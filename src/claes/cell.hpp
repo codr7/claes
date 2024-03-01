@@ -11,8 +11,8 @@ namespace claes {
     Type type;
     any value;
 
-    template <typename T>
-    Cell(TType<T> type, T value): type(type), value(value) {}
+    template <typename T, typename V>
+    Cell(TType<T> type, const V &value): type(type), value(static_cast<V>(value)) {}
 
     Cell(const Cell &source): type(source.type), value(source.value) {}
     Cell(Cell &&source): type(source.type), value(std::move(source.value)) {}

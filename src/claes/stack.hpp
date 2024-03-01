@@ -9,6 +9,10 @@ namespace claes {
   struct Stack {
     vector<Cell> items;
     
+    const Cell &peek() const {
+      return items.back();
+    }
+
     Cell pop() {
       auto c = items.back();
       items.pop_back();
@@ -19,8 +23,8 @@ namespace claes {
       items.push_back(cell);
     }
 
-    template <typename T>
-    void push(TType<T> type, T value) {
+    template <typename T, typename V>
+    void push(TType<T> type, const V &value) {
       items.emplace_back(type, value);
     }
   };

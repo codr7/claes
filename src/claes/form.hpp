@@ -5,12 +5,10 @@ namespace claes {
   struct Form {
     struct Imp {
       Location location;
-
-      Imp(Location location): location(move(location)) {}
+      Imp(const Location &location): location(location) {}
     };
 
     shared_ptr<Imp> imp;
-
     Form(shared_ptr<const Imp> imp);
   };
 }

@@ -14,6 +14,7 @@ namespace claes {
 
     shared_ptr<const Imp> imp;
     Type(const string &name): imp(make_shared<const Imp>(name)) {}
+    Type(shared_ptr<const Imp> imp): imp(imp) {}
   };
 
   template <typename T> 
