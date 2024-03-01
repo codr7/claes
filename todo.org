@@ -1,0 +1,7 @@
+* add vm
+** add op struct
+** add code
+** calculated goto
+** pass stack to eval
+* add readers
+* add repl

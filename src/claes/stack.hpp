@@ -19,9 +19,9 @@ namespace claes {
       items.push_back(cell);
     }
 
-    template <typename T, typename...Args>
+    template <typename T>
     void push(TType<T> type, T value) {
-      push(Cell(type, value));
+      items.emplace_back(type, value);
     }
   };
 }
