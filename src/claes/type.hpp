@@ -6,20 +6,39 @@
 namespace claes {
   using namespace std;
 
+  struct Cell;
+
   struct Type {
     struct Imp {
       string name;
       Imp(const string &name): name(name) {}
+      virtual ~Imp() {}
+      virtual void dump(const Cell &value, ostream &out) const = 0;
+      
+      virtual bool is_true(const Cell &value) const {
+	return true;
+      }
     };
 
     shared_ptr<const Imp> imp;
-    Type(const string &name): imp(make_shared<const Imp>(name)) {}
-    Type(shared_ptr<const Imp> imp): imp(imp) {}
+
+    template <typename T>
+    Type(shared_ptr<const T> imp): imp(imp) {}
+
+    void dump(const Cell &value, ostream &out) const {
+      imp->dump(value, out);
+    }
+    
+    bool is_true(const Cell &value) const {
+      return imp->is_true(value);
+    }
   };
 
   template <typename T> 
   struct TType: Type {
-    TType(const string &name): Type(name) {}
+    template <typename...Args>
+    TType(const string &name, Args&&...args):
+      Type(make_shared<const T>(name, std::forward<Args>(args)...)) {}
   };
 }
 

@@ -5,6 +5,7 @@
 #include "claes/forms/id.hpp"
 #include "claes/forms/literal.hpp"
 #include "claes/stack.hpp"
+#include "claes/types/i64.hpp"
 
 using namespace claes;
 using namespace std;
@@ -34,17 +35,15 @@ void form_tests() {
   Location l("form_tests");
   fs.push<forms::Id>(l, "foo");
 
-  TType<int> t("Int");
-  fs.push<forms::Literal>(l, Cell(t, 42));
+  fs.push<forms::Literal>(l, Cell(types::i64, 42));
 }
 
 void stack_tests() {
   const auto MAX = 1000;
-  TType<int> t("Int");
   Stack s;
 
   for (int i = 0; i < MAX; i++) {
-    s.push(t, i);
+    s.push(types::i64, i);
   }
 
   for (int i = 0; i < MAX; i++) {
