@@ -15,6 +15,10 @@ namespace claes {
     Cell(TType<T> type, const V &value): 
       type(type), value(static_cast<T::Value>(value)) {}
 
+    template <typename T>
+    Cell(TType<T> type, const T &&value): 
+      type(type), value(move(value)) {}
+
     Cell(const Cell &source): 
       type(source.type), value(source.value) {}
     
