@@ -1,9 +1,12 @@
-* add readers
-* add env
+* add repl
+* add package
 * add form emit
 * add macros
+* add let macro
+** add frames
+** add variable type
+** increase frame offset for all variables on add frame
 * add meta type
-* add repl
 ** notcurses?
 * add trace support
 ** add op

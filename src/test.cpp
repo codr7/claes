@@ -5,12 +5,15 @@
 #include "claes/cell.hpp"
 #include "claes/error.hpp"
 #include "claes/form.hpp"
+#include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
 #include "claes/forms/literal.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/stop.hpp"
+#include "claes/read.hpp"
 #include "claes/stack.hpp"
 #include "claes/types/i64.hpp"
+#include "claes/types/string.hpp"
 #include "claes/vm.hpp"
 
 using namespace claes;
@@ -43,6 +46,28 @@ void form_tests() {
   fs.push<forms::Literal>(l, Cell(types::i64, 42));
 }
 
+void read_tests() {
+  Forms fs;
+  stringstream in("foo 42 (foo \"bar\")");
+  Location location("read_tests");
+
+  auto [n, e] = read_forms(in, fs, location);
+  assert(!e);
+  assert(n == 3);
+
+  const auto id_form = fs.pop().as<forms::Id>();
+  assert(id_form.name == "foo");
+
+  const auto literal_form = fs.pop().as<forms::Literal>();
+  assert(literal_form.value.as(types::i64) == 42);
+
+  const auto call_form = fs.pop().as<forms::Call>();
+  const auto target = call_form.target.as<forms::Id>();
+  assert(target.name == "foo");
+  const auto argument = call_form.arguments.peek().as<forms::Literal>();
+  assert(argument.value.as(types::string) == "bar");
+}
+
 void stack_tests() {
   const auto MAX = 1000;
   Stack s;
@@ -72,6 +97,7 @@ void vm_tests() {
 int main() {  
   alloc_tests();
   form_tests();
+  read_tests();
   stack_tests();
   vm_tests();
   return 0;

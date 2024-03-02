@@ -1,6 +1,8 @@
 #ifndef CLAES_FORMS_LITERAL_HPP
 #define CLAES_FORMS_LITERAL_HPP
 
+#include "claes/cell.hpp"
+
 namespace claes::forms {
   struct Literal: Form::Imp {
     Cell value;

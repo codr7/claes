@@ -12,14 +12,15 @@ namespace claes {
       Location location;
       string message;
 
-      Imp(const Location &location, const string &message);
+      Imp(const Location &location, const string &message):
+	location(location), message(message) {}
     };
 
     shared_ptr<const Imp> imp;
 
     template <typename...Args>
     Error(const Location &location, Args &&...args):
-      imp(make_shared<const Imp>(location, to_string(forward<Args>(args)...))) {}
+      imp(make_shared<const Imp>(location, to_string(std::forward<Args>(args)...))) {}
   };
 
   inline ostream &operator <<(ostream &out, Error e) {

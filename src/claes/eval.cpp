@@ -5,6 +5,7 @@
 #include "claes/ops/branch.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/stop.hpp"
+#include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
 #include "claes/timer.hpp"
 #include "claes/vm.hpp"
@@ -24,7 +25,8 @@ namespace claes {
       &&PUSH,
       //&&RETURN,
       //&&TRACE, 
-      &&STOP};
+      &&STOP,
+      &&TODO};
 
     Op op;
     DISPATCH(start_pc);
@@ -216,9 +218,14 @@ namespace claes {
 	DISPATCH(pc+1);
     */
 
-  STOP:
+  STOP: {
     pc++;
     return nullopt;
+    }
+
+  TODO: {
+      return Error(op.as<ops::Todo>().location, "Todo");
+    }
   }
 }
 

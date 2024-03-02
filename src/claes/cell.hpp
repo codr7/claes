@@ -26,8 +26,8 @@ namespace claes {
       type(source.type), value(std::move(source.value)) {}
 
     template <typename T>
-    T as() const { 
-      return any_cast<T>(value); 
+    typename T::Value as(const TType<T> &type) const { 
+      return any_cast<typename T::Value>(value); 
     }
     
     Cell clone() const {

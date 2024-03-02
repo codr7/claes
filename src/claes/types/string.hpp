@@ -1,22 +1,21 @@
-#ifndef CLAES_TYPES_BIT_HPP
-#define CLAES_TYPES_BIT_HPP
+#ifndef CLAES_TYPES_STRING_HPP
+#define CLAES_TYPES_STRING_HPP
 
 #include <cstdint>
-#include <ostream>
 #include "claes/cell.hpp"
 #include "claes/type.hpp"
 
 namespace claes::types {
   using namespace claes;
 
-  struct Bit: Type::Imp {
-    static TType<Bit> type;
-    using Value = bool;
+  struct String: Type::Imp {
+    static TType<String> type;
+    using Value = string;
     
-    Bit(const string &name): Type::Imp(name) {}
+    String(const string &name): Type::Imp(name) {}
 
     virtual void dump(const Cell &value, ostream &out) const override {
-      out << (value.as(type) ? 'T' : 'F');
+      out << value.as(type);
     }
     
     virtual bool eq(const Cell &left, const Cell &right) const override {
@@ -24,11 +23,11 @@ namespace claes::types {
     }
 
     virtual bool is_true(const Cell &value) const override {
-      return value.as(type);
+      return !value.as(type).empty();
     }
   };
 
-  static TType<Bit> &bit(Bit::type);
+  static TType<String> &string(String::type);
 }
 
 #endif

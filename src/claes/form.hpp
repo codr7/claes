@@ -1,6 +1,7 @@
 #ifndef CLAES_FORM_HPP
 #define CLAES_FORM_HPP
 
+#include <deque>
 #include "claes/location.hpp"
 
 namespace claes {
@@ -17,12 +18,17 @@ namespace claes {
 
     shared_ptr<const Imp> imp;
     Form(shared_ptr<const Imp> imp): imp(imp) {}
+
+    template <typename T>
+    const T &as() const { 
+      return *static_cast<const T *>(imp.get()); 
+    }
   };
 
   struct Forms {
     deque<Form> items;
     
-    Form peek() {
+    Form peek() const {
       return items.front();
     }
     
