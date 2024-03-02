@@ -13,7 +13,7 @@ namespace claes {
 
     template <typename T, typename V>
     Cell(TType<T> type, const V &value): 
-      type(type), value(static_cast<V>(value)) {}
+      type(type), value(static_cast<T::Value>(value)) {}
 
     Cell(const Cell &source): 
       type(source.type), value(source.value) {}
@@ -39,7 +39,15 @@ namespace claes {
     }
   };
 
-  inline ostream &operator <<(ostream &out, Cell cell) {
+  inline bool operator ==(const Cell &left, const Cell &right) {
+    if (left.type != right.type) {
+      return false;
+    }
+
+    return left.type.eq(left, right);
+  }
+
+  inline ostream &operator <<(ostream &out, const Cell &cell) {
     cell.dump(out);
     return out;
   }

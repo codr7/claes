@@ -9,10 +9,8 @@ namespace claes::ops {
   using namespace claes;
   
   struct Stop: Op::Imp {
-    Cell value;
-
-    Stop(const Cell &value):
-      Op::Imp(Op::Code::STOP), value(value) {}
+    Stop():
+      Op::Imp(Op::Code::STOP) {}
   };
 }
 

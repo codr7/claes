@@ -16,6 +16,10 @@ namespace claes::types {
       out << value.as<Value>();
     }
     
+    virtual bool eq(const Cell &left, const Cell &right) const override {
+      return left.as<Value>() == right.as<Value>();
+    }
+
     virtual bool is_true(const Cell &value) const override {
       return value.as<Value>();
     }

@@ -19,7 +19,6 @@ namespace claes {
     static const void* dispatch[] = {
       &&BENCHMARK, &&BRANCH,
 	//&&CALL, &&CHECK, 
-      //&&DECREMENT, 
       //&&GOTO,
       //&&NOP, 
       &&PUSH,
@@ -218,6 +217,7 @@ namespace claes {
     */
 
   STOP:
+    pc++;
     return nullopt;
   }
 }

@@ -1,4 +1,10 @@
+* add trace support
+** add op
+** add vm flag
 * add readers
-* add Reader type
+* add env
+* add form emit
+* add macros
+* add meta type
 * add repl
 ** notcurses?
