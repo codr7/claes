@@ -20,6 +20,11 @@ namespace claes {
       return *static_cast<const T *>(imp.get());
     }
 
+    template <typename T, typename...Args>
+    void init(Args&&...args) {
+      imp = make_shared<T>(std::forward<Args>(args)...);
+    }
+
     Code op_code() const {
       return imp->code;
     }
