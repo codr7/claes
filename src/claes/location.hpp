@@ -10,7 +10,7 @@ namespace claes {
   struct Location {
     static const Location INVALID;
     
-    Location(const string &source = "?", int line = -1, int column = -1):
+    Location(const string &source, int line = 1, int column = 1):
       source(source), line(line), column(column) {}
 
     string source;

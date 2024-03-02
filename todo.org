@@ -1,7 +1,12 @@
+* add Cell.as<> (Form)
+* add Cell <<
+** add Type.dump
+*** default imp
 * add vm
 ** add op struct
 ** add code
 ** calculated goto
 ** pass stack to eval
 * add readers
+* add Reader type
 * add repl

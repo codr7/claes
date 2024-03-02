@@ -1,12 +1,17 @@
 #include <vector>
 #include "claes/alloc.hpp"
+#include "claes/cell.hpp"
+#include "claes/form.hpp"
+#include "claes/forms/id.hpp"
+#include "claes/forms/literal.hpp"
 #include "claes/stack.hpp"
 
+using namespace claes;
 using namespace std;
 
 void alloc_tests() {
   const auto MAX = 1000;
-  claes::Alloc<int, 64> a;
+  Alloc<int, 64> a;
   vector<int *> ps;
 
   for (int i = 0; i < MAX; i++) {
@@ -24,10 +29,19 @@ void alloc_tests() {
   }
 }
 
+void form_tests() {
+  Forms fs;
+  Location l("form_tests");
+  fs.push<forms::Id>(l, "foo");
+
+  TType<int> t("Int");
+  fs.push<forms::Literal>(l, Cell(t, 42));
+}
+
 void stack_tests() {
   const auto MAX = 1000;
-  claes::TType<int> t("Int");
-  claes::Stack s;
+  TType<int> t("Int");
+  Stack s;
 
   for (int i = 0; i < MAX; i++) {
     s.push(t, i);
@@ -40,6 +54,7 @@ void stack_tests() {
   
 int main() {  
   alloc_tests();
+  form_tests();
   stack_tests();
   return 0;
 }
