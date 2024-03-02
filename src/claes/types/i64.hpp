@@ -2,6 +2,7 @@
 #define CLAES_TYPES_I64_HPP
 
 #include <cstdint>
+#include "claes/cell.hpp"
 #include "claes/type.hpp"
 
 namespace claes::types {

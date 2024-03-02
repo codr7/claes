@@ -13,6 +13,8 @@ namespace claes {
       string name;
       Imp(const string &name): name(name) {}
       virtual ~Imp() {}
+      virtual Cell clone(const Cell &value) const;
+
       virtual void dump(const Cell &value, ostream &out) const = 0;
       
       virtual bool is_true(const Cell &value) const {
@@ -24,6 +26,8 @@ namespace claes {
 
     template <typename T>
     Type(shared_ptr<const T> imp): imp(imp) {}
+
+    Cell clone(const Cell &value) const;
 
     void dump(const Cell &value, ostream &out) const {
       imp->dump(value, out);

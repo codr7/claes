@@ -26,6 +26,10 @@ namespace claes {
       return any_cast<T>(value); 
     }
     
+    Cell clone() const {
+      return type.clone(*this);
+    }
+
     void dump(ostream &out) const {
       type.dump(*this, out);
     }
