@@ -15,7 +15,7 @@
 namespace claes {
   using namespace std;
   
-  optional<Error> VM::eval(PC start_pc, Stack &stack) {
+  optional<Error> VM::eval(const PC start_pc, Stack &stack) {
     static const void* dispatch[] = {
       &&BENCHMARK, &&BRANCH,
 	//&&CALL, &&CHECK, 
@@ -30,7 +30,7 @@ namespace claes {
     DISPATCH(start_pc);
 
   BENCHMARK: {
-      auto n = op.as<ops::Benchmark>().repetitions;
+      const auto n = op.as<ops::Benchmark>().repetitions;
       const auto start_pc = pc+1;
       Timer t;
 

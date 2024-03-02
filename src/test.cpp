@@ -57,7 +57,7 @@ void stack_tests() {
 }
 
 void vm_tests() {
-  Cell v(types::i64, 42);
+  const Cell v(types::i64, 42);
 
   VM vm;
   vm.emit<ops::Push>(v);

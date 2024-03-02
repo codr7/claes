@@ -17,7 +17,7 @@ namespace claes {
       return ops.emplace_back(make_shared<T>(std::forward<Args>(args)...));
     }
 
-    optional<Error> eval(PC start_pc, Stack &stack);
+    optional<Error> eval(const PC start_pc, Stack &stack);
   };
 }
 
