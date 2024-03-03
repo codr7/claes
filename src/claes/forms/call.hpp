@@ -13,8 +13,13 @@ namespace claes::forms {
 
     Form target;
     Forms arguments;
+
     Call(const Location &location, const Form &target, const Forms arguments): 
       Form::Imp(location), target(target), arguments(arguments) {}
+
+    virtual optional<Error> emit(VM &vm, Env &env, Forms &arguments) const {
+      return target.emit_call(vm, env, this->arguments, location);
+    }
   };
 }
 

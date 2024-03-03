@@ -10,7 +10,15 @@ namespace claes::forms {
     };
 
     string name;
-    Id(const Location &location, const string &name): Form::Imp(location), name(name) {}
+    Id(const Location &location, const string &name): 
+      Form::Imp(location), name(name) {}
+    
+    virtual optional<Error> emit(VM &vm, Env &env, Forms &arguments) const override;
+
+    virtual optional<Error> emit_call(VM &vm, 
+				      Env &env, 
+				      const Forms &arguments, 
+				      const Location &location) const override;
   };
 }
 

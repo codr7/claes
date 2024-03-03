@@ -17,7 +17,10 @@ namespace claes {
     int line, column;
   };
 
-  ostream &operator <<(ostream &out, Location location);
+  inline ostream &operator <<(ostream &out, Location location) {
+    out << location.source << '@' << location.line << ':' << location.column;
+    return out;
+  }
 }
 
 #endif

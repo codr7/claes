@@ -12,3 +12,6 @@ file(GLOB_RECURSE src src/claes/*.cpp)
 
 add_executable(test ${src} src/test.cpp)
 target_include_directories(test PUBLIC src/)
+
+add_executable(claes ${src} src/main.cpp)
+target_include_directories(claes PUBLIC src/)

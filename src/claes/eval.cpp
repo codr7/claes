@@ -3,6 +3,7 @@
 #include "claes/error.hpp"
 #include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
+#include "claes/ops/call_indirect.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
@@ -19,6 +20,7 @@ namespace claes {
   optional<Error> VM::eval(const PC start_pc, Stack &stack) {
     static const void* dispatch[] = {
       &&BENCHMARK, &&BRANCH,
+      &&CALL_INDIRECT,
 	//&&CALL, &&CHECK, 
       //&&GOTO,
       //&&NOP, 
@@ -48,6 +50,14 @@ namespace claes {
   BRANCH: {
       DISPATCH(stack.pop().is_true() ? pc+1 : op.as<ops::Branch>().else_pc);
     }
+
+  CALL_INDIRECT: {
+      const auto target = stack.pop();
+      pc++;
+      target.call(*this, stack, op.as<ops::CallIndirect>().location);
+    }
+    
+    DISPATCH(pc);
 
     /*
       CALL: {

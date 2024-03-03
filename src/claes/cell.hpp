@@ -25,17 +25,48 @@ namespace claes {
     Cell(Cell &&source): 
       type(source.type), value(std::move(source.value)) {}
 
+    const Cell &operator =(const Cell &source) {
+      type = source.type;
+      value = source.value;
+      return *this;
+    }
+
     template <typename T>
     typename T::Value as(const TType<T> &type) const { 
       return any_cast<typename T::Value>(value); 
     }
     
+    optional<Error> call(VM &vm, Stack &stack, const Location &location) const {
+      return type.call(*this, vm, stack, location);
+    }
+
     Cell clone() const {
       return type.clone(*this);
     }
 
     void dump(ostream &out) const {
       type.dump(*this, out);
+    }
+
+    optional<Error> emit_call(VM &vm, 
+			      Env &env, 
+			      const Forms &arguments,
+			      const Location &location) const {
+      return type.emit_call(*this, vm, env, arguments, location);
+    }
+
+    optional<Error> emit_id(VM &vm, 
+			    Env &env, 
+			    Forms &arguments,
+			    const Location &location) const {
+      return type.emit_id(*this, vm, env, arguments, location);
+    }
+
+    optional<Error> emit_literal(VM &vm, 
+				 Env &env, 
+				 Forms &arguments,
+				 const Location &location) const {
+      return type.emit_literal(*this, vm, env, arguments, location);
     }
 
     bool is_true() const { 

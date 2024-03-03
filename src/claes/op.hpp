@@ -5,7 +5,7 @@
 
 namespace claes {
   struct Op {
-    enum struct Code {BENCHMARK, BRANCH, PUSH, STOP, TODO};
+    enum struct Code {BENCHMARK, BRANCH, CALL_INDIRECT, PUSH, STOP, TODO};
 
     struct Imp {
       Code code;

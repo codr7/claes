@@ -1,13 +1,23 @@
-* add repl
-* add package
-* add form emit
-* add macros
+* finish repl
+** why no undefined error?
+** commit
+
+* register trace macro
+** add trace support
+*** add op
+*** add vm flag
+
+* rename location to loc
+
+* add using E = optional<Error>
+** grep replace
+
 * add let macro
 ** add frames
 ** add variable type
 ** increase frame offset for all variables on add frame
+
 * add meta type
-** notcurses?
-* add trace support
-** add op
-** add vm flag
+** bind types
+
+* notcurses?

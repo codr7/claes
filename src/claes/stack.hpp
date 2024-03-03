@@ -9,6 +9,10 @@ namespace claes {
   struct Stack {
     vector<Cell> items;
     
+    bool empty() const {
+      return items.empty();
+    }
+
     const Cell &peek() const {
       return items.back();
     }
