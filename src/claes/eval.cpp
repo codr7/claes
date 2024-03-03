@@ -43,7 +43,7 @@ namespace claes {
 	if (auto e = eval(start_pc, s); e) { return e; }
       }
 
-      stack.push(types::i64, t.ms());
+      stack.push(types::I64::get(), t.ms());
       DISPATCH(pc);
     }
     

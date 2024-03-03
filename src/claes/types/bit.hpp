@@ -10,25 +10,27 @@ namespace claes::types {
   using namespace claes;
 
   struct Bit: Type::Imp {
-    static TType<Bit> type;
     using Value = bool;
+
+    static TType<Bit> get() {
+      static TType<Bit> t("Bit");
+      return t;
+    }
     
     Bit(const string &name): Type::Imp(name) {}
 
     virtual void dump(const Cell &value, ostream &out) const override {
-      out << (value.as(type) ? 'T' : 'F');
+      out << (value.as(get()) ? 'T' : 'F');
     }
     
     virtual bool eq(const Cell &left, const Cell &right) const override {
-      return left.as(type) == right.as(type);
+      return left.as(get()) == right.as(get());
     }
 
     virtual bool is_true(const Cell &value) const override {
-      return value.as(type);
+      return value.as(get());
     }
   };
-
-  static TType<Bit> &bit(Bit::type);
 }
 
 #endif

@@ -9,6 +9,7 @@ namespace claes {
   struct Stack;
 
   struct VM {
+    bool trace = false;
     PC pc = 0;
     vector<Op> ops;
 

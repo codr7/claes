@@ -117,6 +117,11 @@ namespace claes {
     TType(const string &name, Args&&...args):
       Type(make_shared<const T>(name, std::forward<Args>(args)...)) {}
   };
+
+  inline ostream &operator <<(ostream &out, const Type &type) {
+    out << "(Type " << type.imp->name << ')';
+    return out;
+  }
 }
 
 #endif

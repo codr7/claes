@@ -43,7 +43,7 @@ void form_tests() {
   Forms fs;
   Location l("form_tests");
   fs.push<forms::Id>(l, "foo");
-  fs.push<forms::Literal>(l, Cell(types::i64, 42));
+  fs.push<forms::Literal>(l, Cell(types::I64::get(), 42));
 }
 
 void read_tests() {
@@ -59,13 +59,13 @@ void read_tests() {
   assert(id_form.name == "foo");
 
   const auto literal_form = fs.pop().as<forms::Literal>();
-  assert(literal_form.value.as(types::i64) == 42);
+  assert(literal_form.value.as(types::I64::get()) == 42);
 
   const auto call_form = fs.pop().as<forms::Call>();
   const auto target = call_form.target.as<forms::Id>();
   assert(target.name == "foo");
   const auto argument = call_form.arguments.peek().as<forms::Literal>();
-  assert(argument.value.as(types::string) == "bar");
+  assert(argument.value.as(types::String::get()) == "bar");
 }
 
 void stack_tests() {
@@ -73,7 +73,7 @@ void stack_tests() {
   Stack s;
 
   for (int i = 0; i < MAX; i++) {
-    s.push(types::i64, i);
+    s.push(types::I64::get(), i);
   }
 
   for (int i = 0; i < MAX; i++) {
@@ -82,7 +82,7 @@ void stack_tests() {
 }
 
 void vm_tests() {
-  const Cell v(types::i64, 42);
+  const Cell v(types::I64::get(), 42);
 
   VM vm;
   vm.emit<ops::Push>(v);

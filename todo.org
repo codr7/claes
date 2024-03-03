@@ -1,9 +1,6 @@
-* fix string dump
-
 * register trace macro
-** add trace support
-*** add op
-*** add vm flag
+** add trace support in emit
+*** add trace op
 
 * rename location to loc
 

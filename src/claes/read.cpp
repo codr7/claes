@@ -104,7 +104,7 @@ namespace claes {
     const auto form_location = location;
     auto [v, e] = read_i64(in, location, 10);
     if (e) { return ReadT(false, e); }
-    out.push<forms::Literal>(form_location, Cell(types::i64, v));
+    out.push<forms::Literal>(form_location, Cell(types::I64::get(), v));
     return ReadT(true, nullopt);
   }
 
@@ -164,7 +164,7 @@ namespace claes {
     }
 
     location.column++;
-    out.push<forms::Literal>(form_location, Cell(types::string, buffer.str()));
+    out.push<forms::Literal>(form_location, Cell(types::String::get(), buffer.str()));
     return ReadT(true, nullopt);
   }
 

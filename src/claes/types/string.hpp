@@ -9,25 +9,27 @@ namespace claes::types {
   using namespace claes;
 
   struct String: Type::Imp {
-    static TType<String> type;
     using Value = string;
     
+    static TType<String> get() {
+      static TType<String> t("String");
+      return t;
+    }    
+
     String(const string &name): Type::Imp(name) {}
 
     virtual void dump(const Cell &value, ostream &out) const override {
-      out << '"' << value.as(type) << '"';
+      out << '"' << value.as(get()) << '"';
     }
     
     virtual bool eq(const Cell &left, const Cell &right) const override {
-      return left.as(type) == right.as(type);
+      return left.as(get()) == right.as(get());
     }
 
     virtual bool is_true(const Cell &value) const override {
-      return !value.as(type).empty();
+      return !value.as(get()).empty();
     }
   };
-
-  static TType<String> &string(String::type);
 }
 
 #endif

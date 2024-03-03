@@ -10,8 +10,12 @@ namespace claes::types {
   using namespace claes;
 
   struct Macro: Type::Imp {
-    static TType<Macro> type;
     using Value = claes::Macro;
+
+    static TType<Macro> get() {
+      static TType<Macro> t("Macro");
+      return t;
+    }
     
     Macro(const string &name): Type::Imp(name) {}
 
@@ -25,8 +29,6 @@ namespace claes::types {
 
     virtual bool eq(const Cell &left, const Cell &right) const override;
   };
-
-  static TType<Macro> &macro(Macro::type);
 }
 
 #endif
