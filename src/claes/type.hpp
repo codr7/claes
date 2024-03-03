@@ -19,35 +19,35 @@ namespace claes {
       Imp(const string &name): name(name) {}
       virtual ~Imp() {}
 
-      virtual optional<Error> call(const Cell &target, 
-				   VM &vm, 
-				   Stack &stack, 
-				   const Location &location) const;
+      virtual E call(const Cell &target, 
+		     VM &vm, 
+		     Stack &stack, 
+		     const Location &location) const;
 
       virtual Cell clone(const Cell &value) const;
       virtual void dump(const Cell &value, ostream &out) const = 0;      
 
-      virtual optional<Error> emit_call(const Cell &value,
-					VM &vm, 
-					Env &env, 
-					const Forms &arguments,
-					const Location &location) const {
+      virtual E emit_call(const Cell &value,
+			  VM &vm, 
+			  Env &env, 
+			  const Forms &arguments,
+			  const Location &location) const {
 	return Error(location, "Invalid call target: ", value);
       }
 
-      virtual optional<Error> emit_id(const Cell &value,
-				      VM &vm, 
-				      Env &env, 
-				      Forms &arguments,
-				      const Location &location) const {
+      virtual E emit_id(const Cell &value,
+			VM &vm, 
+			Env &env, 
+			Forms &arguments,
+			const Location &location) const {
 	return emit_literal(value, vm, env, arguments, location);
       }
 
-      virtual optional<Error> emit_literal(const Cell &value,
-					   VM &vm, 
-					   Env &env, 
-					   Forms &arguments,
-					   const Location &location) const;
+      virtual E emit_literal(const Cell &value,
+			     VM &vm, 
+			     Env &env, 
+			     Forms &arguments,
+			     const Location &location) const;
 
       virtual bool eq(const Cell &left, const Cell &right) const = 0;
 
@@ -61,10 +61,10 @@ namespace claes {
     template <typename T>
     Type(shared_ptr<const T> imp): imp(imp) {}
 
-    optional<Error> call(const Cell &target, 
-			 VM &vm, 
-			 Stack &stack, 
-			 const Location &location) const {
+    E call(const Cell &target, 
+	   VM &vm, 
+	   Stack &stack, 
+	   const Location &location) const {
       return imp->call(target, vm, stack, location);
     }
 
@@ -74,27 +74,27 @@ namespace claes {
       imp->dump(value, out);
     }
 
-    optional<Error> emit_call(const Cell &value,
-			    VM &vm, 
-			    Env &env, 
-			    const Forms &arguments,
-			    const Location &location) const {
+    E emit_call(const Cell &value,
+		VM &vm, 
+		Env &env, 
+		const Forms &arguments,
+		const Location &location) const {
       return imp->emit_call(value, vm, env, arguments, location);
     }
 
-    optional<Error> emit_id(const Cell &value,
-			    VM &vm, 
-			    Env &env, 
-			    Forms &arguments,
-			    const Location &location) const {
+    E emit_id(const Cell &value,
+	      VM &vm, 
+	      Env &env, 
+	      Forms &arguments,
+	      const Location &location) const {
       return imp->emit_id(value, vm, env, arguments, location);
     }
 
-    optional<Error> emit_literal(const Cell &value,
-				 VM &vm, 
-				 Env &env, 
-				 Forms &arguments,
-				 const Location &location) const {
+    E emit_literal(const Cell &value,
+		   VM &vm, 
+		   Env &env, 
+		   Forms &arguments,
+		   const Location &location) const {
       return imp->emit_literal(value, vm, env, arguments, location);
     }
     

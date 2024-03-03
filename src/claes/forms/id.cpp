@@ -2,7 +2,7 @@
 #include "claes/forms/id.hpp"
 
 namespace claes::forms {
-  optional<Error> Id::emit(VM &vm, Env &env, Forms &arguments) const {
+  E Id::emit(VM &vm, Env &env, Forms &arguments) const {
     if (auto found = env.find(name); found) {
       return found->emit_id(vm, env, arguments, location);
     }
@@ -10,10 +10,10 @@ namespace claes::forms {
     return Error(location, "Unknown identifier: ", name);
   }
 
-  optional<Error> Id::emit_call(VM &vm, 
-				Env &env, 
-				const Forms &arguments, 
-				const Location &location) const {
+  E Id::emit_call(VM &vm, 
+		  Env &env, 
+		  const Forms &arguments, 
+		  const Location &location) const {
     const auto target = env.find(name);
     
     if (!target) {

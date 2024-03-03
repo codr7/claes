@@ -11,11 +11,11 @@ namespace claes {
   struct VM;
 
   struct Macro {
-    using Body = function<optional<Error> (Macro &macro,
-					   VM &vm, 
-					   Env &env, 
-					   const Forms &arguments,
-					   const Location &location)>;
+    using Body = function<E (Macro &macro,
+			     VM &vm, 
+			     Env &env, 
+			     const Forms &arguments,
+			     const Location &location)>;
 
     struct Imp {
       Body body;
@@ -29,10 +29,10 @@ namespace claes {
     Macro(const string &name, const Body &body): 
       imp(make_shared<const Imp>(name, body)) {}
 
-    optional<Error> call(VM &vm, 
-			 Env &env, 
-			 const Forms &arguments,
-			 const Location &location) {
+    E call(VM &vm, 
+	   Env &env, 
+	   const Forms &arguments,
+	   const Location &location) {
       return imp->body(*this, vm, env, arguments, location);
     }
   };

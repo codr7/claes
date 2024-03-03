@@ -7,7 +7,7 @@
 namespace claes {
   using namespace std;
 
-  using ReadT = pair<bool, optional<Error>>;
+  using ReadT = pair<bool, E>;
 
   using Reader = function<ReadT (istream &in, 
 				 Forms &out, 
@@ -20,7 +20,7 @@ namespace claes {
   ReadT read_string(istream &in, Forms &out, Location &location);
   ReadT read_ws(istream &in, Forms &out, Location &location);
 
-  pair<int, optional<Error>> read_forms(istream &in, Forms &out, Location &location);
+  pair<int, E> read_forms(istream &in, Forms &out, Location &location);
 }
 
 #endif

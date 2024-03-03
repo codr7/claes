@@ -31,7 +31,7 @@ namespace claes {
       return ops.size();
     }
 
-    optional<Error> eval(const PC start_pc, Stack &stack);
+    E eval(const PC start_pc, Stack &stack);
   
     void repl(istream &in, ostream &out);
   };

@@ -23,6 +23,8 @@ namespace claes {
       imp(make_shared<const Imp>(location, to_string(std::forward<Args>(args)...))) {}
   };
 
+  using E = optional<Error>;
+
   inline ostream &operator <<(ostream &out, Error e) {
     out << "Error in " << e.imp->location << ':' << endl << e.imp->message;
     return out;

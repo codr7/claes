@@ -36,7 +36,7 @@ namespace claes {
       return any_cast<typename T::Value>(value); 
     }
     
-    optional<Error> call(VM &vm, Stack &stack, const Location &location) const {
+    E call(VM &vm, Stack &stack, const Location &location) const {
       return type.call(*this, vm, stack, location);
     }
 
@@ -48,24 +48,24 @@ namespace claes {
       type.dump(*this, out);
     }
 
-    optional<Error> emit_call(VM &vm, 
-			      Env &env, 
-			      const Forms &arguments,
-			      const Location &location) const {
+    E emit_call(VM &vm, 
+		Env &env, 
+		const Forms &arguments,
+		const Location &location) const {
       return type.emit_call(*this, vm, env, arguments, location);
     }
 
-    optional<Error> emit_id(VM &vm, 
-			    Env &env, 
-			    Forms &arguments,
-			    const Location &location) const {
+    E emit_id(VM &vm, 
+	      Env &env, 
+	      Forms &arguments,
+	      const Location &location) const {
       return type.emit_id(*this, vm, env, arguments, location);
     }
 
-    optional<Error> emit_literal(VM &vm, 
-				 Env &env, 
-				 Forms &arguments,
-				 const Location &location) const {
+    E emit_literal(VM &vm, 
+		   Env &env, 
+		   Forms &arguments,
+		   const Location &location) const {
       return type.emit_literal(*this, vm, env, arguments, location);
     }
 

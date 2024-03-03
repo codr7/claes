@@ -21,11 +21,11 @@ namespace claes::types {
 
     virtual void dump(const Cell &value, ostream &out) const override;
     
-    virtual optional<Error> emit_call(const Cell &value,
-				      VM &vm, 
-				      Env &env, 
-				      const Forms &arguments,
-				      const Location &location) const override;
+    virtual E emit_call(const Cell &value,
+			VM &vm, 
+			Env &env, 
+			const Forms &arguments,
+			const Location &location) const override;
 
     virtual bool eq(const Cell &left, const Cell &right) const override;
   };

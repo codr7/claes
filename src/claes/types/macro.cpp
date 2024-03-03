@@ -6,11 +6,11 @@ namespace claes::types {
     out << value.as(get());
   }
 
-  optional<Error> Macro::emit_call(const Cell &value,
-				   VM &vm, 
-				   Env &env, 
-				   const Forms &arguments,
-				   const Location &location) const {
+  E Macro::emit_call(const Cell &value,
+		     VM &vm, 
+		     Env &env, 
+		     const Forms &arguments,
+		     const Location &location) const {
     return value.as(get()).call(vm, env, arguments, location);
   }
   

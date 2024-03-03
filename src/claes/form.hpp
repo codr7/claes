@@ -20,12 +20,12 @@ namespace claes {
       Location location;
       Imp(const Location &location): location(location) {}
       virtual ~Imp() {}
-      virtual optional<Error> emit(VM &vm, Env &env, Forms &arguments) const = 0;
+      virtual E emit(VM &vm, Env &env, Forms &arguments) const = 0;
 
-      virtual optional<Error> emit_call(VM &vm, 
-					Env &env, 
-					const Forms &arguments, 
-					const Location &location) const;
+      virtual E emit_call(VM &vm, 
+			  Env &env, 
+			  const Forms &arguments, 
+			  const Location &location) const;
     };
 
     shared_ptr<const Imp> imp;
@@ -36,14 +36,14 @@ namespace claes {
       return *static_cast<const T *>(imp.get()); 
     }
 
-    optional<Error> emit(VM &vm, Env &env, Forms &arguments) const {
+    E emit(VM &vm, Env &env, Forms &arguments) const {
       return imp->emit(vm, env, arguments);
     }
 
-    optional<Error> emit_call(VM &vm, 
-			      Env &env, 
-			      const Forms &arguments, 
-			      const Location &location) const {
+    E emit_call(VM &vm, 
+		Env &env, 
+		const Forms &arguments, 
+		const Location &location) const {
       return imp->emit_call(vm, env, arguments, location);
     }
   };
@@ -51,7 +51,7 @@ namespace claes {
   struct Forms {
     deque<Form> items;
     
-    optional<Error> emit(VM &vm, Env &env) {
+    E emit(VM &vm, Env &env) {
       while (!empty()) {
 	if (auto e = pop().emit(vm, env, *this); e) {
 	  return e;

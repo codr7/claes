@@ -3,10 +3,10 @@
 #include "claes/vm.hpp"
 
 namespace claes {
-  optional<Error> Form::Imp::emit_call(VM &vm, 
-				       Env &env, 
-				       const Forms &arguments, 
-				       const Location &location) const {
+  E Form::Imp::emit_call(VM &vm, 
+			 Env &env, 
+			 const Forms &arguments, 
+			 const Location &location) const {
     Forms as(arguments);
 
     if (auto e = as.emit(vm, env); e) {

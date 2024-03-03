@@ -72,7 +72,7 @@ namespace claes {
     return ReadT(false, nullopt);
   }
 
-  static pair<types::I64::Value, optional<Error>> 
+  static pair<types::I64::Value, E> 
   read_i64(istream &in, Location &location, uint16_t base) {    
     static const map<char, int8_t> char_values = {
       {'0', 0}, {'1', 1}, {'2', 2}, {'3', 3}, {'4', 4}, {'5', 5}, {'6', 6}, {'7', 7},
@@ -192,7 +192,7 @@ namespace claes {
     return ReadT(false, nullopt);
   }
 
-  pair<int, optional<Error>> read_forms(istream &in, Forms &out, Location &location) {
+  pair<int, E> read_forms(istream &in, Forms &out, Location &location) {
     auto n = 0;
 
     for (;; n++) {

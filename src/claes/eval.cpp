@@ -17,7 +17,7 @@
 namespace claes {
   using namespace std;
   
-  optional<Error> VM::eval(const PC start_pc, Stack &stack) {
+  E VM::eval(const PC start_pc, Stack &stack) {
     static const void* dispatch[] = {
       &&BENCHMARK, &&BRANCH,
       &&CALL_INDIRECT,
