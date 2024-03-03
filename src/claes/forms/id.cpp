@@ -7,7 +7,7 @@ namespace claes::forms {
       return found->emit_id(vm, env, arguments, location);
     }
 
-    return nullopt;
+    return Error(location, "Unknown identifier: ", name);
   }
 
   optional<Error> Id::emit_call(VM &vm, 

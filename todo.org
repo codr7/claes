@@ -1,6 +1,4 @@
-* finish repl
-** why no undefined error?
-** commit
+* fix string dump
 
 * register trace macro
 ** add trace support
