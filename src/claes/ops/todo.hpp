@@ -13,6 +13,10 @@ namespace claes::ops {
 
     Todo(const Location &location):
       Op::Imp(Op::Code::TODO), location(location) {}
+
+    virtual void trace(ostream &out) const override {
+      out << "Todo location: " << location;
+    }
   };
 }
 

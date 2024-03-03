@@ -12,6 +12,10 @@ namespace claes::ops {
 
     Branch(PC else_pc):
       Op::Imp(Op::Code::BRANCH), else_pc(else_pc) {}
+
+    virtual void trace(ostream &out) const override {
+      out << "Branch else_pc: " << else_pc;
+    }
   };
 }
 

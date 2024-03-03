@@ -5,11 +5,13 @@
 
 namespace claes {
   struct Op {
-    enum struct Code {BENCHMARK, BRANCH, CALL_INDIRECT, PUSH, STOP, TODO};
+    enum struct Code {BENCHMARK, BRANCH, CALL_INDIRECT, PUSH, STOP, TODO, TRACE};
 
     struct Imp {
       Code code;
       Imp(Code code): code(code) {}
+      virtual ~Imp() {}
+      virtual void trace(ostream &out) const = 0;
     };
     
     shared_ptr<const Imp> imp;
@@ -27,6 +29,10 @@ namespace claes {
 
     Code op_code() const {
       return imp->code;
+    }
+
+    void trace(ostream &out) const {
+      return imp->trace(out);
     }
   };
 }

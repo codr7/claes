@@ -1,11 +1,7 @@
-* register trace macro
-** add trace support in emit
-*** add trace op
-
-* rename location to loc
-
 * add using E = optional<Error>
 ** grep replace
+
+* rename location to loc
 
 * add let macro
 ** add frames

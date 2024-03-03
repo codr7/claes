@@ -28,7 +28,7 @@ namespace claes {
       //&&RETURN,
       //&&TRACE, 
       &&STOP,
-      &&TODO};
+      &&TODO, &&TRACE};
 
     Op op;
     DISPATCH(start_pc);
@@ -235,6 +235,13 @@ namespace claes {
 
   TODO: {
       return Error(op.as<ops::Todo>().location, "Todo");
+    }
+
+  TRACE: {
+      cout << pc << ' ';
+      ops[++pc].trace(cout);
+      cout << endl;
+      DISPATCH(pc);
     }
   }
 }

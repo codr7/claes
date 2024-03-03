@@ -1,5 +1,5 @@
-#ifndef CLAES_OPS_STOP_HPP
-#define CLAES_OPS_STOP_HPP
+#ifndef CLAES_OPS_TRACE_HPP
+#define CLAES_OPS_TRACE_HPP
 
 #include "claes/cell.hpp"
 #include "claes/common.hpp"
@@ -8,12 +8,12 @@
 namespace claes::ops {
   using namespace claes;
   
-  struct Stop: Op::Imp {
-    Stop():
-      Op::Imp(Op::Code::STOP) {}
+  struct Trace: Op::Imp {
+    Trace():
+      Op::Imp(Op::Code::TRACE) {}
 
     virtual void trace(ostream &out) const override {
-      out << "Stop";
+      out << "Trace";
     }
   };
 }

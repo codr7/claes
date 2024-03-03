@@ -13,6 +13,10 @@ namespace claes::ops {
 
     Push(const Cell &value):
       Op::Imp(Op::Code::PUSH), value(value) {}
+    
+    virtual void trace(ostream &out) const override {
+      out << "Push value: " << value;
+    }
   };
 }
 

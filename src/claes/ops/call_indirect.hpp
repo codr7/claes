@@ -13,6 +13,10 @@ namespace claes::ops {
 
     CallIndirect(const Location &location):
       Op::Imp(Op::Code::CALL_INDIRECT), location(location) {}
+
+    virtual void trace(ostream &out) const override {
+      out << "CallIndirect location: " << location;
+    }
   };
 }
 
