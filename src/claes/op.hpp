@@ -1,9 +1,9 @@
 #ifndef CLAES_OP_HPP
 #define CLAES_OP_HPP
 
-#include "claes/location.hpp"
-
 namespace claes {
+  using namespace std;
+
   struct Op {
     enum struct Code {BENCHMARK, BRANCH, CALL_INDIRECT, PUSH, STOP, TODO, TRACE};
 

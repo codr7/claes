@@ -23,7 +23,10 @@ namespace claes {
 
     template <typename T, typename...Args>
     PC emit(Args&&...args) {
-      emit_no_trace<ops::Trace>();
+      if (trace) {
+	emit_no_trace<ops::Trace>();
+      }
+
       return emit_no_trace<T>(std::forward<Args>(args)...);
     }
 

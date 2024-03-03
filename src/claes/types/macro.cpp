@@ -10,8 +10,8 @@ namespace claes::types {
 		     VM &vm, 
 		     Env &env, 
 		     const Forms &arguments,
-		     const Location &location) const {
-    return value.as(get()).call(vm, env, arguments, location);
+		     const Loc &loc) const {
+    return value.as(get()).call(vm, env, arguments, loc);
   }
   
   bool Macro::eq(const Cell &left, const Cell &right) const {

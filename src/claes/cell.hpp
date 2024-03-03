@@ -36,8 +36,8 @@ namespace claes {
       return any_cast<typename T::Value>(value); 
     }
     
-    E call(VM &vm, Stack &stack, const Location &location) const {
-      return type.call(*this, vm, stack, location);
+    E call(VM &vm, Stack &stack, const Loc &loc) const {
+      return type.call(*this, vm, stack, loc);
     }
 
     Cell clone() const {
@@ -51,22 +51,22 @@ namespace claes {
     E emit_call(VM &vm, 
 		Env &env, 
 		const Forms &arguments,
-		const Location &location) const {
-      return type.emit_call(*this, vm, env, arguments, location);
+		const Loc &loc) const {
+      return type.emit_call(*this, vm, env, arguments, loc);
     }
 
     E emit_id(VM &vm, 
 	      Env &env, 
 	      Forms &arguments,
-	      const Location &location) const {
-      return type.emit_id(*this, vm, env, arguments, location);
+	      const Loc &loc) const {
+      return type.emit_id(*this, vm, env, arguments, loc);
     }
 
     E emit_literal(VM &vm, 
 		   Env &env, 
 		   Forms &arguments,
-		   const Location &location) const {
-      return type.emit_literal(*this, vm, env, arguments, location);
+		   const Loc &loc) const {
+      return type.emit_literal(*this, vm, env, arguments, loc);
     }
 
     bool is_true() const { 

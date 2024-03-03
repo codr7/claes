@@ -3,7 +3,7 @@
 
 #include <deque>
 #include "claes/error.hpp"
-#include "claes/location.hpp"
+#include "claes/loc.hpp"
 
 namespace claes {
   struct Env;
@@ -12,20 +12,20 @@ namespace claes {
 
   struct Form {
     template <typename T, typename...Args>
-    static Form make(const Location &location, Args&&...args) {
-      return Form(make_shared<T>(location, std::forward<Args>(args)...));
+    static Form make(const Loc &loc, Args&&...args) {
+      return Form(make_shared<T>(loc, std::forward<Args>(args)...));
     };
       
     struct Imp {
-      Location location;
-      Imp(const Location &location): location(location) {}
+      Loc loc;
+      Imp(const Loc &loc): loc(loc) {}
       virtual ~Imp() {}
       virtual E emit(VM &vm, Env &env, Forms &arguments) const = 0;
 
       virtual E emit_call(VM &vm, 
 			  Env &env, 
 			  const Forms &arguments, 
-			  const Location &location) const;
+			  const Loc &loc) const;
     };
 
     shared_ptr<const Imp> imp;
@@ -43,8 +43,8 @@ namespace claes {
     E emit_call(VM &vm, 
 		Env &env, 
 		const Forms &arguments, 
-		const Location &location) const {
-      return imp->emit_call(vm, env, arguments, location);
+		const Loc &loc) const {
+      return imp->emit_call(vm, env, arguments, loc);
     }
   };
 
@@ -76,8 +76,8 @@ namespace claes {
     }
     
     template <typename T, typename...Args>
-    Form push(const Location location, Args&&...args) {
-      return items.emplace_back(make_shared<T>(location, std::forward<Args>(args)...));
+    Form push(const Loc loc, Args&&...args) {
+      return items.emplace_back(make_shared<T>(loc, std::forward<Args>(args)...));
     }
   };
 }

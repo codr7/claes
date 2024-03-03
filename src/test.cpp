@@ -41,7 +41,7 @@ void alloc_tests() {
 
 void form_tests() {
   Forms fs;
-  Location l("form_tests");
+  Loc l("form_tests");
   fs.push<forms::Id>(l, "foo");
   fs.push<forms::Literal>(l, Cell(types::I64::get(), 42));
 }
@@ -49,9 +49,9 @@ void form_tests() {
 void read_tests() {
   Forms fs;
   stringstream in("foo 42 (foo \"bar\")");
-  Location location("read_tests");
+  Loc loc("read_tests");
 
-  auto [n, e] = read_forms(in, fs, location);
+  auto [n, e] = read_forms(in, fs, loc);
   assert(!e);
   assert(n == 3);
 

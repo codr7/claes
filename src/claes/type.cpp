@@ -15,15 +15,15 @@ namespace claes {
   E Type::Imp::call(const Cell &target, 
 		    VM &vm, 
 		    Stack &stack, 
-		    const Location &location) const {
-    return Error(location, "Invalid call target: ", target);
+		    const Loc &loc) const {
+    return Error(loc, "Invalid call target: ", target);
   }
 
   E Type::Imp::emit_literal(const Cell &value,
 			    VM &vm, 
 			    Env &env, 
 			    Forms &arguments,
-			    const Location &location) const {
+			    const Loc &loc) const {
     vm.emit<ops::Push>(value);
     return nullopt;
   }

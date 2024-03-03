@@ -25,7 +25,7 @@ namespace claes::types {
 			VM &vm, 
 			Env &env, 
 			const Forms &arguments,
-			const Location &location) const override;
+			const Loc &loc) const override;
 
     virtual bool eq(const Cell &left, const Cell &right) const override;
   };

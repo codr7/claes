@@ -7,18 +7,18 @@ namespace claes::forms {
   struct Literal: Form::Imp {
     Cell value;
     
-    Literal(const Location &location, const Cell &value): 
-      Form::Imp(location), value(value) {}
+    Literal(const Loc &loc, const Cell &value): 
+      Form::Imp(loc), value(value) {}
 
     virtual E emit(VM &vm, Env &env, Forms &arguments) const override {
-      return value.emit_literal(vm, env, arguments, location);
+      return value.emit_literal(vm, env, arguments, loc);
     }
 
     virtual E emit_call(VM &vm, 
 			Env &env, 
 			const Forms &arguments, 
-			const Location &location) const override {
-      return value.emit_call(vm, env, arguments, location);
+			const Loc &loc) const override {
+      return value.emit_call(vm, env, arguments, loc);
     }
   };
 }

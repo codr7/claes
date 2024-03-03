@@ -23,13 +23,13 @@ namespace claes {
       if (!getline(in, line)) { break; }
        
       if (line.empty()) {
-	Location location("repl", 1, 1);
+	Loc loc("repl", 1, 1);
 	PC start_pc = emit_pc();
 	Forms fs;
 	buffer.seekp(0);
 	
 
-	if (auto [_, e] = read_forms(buffer, fs, location); e) {
+	if (auto [_, e] = read_forms(buffer, fs, loc); e) {
 	  out << *e << endl;
 	  buffer.str("");
 	  buffer.clear();

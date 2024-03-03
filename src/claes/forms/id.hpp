@@ -5,20 +5,20 @@
 
 namespace claes::forms {
   struct Id: Form::Imp {
-    static Form make(const Location &location, const string &name) {
-      return Form::make<Id>(location, name);
+    static Form make(const Loc &loc, const string &name) {
+      return Form::make<Id>(loc, name);
     };
 
     string name;
-    Id(const Location &location, const string &name): 
-      Form::Imp(location), name(name) {}
+    Id(const Loc &loc, const string &name): 
+      Form::Imp(loc), name(name) {}
     
     virtual E emit(VM &vm, Env &env, Forms &arguments) const override;
 
     virtual E emit_call(VM &vm, 
 			Env &env, 
 			const Forms &arguments, 
-			const Location &location) const override;
+			const Loc &loc) const override;
   };
 }
 

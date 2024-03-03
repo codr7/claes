@@ -54,7 +54,7 @@ namespace claes {
   CALL_INDIRECT: {
       const auto target = stack.pop();
       pc++;
-      target.call(*this, stack, op.as<ops::CallIndirect>().location);
+      target.call(*this, stack, op.as<ops::CallIndirect>().loc);
     }
     
     DISPATCH(pc);
@@ -234,7 +234,7 @@ namespace claes {
     }
 
   TODO: {
-      return Error(op.as<ops::Todo>().location, "Todo");
+      return Error(op.as<ops::Todo>().loc, "Todo");
     }
 
   TRACE: {

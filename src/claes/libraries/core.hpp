@@ -24,7 +24,7 @@ namespace claes::libraries {
 		    VM &vm, 
 		    Env &env, 
 		    const Forms &arguments, 
-		    const Location &location) {
+		    const Loc &loc) {
 	vm.trace = !vm.trace;
 	vm.emit<ops::Push>(Cell(types::Bit::get(), vm.trace));
 	return nullopt;

@@ -22,7 +22,7 @@ namespace claes {
       virtual E call(const Cell &target, 
 		     VM &vm, 
 		     Stack &stack, 
-		     const Location &location) const;
+		     const Loc &loc) const;
 
       virtual Cell clone(const Cell &value) const;
       virtual void dump(const Cell &value, ostream &out) const = 0;      
@@ -31,23 +31,23 @@ namespace claes {
 			  VM &vm, 
 			  Env &env, 
 			  const Forms &arguments,
-			  const Location &location) const {
-	return Error(location, "Invalid call target: ", value);
+			  const Loc &loc) const {
+	return Error(loc, "Invalid call target: ", value);
       }
 
       virtual E emit_id(const Cell &value,
 			VM &vm, 
 			Env &env, 
 			Forms &arguments,
-			const Location &location) const {
-	return emit_literal(value, vm, env, arguments, location);
+			const Loc &loc) const {
+	return emit_literal(value, vm, env, arguments, loc);
       }
 
       virtual E emit_literal(const Cell &value,
 			     VM &vm, 
 			     Env &env, 
 			     Forms &arguments,
-			     const Location &location) const;
+			     const Loc &loc) const;
 
       virtual bool eq(const Cell &left, const Cell &right) const = 0;
 
@@ -64,8 +64,8 @@ namespace claes {
     E call(const Cell &target, 
 	   VM &vm, 
 	   Stack &stack, 
-	   const Location &location) const {
-      return imp->call(target, vm, stack, location);
+	   const Loc &loc) const {
+      return imp->call(target, vm, stack, loc);
     }
 
     Cell clone(const Cell &value) const;
@@ -78,24 +78,24 @@ namespace claes {
 		VM &vm, 
 		Env &env, 
 		const Forms &arguments,
-		const Location &location) const {
-      return imp->emit_call(value, vm, env, arguments, location);
+		const Loc &loc) const {
+      return imp->emit_call(value, vm, env, arguments, loc);
     }
 
     E emit_id(const Cell &value,
 	      VM &vm, 
 	      Env &env, 
 	      Forms &arguments,
-	      const Location &location) const {
-      return imp->emit_id(value, vm, env, arguments, location);
+	      const Loc &loc) const {
+      return imp->emit_id(value, vm, env, arguments, loc);
     }
 
     E emit_literal(const Cell &value,
 		   VM &vm, 
 		   Env &env, 
 		   Forms &arguments,
-		   const Location &location) const {
-      return imp->emit_literal(value, vm, env, arguments, location);
+		   const Loc &loc) const {
+      return imp->emit_literal(value, vm, env, arguments, loc);
     }
     
     bool eq(const Cell &left, const Cell &right) const {

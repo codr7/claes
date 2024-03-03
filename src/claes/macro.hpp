@@ -15,7 +15,7 @@ namespace claes {
 			     VM &vm, 
 			     Env &env, 
 			     const Forms &arguments,
-			     const Location &location)>;
+			     const Loc &loc)>;
 
     struct Imp {
       Body body;
@@ -32,8 +32,8 @@ namespace claes {
     E call(VM &vm, 
 	   Env &env, 
 	   const Forms &arguments,
-	   const Location &location) {
-      return imp->body(*this, vm, env, arguments, location);
+	   const Loc &loc) {
+      return imp->body(*this, vm, env, arguments, loc);
     }
   };
 

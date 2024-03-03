@@ -9,13 +9,13 @@ namespace claes::ops {
   using namespace claes;
   
   struct Todo: Op::Imp {
-    Location location;
+    Loc loc;
 
-    Todo(const Location &location):
-      Op::Imp(Op::Code::TODO), location(location) {}
+    Todo(const Loc &loc):
+      Op::Imp(Op::Code::TODO), loc(loc) {}
 
     virtual void trace(ostream &out) const override {
-      out << "Todo location: " << location;
+      out << "Todo loc: " << loc;
     }
   };
 }

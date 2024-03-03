@@ -6,7 +6,7 @@ namespace claes {
   E Form::Imp::emit_call(VM &vm, 
 			 Env &env, 
 			 const Forms &arguments, 
-			 const Location &location) const {
+			 const Loc &loc) const {
     Forms as(arguments);
 
     if (auto e = as.emit(vm, env); e) {
@@ -17,7 +17,7 @@ namespace claes {
       return e;
     }
 	
-    vm.emit<ops::CallIndirect>(location);
+    vm.emit<ops::CallIndirect>(loc);
     return nullopt;
   }
 }
