@@ -15,7 +15,7 @@ namespace claes::types {
     String(const string &name): Type::Imp(name) {}
 
     virtual void dump(const Cell &value, ostream &out) const override {
-      out << value.as(type);
+      out << '"' << value.as(type) << '"';
     }
     
     virtual bool eq(const Cell &left, const Cell &right) const override {
