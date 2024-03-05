@@ -8,7 +8,7 @@
 
 #include "claes/cell.hpp"
 #include "claes/macro.hpp"
-#include "claes/types/register.hpp"
+#include "claes/types/reg.hpp"
 
 namespace claes {
   using namespace std;

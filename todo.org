@@ -1,4 +1,4 @@
-* rename register to reg
+* rename libraries to libs
 
 * add check macro
 * add load macro

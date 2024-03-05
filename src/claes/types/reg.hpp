@@ -1,23 +1,23 @@
-#ifndef CLAES_TYPES_REGISTER_HPP
-#define CLAES_TYPES_REGISTER_HPP
+#ifndef CLAES_TYPES_REG_HPP
+#define CLAES_TYPES_REG_HPP
 
 #include <cstdint>
 #include <ostream>
-#include "claes/register.hpp"
+#include "claes/reg.hpp"
 #include "claes/type.hpp"
 
 namespace claes::types {
   using namespace claes;
 
-  struct Register: Type::Imp {
-    using Value = claes::Register;
+  struct Reg: Type::Imp {
+    using Value = claes::Reg;
 
-    static TType<Register> get() {
-      static TType<Register> t("Register");
+    static TType<Reg> get() {
+      static TType<Reg> t("Reg");
       return t;
     }
     
-    Register(const string &name): Type::Imp(name) {}
+    Reg(const string &name): Type::Imp(name) {}
 
     virtual void dump(const Cell &value, ostream &out) const override;
 

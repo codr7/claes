@@ -9,12 +9,12 @@
 #include "claes/ops/begin_frame.hpp"
 #include "claes/ops/end_frame.hpp"
 #include "claes/ops/push.hpp"
-#include "claes/ops/push_register.hpp"
+#include "claes/ops/push_reg.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/i64.hpp"
 #include "claes/types/meta.hpp"
 #include "claes/types/macro.hpp"
-#include "claes/types/register.hpp"
+#include "claes/types/reg.hpp"
 #include "claes/types/string.hpp"
 #include "claes/types/vector.hpp"
 #include "claes/vm.hpp"
@@ -26,7 +26,7 @@ namespace claes::libraries {
       bind_type(types::I64::get());
       bind_type(types::Meta::get());
       bind_type(types::Macro::get());
-      bind_type(types::Register::get());
+      bind_type(types::Reg::get());
       bind_type(types::String::get());
       bind_type(types::Vector::get());
 
@@ -50,7 +50,7 @@ namespace claes::libraries {
 		     const auto &value_form = *(++bf);
 
 		     body_env.bind(name_form.as<forms::Id>().name, 
-				   Cell(types::Register::get(), i++));
+				   Cell(types::Reg::get(), i++));
 
 		     Forms value_args;
 
@@ -58,18 +58,18 @@ namespace claes::libraries {
 		       return e;
 		     }
 
-		     vm.emit<ops::PushRegister>();
+		     vm.emit<ops::PushReg>();
 		   }
  		 
 		   for (auto p = body_env.imp->parent; p; p = p->parent) {
 		     for (auto b: p->bindings) {
-		       if (b.second.type == types::Register::get()) {
-			 auto v = b.second.as(types::Register::get());
+		       if (b.second.type == types::Reg::get()) {
+			 auto v = b.second.as(types::Reg::get());
 			 v.frame_offset++;
 
 			 if (body_env.imp->bindings.find(b.first) == 
 			     body_env.imp->bindings.end()) {
-			   body_env.bind(b.first, Cell(types::Register::get(), v));
+			   body_env.bind(b.first, Cell(types::Reg::get(), v));
 			 }
 		       }
 		     }

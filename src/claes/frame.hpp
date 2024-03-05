@@ -6,7 +6,7 @@
 
 namespace claes {
   struct Frame {
-    vector<Cell> registers;
+    vector<Cell> regs;
   };
 }
 

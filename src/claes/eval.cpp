@@ -4,7 +4,7 @@
 #include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
 #include "claes/ops/call_indirect.hpp"
-#include "claes/ops/get_register.hpp"
+#include "claes/ops/get_reg.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
@@ -24,10 +24,10 @@ namespace claes {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
       &&CALL_INDIRECT,
       &&END_FRAME,
-      &&GET_REGISTER,
+      &&GET_REG,
       &&MAKE_VECTOR,
       &&PUSH,
-      &&PUSH_ITEM, &&PUSH_REGISTER,
+      &&PUSH_ITEM, &&PUSH_REG,
       &&STOP,
       &&TODO, &&TRACE};
 
@@ -70,8 +70,8 @@ namespace claes {
       DISPATCH(pc+1);
     }
 
-  GET_REGISTER: {
-      stack.push(get_register(op.as<ops::GetRegister>().reg));
+  GET_REG: {
+      stack.push(get_reg(op.as<ops::GetReg>().reg));
       DISPATCH(pc+1);
     }    
 
@@ -92,8 +92,8 @@ namespace claes {
     
     DISPATCH(pc+1);
 
-  PUSH_REGISTER: {
-      push_register(stack.pop());
+  PUSH_REG: {
+      push_reg(stack.pop());
       DISPATCH(pc+1);
     }
 

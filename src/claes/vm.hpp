@@ -4,12 +4,12 @@
 #include "claes/common.hpp"
 #include "claes/frame.hpp"
 #include "claes/op.hpp"
-#include "claes/register.hpp"
+#include "claes/reg.hpp"
 #include "claes/ops/trace.hpp"
 
 namespace claes {
   struct Error;
-  struct Register;
+  struct Reg;
   struct Stack;
 
   struct VM {
@@ -48,20 +48,20 @@ namespace claes {
 
     E eval(const PC start_pc, Stack &stack);
 
-    const Cell &get_register(const Register &reg) const {
+    const Cell &get_reg(const Reg &reg) const {
       const auto &f = *next(frames.rbegin(), reg.frame_offset);
-      return f.registers[reg.index];
+      return f.regs[reg.index];
     }
 
-    Cell &get_register(const Register &reg) {
+    Cell &get_reg(const Reg &reg) {
       auto &f = *next(frames.rbegin(), reg.frame_offset);
-      return f.registers[reg.index];
+      return f.regs[reg.index];
     }
   
     void repl(istream &in, ostream &out);
 
-    void push_register(const Cell &value) {
-      frames.back().registers.push_back(value);
+    void push_reg(const Cell &value) {
+      frames.back().regs.push_back(value);
     }
   };
 }
