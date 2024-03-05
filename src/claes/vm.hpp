@@ -2,6 +2,7 @@
 #define CLAES_VM_HPP
 
 #include "claes/common.hpp"
+#include "claes/frame.hpp"
 #include "claes/op.hpp"
 #include "claes/ops/trace.hpp"
 
@@ -10,9 +11,14 @@ namespace claes {
   struct Stack;
 
   struct VM {
-    bool trace = false;
-    PC pc = 0;
+    vector<Frame> frames;
     vector<Op> ops;
+    PC pc = 0;
+    bool trace = false;
+
+    void begin_frame() {
+      frames.emplace_back();
+    }
 
     template <typename T, typename...Args>
     PC emit_no_trace(Args&&...args) {      
@@ -34,9 +40,21 @@ namespace claes {
       return ops.size();
     }
 
+    void end_frame() {
+      frames.pop_back();
+    }
+
     E eval(const PC start_pc, Stack &stack);
+
+    const Cell &get_register(const int index) {
+      return frames.back().registers[index];
+    }
   
     void repl(istream &in, ostream &out);
+
+    void push_register(const Cell &value) {
+      frames.back().registers.push_back(value);
+    }
   };
 }
 

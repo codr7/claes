@@ -18,6 +18,7 @@ namespace claes {
   ReadT read_i64(istream &in, Forms &out, Loc &loc);
   ReadT read_id(istream &in, Forms &out, Loc &loc);
   ReadT read_string(istream &in, Forms &out, Loc &loc);
+  ReadT read_vector(istream &in, Forms &out, Loc &loc);
   ReadT read_ws(istream &in, Forms &out, Loc &loc);
 
   pair<int, E> read_forms(istream &in, Forms &out, Loc &loc);

@@ -32,7 +32,7 @@ namespace claes {
 	  return found->second;
 	}
 
-	return nullopt;
+	return parent ? parent->find(name) : nullopt;
       }
 
       void import_from(const Imp &source) {

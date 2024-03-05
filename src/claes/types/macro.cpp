@@ -11,7 +11,7 @@ namespace claes::types {
 		     Env &env, 
 		     const Forms &arguments,
 		     const Loc &loc) const {
-    return value.as(get()).call(vm, env, arguments, loc);
+    return const_cast<Value &>(value.as(get())).call(vm, env, arguments, loc);
   }
   
   bool Macro::eq(const Cell &left, const Cell &right) const {

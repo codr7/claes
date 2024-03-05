@@ -5,7 +5,13 @@ namespace claes {
   using namespace std;
 
   struct Op {
-    enum struct Code {BENCHMARK, BRANCH, CALL_INDIRECT, PUSH, STOP, TODO, TRACE};
+    enum struct Code {BEGIN_FRAME, BENCHMARK, BRANCH, 
+		      CALL_INDIRECT,
+		      END_FRAME,
+		      MAKE_VECTOR,
+		      PUSH, PUSH_ITEM, PUSH_REGISTER, 
+		      STOP, 
+		      TODO, TRACE};
 
     struct Imp {
       Code code;

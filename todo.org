@@ -1,9 +1,9 @@
 * add let macro
-** add frames
-** add variable type
-** increase frame offset for all variables on add frame
-
-* add meta type
-** bind types
+** add check macro
+** add load macro
+** add test
+** increase frame offset for all variables in env on begin frame
+** add nested test
+** commit
 
 * notcurses?

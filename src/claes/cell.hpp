@@ -32,8 +32,13 @@ namespace claes {
     }
 
     template <typename T>
-    typename T::Value as(const TType<T> &type) const { 
-      return any_cast<typename T::Value>(value); 
+    typename T::Value &as(const TType<T> &type) { 
+      return any_cast<typename T::Value &>(value); 
+    }
+
+    template <typename T>
+    const typename T::Value &as(const TType<T> &type) const { 
+      return any_cast<const typename T::Value &>(value); 
     }
     
     E call(VM &vm, Stack &stack, const Loc &loc) const {

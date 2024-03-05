@@ -13,6 +13,10 @@ namespace claes {
       return items.empty();
     }
 
+    Cell &peek() {
+      return items.back();
+    }
+
     const Cell &peek() const {
       return items.back();
     }
