@@ -1,11 +1,14 @@
 #ifndef CLAES_ENV_HPP
 #define CLAES_ENV_HPP
 
+#include <iostream>
+
 #include <map>
 #include <string>
 
 #include "claes/cell.hpp"
 #include "claes/macro.hpp"
+#include "claes/types/register.hpp"
 
 namespace claes {
   using namespace std;
@@ -14,10 +17,11 @@ namespace claes {
 
   struct Env {
     struct Imp {
-      shared_ptr<Imp> parent;
+      Imp *parent;
       map<string, Cell> bindings;
-      
-      Imp(shared_ptr<Imp> parent): parent(parent) {}
+      int ref_count = 1;
+
+      Imp(Imp *parent): parent(parent) {}
 
       void bind(const string &name, const Cell &value) {
 	if (auto found = bindings.find(name); found != bindings.end()) {
@@ -25,6 +29,12 @@ namespace claes {
 	}
 
 	bindings.insert(make_pair(name, value));
+      }
+
+      void deref() {
+	if (--ref_count == 0) {
+	  delete this;
+	}
       }
 
       optional<Cell> find(const string &name) const {
@@ -46,10 +56,24 @@ namespace claes {
       }
     };
 
-    shared_ptr<Imp> imp;
+    Imp *imp = nullptr;
 
-    Env(optional<Env> parent = nullopt): 
-      imp(make_shared<Imp>(parent ? parent->imp : nullptr)) {}
+    Env(Imp *parent = nullptr): imp(new Imp(parent)) {}
+
+    Env(const Env &env): imp(env.imp) {
+      imp->ref_count++;
+    }
+
+    ~Env() {
+      imp->deref();
+    }
+
+    const Env &operator=(const Env &env) {
+      imp->deref();
+      imp = env.imp;
+      imp->ref_count++;
+      return *this;
+    }
 
     void bind(const string &name, const Cell &value) {
       imp->bind(name, value);

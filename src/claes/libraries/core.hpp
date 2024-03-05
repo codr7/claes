@@ -1,6 +1,8 @@
 #ifndef CLAES_LIBRARIES_CORE_HPP
 #define CLAES_LIBRARIES_CORE_HPP
 
+#include <iostream>
+
 #include "claes/env.hpp"
 #include "claes/forms/id.hpp"
 #include "claes/forms/vector.hpp"
@@ -38,6 +40,7 @@ namespace claes::libraries {
 		   const auto &binding_forms = 
 		     my_arguments.pop().as<forms::Vector>().items;
 		   vm.emit<ops::BeginFrame>();
+		   Env body_env(env.imp);
 		   auto i = 0;
 
 		   for (auto bf = binding_forms.items.begin(); 
@@ -46,19 +49,33 @@ namespace claes::libraries {
 		     const auto &name_form = *bf;
 		     const auto &value_form = *(++bf);
 
-		     env.bind(name_form.as<forms::Id>().name, 
-			      Cell(types::Register::get(), i++));
+		     body_env.bind(name_form.as<forms::Id>().name, 
+				   Cell(types::Register::get(), i++));
 
 		     Forms value_args;
 
-		     if (auto e = value_form.emit(vm, env, value_args); e) {
+		     if (auto e = value_form.emit(vm, body_env, value_args); e) {
 		       return e;
 		     }
 
 		     vm.emit<ops::PushRegister>();
 		   }
- 
-		   if (auto e = my_arguments.emit(vm, env); e) {
+ 		 
+		   for (auto p = body_env.imp->parent; p; p = p->parent) {
+		     for (auto b: p->bindings) {
+		       if (b.second.type == types::Register::get()) {
+			 auto v = b.second.as(types::Register::get());
+			 v.frame_offset++;
+
+			 if (body_env.imp->bindings.find(b.first) == 
+			     body_env.imp->bindings.end()) {
+			   body_env.bind(b.first, Cell(types::Register::get(), v));
+			 }
+		       }
+		     }
+		   }
+
+		   if (auto e = my_arguments.emit(vm, body_env); e) {
 		     return e;
 		   }
 
