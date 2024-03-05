@@ -1,5 +1,5 @@
-#ifndef CLAES_LIBRARIES_CORE_HPP
-#define CLAES_LIBRARIES_CORE_HPP
+#ifndef CLAES_LIBS_CORE_HPP
+#define CLAES_LIBS_CORE_HPP
 
 #include <iostream>
 
@@ -14,18 +14,20 @@
 #include "claes/types/i64.hpp"
 #include "claes/types/meta.hpp"
 #include "claes/types/macro.hpp"
+#include "claes/types/pair.hpp"
 #include "claes/types/reg.hpp"
 #include "claes/types/string.hpp"
 #include "claes/types/vector.hpp"
 #include "claes/vm.hpp"
 
-namespace claes::libraries {
+namespace claes::libs {
   struct Core: Env {
     Core(): Env() {
       bind_type(types::Bit::get());
       bind_type(types::I64::get());
       bind_type(types::Meta::get());
       bind_type(types::Macro::get());
+      bind_type(types::Pair::get());
       bind_type(types::Reg::get());
       bind_type(types::String::get());
       bind_type(types::Vector::get());

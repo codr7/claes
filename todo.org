@@ -1,5 +1,3 @@
-* rename libraries to libs
-
 * add check macro
 * add load macro
 
@@ -9,9 +7,5 @@
 (let [x 1] (let [x 2]) x)
 (let [x 1] (let [] x))
 
-* add pairs
-** add type
-** add reader
-*** keep reading while ':'
-
-* notcurses?
+1:2
+1:2:3

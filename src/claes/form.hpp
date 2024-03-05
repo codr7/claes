@@ -74,6 +74,12 @@ namespace claes {
       items.pop_front();
       return f;
     }
+
+    Form pop_back() {
+      auto f = peek();
+      items.pop_back();
+      return f;
+    }
     
     template <typename T, typename...Args>
     Form push(const Loc loc, Args&&...args) {

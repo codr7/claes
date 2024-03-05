@@ -2,7 +2,7 @@
 
 #include "claes/env.hpp"
 #include "claes/form.hpp"
-#include "claes/libraries/core.hpp"
+#include "claes/libs/core.hpp"
 #include "claes/read.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/stack.hpp"
@@ -13,7 +13,7 @@ namespace claes {
     stringstream buffer;
     Stack stack;
     Env env;
-    libraries::Core core;
+    libs::Core core;
     env.import_from(core);
 
     for (;;) {

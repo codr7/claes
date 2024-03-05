@@ -10,6 +10,7 @@
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
 #include "claes/timer.hpp"
+#include "claes/types/pair.hpp"
 #include "claes/types/vector.hpp"
 #include "claes/vm.hpp"
 
@@ -25,7 +26,7 @@ namespace claes {
       &&CALL_INDIRECT,
       &&END_FRAME,
       &&GET_REG,
-      &&MAKE_VECTOR,
+      &&MAKE_PAIR, &&MAKE_VECTOR,
       &&PUSH,
       &&PUSH_ITEM, &&PUSH_REG,
       &&STOP,
@@ -74,6 +75,14 @@ namespace claes {
       stack.push(get_reg(op.as<ops::GetReg>().reg));
       DISPATCH(pc+1);
     }    
+
+  MAKE_PAIR: {
+      auto right = stack.pop();
+      auto left = stack.pop();
+      stack.push(types::Pair::get(), make_pair(left, right));
+    }
+    
+    DISPATCH(pc+1);
 
   MAKE_VECTOR: {
       stack.push(types::Vector::get(), types::Vector::Value());

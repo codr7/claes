@@ -9,6 +9,7 @@ namespace claes {
 		      CALL_INDIRECT,
 		      END_FRAME,
 		      GET_REG,
+		      MAKE_PAIR,
 		      MAKE_VECTOR,
 		      PUSH, PUSH_ITEM, PUSH_REG, 
 		      STOP, 

@@ -2,6 +2,7 @@
 
 #include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
+#include "claes/forms/pair.hpp"
 #include "claes/forms/literal.hpp"
 #include "claes/forms/vector.hpp"
 #include "claes/read.hpp"
@@ -60,6 +61,7 @@ namespace claes {
       read_ws, 
       read_i64, 
       read_string,
+      read_pair,
       read_vector,
       read_call,
       read_id
@@ -116,7 +118,7 @@ namespace claes {
     char c = 0;
     
     while (in.get(c)) {
-      if (!isgraph(c) ||  c == '(' || c == ')' || c == '[' || c == ']') {
+      if (!isgraph(c) ||  c == '(' || c == ')' || c == '[' || c == ']' || c == ':') {
 	in.unget();
 	break;
       }
@@ -130,6 +132,46 @@ namespace claes {
     }
     
     out.push<forms::Id>(form_loc, buffer.str());
+    return ReadT(true, nullopt);
+  }
+
+  ReadT read_pair(istream &in, Forms &out, Loc &loc) {
+    char c = 0;
+
+    if (!in.get(c)) { 
+      return ReadT(false, nullopt); 
+    }
+
+    if (c != ':') {
+      in.unget();
+      return ReadT(false, nullopt);
+    }
+
+    const auto form_loc = loc;
+    loc.column++;
+    auto left = out.pop_back();
+    read_ws(in, out, loc);
+
+    if (auto ok = read_form(in, out, loc); ok.second) {
+      return ok;
+    } else if (!ok.first) {
+      return ReadT(false, Error(loc, "Missing right part of pair"));
+    }
+
+    read_ws(in, out, loc);
+
+    if (in.get(c)) { 
+      in.unget();
+
+      if (c == ':') {
+	if (auto ok = read_pair(in, out, loc); ok.second) {
+	  return make_pair(false, ok.second);
+	}
+      }
+    }
+
+    auto right = out.pop_back();
+    out.push<forms::Pair>(form_loc, left, right);
     return ReadT(true, nullopt);
   }
 
