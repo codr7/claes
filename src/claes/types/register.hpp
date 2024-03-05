@@ -24,7 +24,7 @@ namespace claes::types {
     virtual E emit_id(const Cell &value,
 		      VM &vm, 
 		      Env &env, 
-		      Forms &arguments,
+		      Forms &args,
 		      const Loc &loc) const override;
     
     virtual bool eq(const Cell &left, const Cell &right) const override;

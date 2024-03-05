@@ -30,7 +30,7 @@ namespace claes {
       virtual E emit_call(const Cell &value,
 			  VM &vm, 
 			  Env &env, 
-			  const Forms &arguments,
+			  const Forms &args,
 			  const Loc &loc) const {
 	return Error(loc, "Invalid call target: ", value);
       }
@@ -38,15 +38,15 @@ namespace claes {
       virtual E emit_id(const Cell &value,
 			VM &vm, 
 			Env &env, 
-			Forms &arguments,
+			Forms &args,
 			const Loc &loc) const {
-	return emit_literal(value, vm, env, arguments, loc);
+	return emit_literal(value, vm, env, args, loc);
       }
 
       virtual E emit_literal(const Cell &value,
 			     VM &vm, 
 			     Env &env, 
-			     Forms &arguments,
+			     Forms &args,
 			     const Loc &loc) const;
 
       virtual bool eq(const Cell &left, const Cell &right) const = 0;
@@ -77,25 +77,25 @@ namespace claes {
     E emit_call(const Cell &value,
 		VM &vm, 
 		Env &env, 
-		const Forms &arguments,
+		const Forms &args,
 		const Loc &loc) const {
-      return imp->emit_call(value, vm, env, arguments, loc);
+      return imp->emit_call(value, vm, env, args, loc);
     }
 
     E emit_id(const Cell &value,
 	      VM &vm, 
 	      Env &env, 
-	      Forms &arguments,
+	      Forms &args,
 	      const Loc &loc) const {
-      return imp->emit_id(value, vm, env, arguments, loc);
+      return imp->emit_id(value, vm, env, args, loc);
     }
 
     E emit_literal(const Cell &value,
 		   VM &vm, 
 		   Env &env, 
-		   Forms &arguments,
+		   Forms &args,
 		   const Loc &loc) const {
-      return imp->emit_literal(value, vm, env, arguments, loc);
+      return imp->emit_literal(value, vm, env, args, loc);
     }
     
     bool eq(const Cell &left, const Cell &right) const {

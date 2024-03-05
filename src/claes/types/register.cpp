@@ -11,7 +11,7 @@ namespace claes::types {
   E Register::emit_id(const Cell &value,
 		      VM &vm, 
 		      Env &env, 
-		      Forms &arguments,
+		      Forms &args,
 		      const Loc &loc) const {
     vm.emit<ops::GetRegister>(value.as(get()));
     return nullopt;

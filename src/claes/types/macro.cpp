@@ -9,9 +9,9 @@ namespace claes::types {
   E Macro::emit_call(const Cell &value,
 		     VM &vm, 
 		     Env &env, 
-		     const Forms &arguments,
+		     const Forms &args,
 		     const Loc &loc) const {
-    return const_cast<Value &>(value.as(get())).call(vm, env, arguments, loc);
+    return const_cast<Value &>(value.as(get())).call(vm, env, args, loc);
   }
   
   bool Macro::eq(const Cell &left, const Cell &right) const {

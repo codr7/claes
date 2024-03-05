@@ -23,7 +23,7 @@ namespace claes {
 
     const auto form_loc = loc;
     loc.column++;
-    Forms arguments;
+    Forms args;
     
     for (;;) {
       read_ws(in, out, loc);
@@ -38,7 +38,7 @@ namespace claes {
 	break;
       }
       
-      if (auto [f, e] = read_form(in, arguments, loc); e) { 
+      if (auto [f, e] = read_form(in, args, loc); e) { 
 	return ReadT(false, e); 
       } else if (!f) {
 	break;
@@ -50,8 +50,8 @@ namespace claes {
     }
 
     loc.column++;
-    const auto target = arguments.pop();
-    out.push<forms::Call>(form_loc, target, arguments);
+    const auto target = args.pop();
+    out.push<forms::Call>(form_loc, target, args);
     return ReadT(true, nullopt);
   }
 

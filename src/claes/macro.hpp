@@ -14,7 +14,7 @@ namespace claes {
     using Body = function<E (Macro &macro,
 			     VM &vm, 
 			     Env &env, 
-			     const Forms &arguments,
+			     const Forms &args,
 			     const Loc &loc)>;
 
     struct Imp {
@@ -31,9 +31,9 @@ namespace claes {
 
     E call(VM &vm, 
 	   Env &env, 
-	   const Forms &arguments,
+	   const Forms &args,
 	   const Loc &loc) {
-      return imp->body(*this, vm, env, arguments, loc);
+      return imp->body(*this, vm, env, args, loc);
     }
   };
 

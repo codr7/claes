@@ -5,9 +5,9 @@
 namespace claes {
   E Form::Imp::emit_call(VM &vm, 
 			 Env &env, 
-			 const Forms &arguments, 
+			 const Forms &args, 
 			 const Loc &loc) const {
-    Forms as(arguments);
+    Forms as(args);
 
     if (auto e = as.emit(vm, env); e) {
       return e;

@@ -34,11 +34,11 @@ namespace claes::libraries {
 		 [](Macro self, 
 		    VM &vm, 
 		    Env &env, 
-		    const Forms &arguments, 
+		    const Forms &args, 
 		    const Loc &loc) -> E {
-		   Forms my_arguments(arguments);
+		   Forms my_args(args);
 		   const auto &binding_forms = 
-		     my_arguments.pop().as<forms::Vector>().items;
+		     my_args.pop().as<forms::Vector>().items;
 		   vm.emit<ops::BeginFrame>();
 		   Env body_env(env.imp);
 		   auto i = 0;
@@ -75,7 +75,7 @@ namespace claes::libraries {
 		     }
 		   }
 
-		   if (auto e = my_arguments.emit(vm, body_env); e) {
+		   if (auto e = my_args.emit(vm, body_env); e) {
 		     return e;
 		   }
 
@@ -87,7 +87,7 @@ namespace claes::libraries {
 		 [](Macro self, 
 		    VM &vm, 
 		    Env &env, 
-		    const Forms &arguments, 
+		    const Forms &args, 
 		    const Loc &loc) {
 	vm.trace = !vm.trace;
 	vm.emit<ops::Push>(Cell(types::Bit::get(), vm.trace));

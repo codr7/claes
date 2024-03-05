@@ -20,11 +20,11 @@ namespace claes {
       Loc loc;
       Imp(const Loc &loc): loc(loc) {}
       virtual ~Imp() {}
-      virtual E emit(VM &vm, Env &env, Forms &arguments) const = 0;
+      virtual E emit(VM &vm, Env &env, Forms &args) const = 0;
 
       virtual E emit_call(VM &vm, 
 			  Env &env, 
-			  const Forms &arguments, 
+			  const Forms &args, 
 			  const Loc &loc) const;
     };
 
@@ -36,15 +36,15 @@ namespace claes {
       return *static_cast<const T *>(imp.get()); 
     }
 
-    E emit(VM &vm, Env &env, Forms &arguments) const {
-      return imp->emit(vm, env, arguments);
+    E emit(VM &vm, Env &env, Forms &args) const {
+      return imp->emit(vm, env, args);
     }
 
     E emit_call(VM &vm, 
 		Env &env, 
-		const Forms &arguments, 
+		const Forms &args, 
 		const Loc &loc) const {
-      return imp->emit_call(vm, env, arguments, loc);
+      return imp->emit_call(vm, env, args, loc);
     }
   };
 

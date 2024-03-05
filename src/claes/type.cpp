@@ -22,7 +22,7 @@ namespace claes {
   E Type::Imp::emit_literal(const Cell &value,
 			    VM &vm, 
 			    Env &env, 
-			    Forms &arguments,
+			    Forms &args,
 			    const Loc &loc) const {
     vm.emit<ops::Push>(value);
     return nullopt;

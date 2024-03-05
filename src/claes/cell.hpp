@@ -55,23 +55,23 @@ namespace claes {
 
     E emit_call(VM &vm, 
 		Env &env, 
-		const Forms &arguments,
+		const Forms &args,
 		const Loc &loc) const {
-      return type.emit_call(*this, vm, env, arguments, loc);
+      return type.emit_call(*this, vm, env, args, loc);
     }
 
     E emit_id(VM &vm, 
 	      Env &env, 
-	      Forms &arguments,
+	      Forms &args,
 	      const Loc &loc) const {
-      return type.emit_id(*this, vm, env, arguments, loc);
+      return type.emit_id(*this, vm, env, args, loc);
     }
 
     E emit_literal(VM &vm, 
 		   Env &env, 
-		   Forms &arguments,
+		   Forms &args,
 		   const Loc &loc) const {
-      return type.emit_literal(*this, vm, env, arguments, loc);
+      return type.emit_literal(*this, vm, env, args, loc);
     }
 
     bool is_true() const { 
