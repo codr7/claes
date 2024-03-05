@@ -4,6 +4,7 @@
 #include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
 #include "claes/ops/call_indirect.hpp"
+#include "claes/ops/get_register.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
@@ -23,6 +24,7 @@ namespace claes {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
       &&CALL_INDIRECT,
       &&END_FRAME,
+      &&GET_REGISTER,
       &&MAKE_VECTOR,
       &&PUSH,
       &&PUSH_ITEM, &&PUSH_REGISTER,
@@ -67,6 +69,11 @@ namespace claes {
       end_frame();
       DISPATCH(pc+1);
     }
+
+  GET_REGISTER: {
+      stack.push(get_register(op.as<ops::GetRegister>().reg));
+      DISPATCH(pc+1);
+    }    
 
   MAKE_VECTOR: {
       stack.push(types::Vector::get(), types::Vector::Value());

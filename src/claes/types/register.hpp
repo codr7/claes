@@ -20,6 +20,12 @@ namespace claes::types {
     Register(const string &name): Type::Imp(name) {}
 
     virtual void dump(const Cell &value, ostream &out) const override;
+
+    virtual E emit_id(const Cell &value,
+		      VM &vm, 
+		      Env &env, 
+		      Forms &arguments,
+		      const Loc &loc) const override;
     
     virtual bool eq(const Cell &left, const Cell &right) const override;
   };

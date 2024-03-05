@@ -8,6 +8,7 @@ namespace claes {
     enum struct Code {BEGIN_FRAME, BENCHMARK, BRANCH, 
 		      CALL_INDIRECT,
 		      END_FRAME,
+		      GET_REGISTER,
 		      MAKE_VECTOR,
 		      PUSH, PUSH_ITEM, PUSH_REGISTER, 
 		      STOP, 

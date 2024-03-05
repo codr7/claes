@@ -34,8 +34,9 @@ namespace claes::libraries {
 		    Env &env, 
 		    const Forms &arguments, 
 		    const Loc &loc) -> E {
-		   Forms args(arguments);
-		   const auto &binding_forms = args.pop().as<forms::Vector>().items;
+		   Forms my_arguments(arguments);
+		   const auto &binding_forms = 
+		     my_arguments.pop().as<forms::Vector>().items;
 		   vm.emit<ops::BeginFrame>();
 		   auto i = 0;
 
@@ -43,11 +44,10 @@ namespace claes::libraries {
 			bf != binding_forms.items.end(); 
 			bf++) {
 		     const auto &name_form = *bf;
-		     bf++;
-		     const auto &value_form = *bf;
+		     const auto &value_form = *(++bf);
 
 		     env.bind(name_form.as<forms::Id>().name, 
-			      Cell(types::Register::get(), i));
+			      Cell(types::Register::get(), i++));
 
 		     Forms value_args;
 
@@ -58,6 +58,10 @@ namespace claes::libraries {
 		     vm.emit<ops::PushRegister>();
 		   }
  
+		   if (auto e = my_arguments.emit(vm, env); e) {
+		     return e;
+		   }
+
 		   vm.emit<ops::EndFrame>();
 		   return nullopt;
       });

@@ -1,9 +1,24 @@
-* add let macro
-** add check macro
-** add load macro
-** add test
-** increase frame offset for all variables in env on begin frame
+* finish let macro
 ** add nested test
+*** increase frame offset for all variables in env on begin frame
 ** commit
+
+* add check macro
+* add load macro
+
+(let [x 42] x)
+(let [x 1 y 2 z 3] y)
+(let [x 42 y x] y)
+(let [x 1] (let [x 2]) x)
+
+(let [x 1] (let [] x))
+
+* rename arguments to args
+* rename register to reg
+
+* add pairs
+** add type
+** add reader
+*** keep reading while ':'
 
 * notcurses?
