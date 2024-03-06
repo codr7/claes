@@ -4,6 +4,7 @@
 #include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
 #include "claes/ops/call_indirect.hpp"
+#include "claes/ops/check.hpp"
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/stop.hpp"
@@ -23,7 +24,7 @@ namespace claes {
   E VM::eval(const PC start_pc, Stack &stack) {
     static const void* dispatch[] = {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
-      &&CALL_INDIRECT,
+      &&CALL_INDIRECT, &&CHECK,
       &&END_FRAME,
       &&GET_REG,
       &&MAKE_PAIR, &&MAKE_VECTOR,
@@ -37,8 +38,9 @@ namespace claes {
 
   BEGIN_FRAME: {
       begin_frame();
-      DISPATCH(pc+1);
     }
+
+    DISPATCH(pc+1);
 
   BENCHMARK: {
       const auto n = op.as<ops::Benchmark>().repetitions;
@@ -51,12 +53,13 @@ namespace claes {
       }
 
       stack.push(types::I64::get(), t.ms());
-      DISPATCH(pc);
     }
     
-  BRANCH: {
-      DISPATCH(stack.pop().is_true() ? pc+1 : op.as<ops::Branch>().else_pc);
-    }
+    DISPATCH(pc);
+    
+  BRANCH: {}
+    
+    DISPATCH(stack.pop().is_true() ? pc+1 : op.as<ops::Branch>().else_pc);
 
   CALL_INDIRECT: {
       const auto target = stack.pop();
@@ -66,15 +69,31 @@ namespace claes {
     
     DISPATCH(pc);
 
+  CHECK: {
+      const auto expected = stack.pop();
+      Stack s;
+      eval(pc+1, s);
+      const auto actual = s.pop();
+
+      if (actual != expected) {
+	return Error(op.as<ops::Check>().loc, 
+		     "Check failed; expected ", expected, ", actual ", actual);
+      }
+    }
+
+    DISPATCH(pc);
+
   END_FRAME: {
       end_frame();
-      DISPATCH(pc+1);
     }
+    
+    DISPATCH(pc+1);
 
   GET_REG: {
       stack.push(get_reg(op.as<ops::GetReg>().reg));
-      DISPATCH(pc+1);
     }    
+
+    DISPATCH(pc+1);
 
   MAKE_PAIR: {
       auto right = stack.pop();
@@ -86,13 +105,15 @@ namespace claes {
 
   MAKE_VECTOR: {
       stack.push(types::Vector::get(), types::Vector::Value());
-      DISPATCH(pc+1);
     }
     
+    DISPATCH(pc+1);
+
   PUSH: {
       stack.push(op.as<ops::Push>().value.clone());
-      DISPATCH(pc+1);
     }
+
+    DISPATCH(pc+1);
 
   PUSH_ITEM: {
       const auto item = stack.pop();
@@ -103,12 +124,13 @@ namespace claes {
 
   PUSH_REG: {
       push_reg(stack.pop());
-      DISPATCH(pc+1);
     }
 
+    DISPATCH(pc+1);
+
   STOP: {
-    pc++;
-    return nullopt;
+      pc++;
+      return nullopt;
     }
 
   TODO: {
@@ -119,8 +141,9 @@ namespace claes {
       cout << pc << ' ';
       ops[++pc].trace(cout);
       cout << endl;
-      DISPATCH(pc);
     }
+
+    DISPATCH(pc);
   }
 }
 

@@ -7,9 +7,11 @@
 #include "claes/forms/id.hpp"
 #include "claes/forms/vector.hpp"
 #include "claes/ops/begin_frame.hpp"
+#include "claes/ops/check.hpp"
 #include "claes/ops/end_frame.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_reg.hpp"
+#include "claes/ops/stop.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/i64.hpp"
 #include "claes/types/meta.hpp"
@@ -37,6 +39,29 @@ namespace claes::libs {
       bind("_", types::Nil::get(), nullptr);
       bind("T", types::Bit::get(), true);
       bind("F", types::Bit::get(), false);
+
+      bind_macro("check", 
+		 [](Macro self, 
+		    VM &vm, 
+		    Env &env, 
+		    const Forms &args, 
+		    const Loc &loc) -> E {
+		   Forms my_args(args);
+		   
+		   if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+		     return e;
+		   }
+
+		   vm.emit<ops::Check>(loc);
+		   Env body_env(env.imp);
+
+		   if (auto e = my_args.emit(vm, body_env); e) {
+		     return e;
+		   }
+		   
+		   vm.emit<ops::Stop>();
+		   return nullopt;
+		 });
 
       bind_macro("let", 
 		 [](Macro self, 
@@ -89,7 +114,7 @@ namespace claes::libs {
 
 		   vm.emit<ops::EndFrame>();
 		   return nullopt;
-      });
+		 });
 
       bind_macro("trace", 
 		 [](Macro self, 
@@ -97,10 +122,10 @@ namespace claes::libs {
 		    Env &env, 
 		    const Forms &args, 
 		    const Loc &loc) {
-	vm.trace = !vm.trace;
-	vm.emit<ops::Push>(Cell(types::Bit::get(), vm.trace));
-	return nullopt;
-      });
+		   vm.trace = !vm.trace;
+		   vm.emit<ops::Push>(Cell(types::Bit::get(), vm.trace));
+		   return nullopt;
+		 });
     }
   };
 
