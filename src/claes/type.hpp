@@ -22,6 +22,7 @@ namespace claes {
       virtual E call(const Cell &target, 
 		     VM &vm, 
 		     Stack &stack, 
+		     int arity,
 		     const Loc &loc) const;
 
       virtual Cell clone(const Cell &value) const;
@@ -64,8 +65,9 @@ namespace claes {
     E call(const Cell &target, 
 	   VM &vm, 
 	   Stack &stack, 
+	   int arity,
 	   const Loc &loc) const {
-      return imp->call(target, vm, stack, loc);
+      return imp->call(target, vm, stack, arity, loc);
     }
 
     Cell clone(const Cell &value) const;

@@ -11,7 +11,7 @@ namespace claes {
   struct VM;
 
   struct Macro {
-    using Body = function<E (Macro &macro,
+    using Body = function<E (const Macro &macro,
 			     VM &vm, 
 			     Env &env, 
 			     const Forms &args,

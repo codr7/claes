@@ -9,13 +9,14 @@ namespace claes::ops {
   using namespace claes;
   
   struct CallIndirect: Op::Imp {
+    int arity;
     Loc loc;
 
-    CallIndirect(const Loc &loc):
-      Op::Imp(Op::Code::CALL_INDIRECT), loc(loc) {}
+    CallIndirect(int arity, const Loc &loc):
+      Op::Imp(Op::Code::CALL_INDIRECT), arity(arity), loc(loc) {}
 
     virtual void trace(ostream &out) const override {
-      out << "CallIndirect loc: " << loc;
+      out << "CallIndirect arity: " << arity << " loc: " << loc;
     }
   };
 }

@@ -1,11 +1,17 @@
 * add load macro
 ** add path method
-*** add methods
 ** add path type
 ** tests.claes
 * add if macro
 * add benchmark macro
 * fib
+
+* add iters
+** add iter type
+** add value.iter
+*** return iter value
+** push value default
+** implement for pair/integer/vector/string
 
 * use vm specific alloc for Env imps
 ** pass to constructor

@@ -15,6 +15,7 @@ namespace claes {
   E Type::Imp::call(const Cell &target, 
 		    VM &vm, 
 		    Stack &stack, 
+		    int arity,
 		    const Loc &loc) const {
     return Error(loc, "Invalid call target: ", target);
   }

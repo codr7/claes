@@ -8,6 +8,7 @@ namespace claes {
 			 const Forms &args, 
 			 const Loc &loc) const {
     Forms as(args);
+    const auto arity = as.items.size();
 
     if (auto e = as.emit(vm, env); e) {
       return e;
@@ -17,7 +18,7 @@ namespace claes {
       return e;
     }
 	
-    vm.emit<ops::CallIndirect>(loc);
+    vm.emit<ops::CallIndirect>(arity, loc);
     return nullopt;
   }
 }

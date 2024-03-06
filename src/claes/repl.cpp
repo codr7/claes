@@ -10,8 +10,8 @@
 
 namespace claes {
   void VM::repl(istream &in, ostream &out) {
-    out << "claes v" << VERSION << ',' << endl;
-    out << "may the source be with you!" << endl << endl;
+    out << "claes v" << VERSION << endl;
+    out << "may the source be with you" << endl << endl;
 
     stringstream buffer;
     Stack stack;

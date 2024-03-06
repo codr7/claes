@@ -41,8 +41,8 @@ namespace claes {
       return any_cast<const typename T::Value &>(value); 
     }
     
-    E call(VM &vm, Stack &stack, const Loc &loc) const {
-      return type.call(*this, vm, stack, loc);
+    E call(VM &vm, Stack &stack, int arity, const Loc &loc) const {
+      return type.call(*this, vm, stack, arity, loc);
     }
 
     Cell clone() const {

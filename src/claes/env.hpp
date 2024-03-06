@@ -8,6 +8,7 @@
 
 #include "claes/cell.hpp"
 #include "claes/macro.hpp"
+#include "claes/method.hpp"
 #include "claes/types/reg.hpp"
 
 namespace claes {
@@ -85,7 +86,7 @@ namespace claes {
     }
 
     void bind_macro(const string &name, const Macro::Body &body);
-
+    void bind_method(const string &name, const Method::Body &body);
     void bind_type(Type type);
 
     optional<Cell> find(const string &name) const {
