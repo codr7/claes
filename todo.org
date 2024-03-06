@@ -1,5 +1,16 @@
 * add check macro
 * add load macro
+** add path method
+*** add methods
+** add path type
+* add if macro
+* add benchmark macro
+* fib
+
+* use vm specific alloc for Env imps
+** pass to constructor
+*** add field
+*** use instead of delete
 
 (let [x 42] x)
 (let [x 1 y 2 z 3] y)

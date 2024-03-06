@@ -79,6 +79,11 @@ namespace claes {
       imp->bind(name, value);
     }
 
+    template <typename T, typename V>
+    void bind(const string &name, const TType<T> &type, const V &value) {
+      bind(name, Cell(type, value));
+    }
+
     void bind_macro(const string &name, const Macro::Body &body);
 
     void bind_type(Type type);

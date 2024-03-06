@@ -12,11 +12,11 @@ namespace claes {
     any value;
 
     template <typename T, typename V>
-    Cell(TType<T> type, const V &value): 
+    Cell(const TType<T> &type, const V &value): 
       type(type), value(static_cast<T::Value>(value)) {}
 
     template <typename T>
-    Cell(TType<T> type, const T &&value): 
+    Cell(const TType<T> &type, const T &&value): 
       type(type), value(std::move(value)) {}
 
     Cell(const Cell &source): 

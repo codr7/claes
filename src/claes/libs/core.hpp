@@ -14,6 +14,7 @@
 #include "claes/types/i64.hpp"
 #include "claes/types/meta.hpp"
 #include "claes/types/macro.hpp"
+#include "claes/types/nil.hpp"
 #include "claes/types/pair.hpp"
 #include "claes/types/reg.hpp"
 #include "claes/types/string.hpp"
@@ -27,10 +28,15 @@ namespace claes::libs {
       bind_type(types::I64::get());
       bind_type(types::Meta::get());
       bind_type(types::Macro::get());
+      bind_type(types::Nil::get());
       bind_type(types::Pair::get());
       bind_type(types::Reg::get());
       bind_type(types::String::get());
       bind_type(types::Vector::get());
+
+      bind("_", types::Nil::get(), nullptr);
+      bind("T", types::Bit::get(), true);
+      bind("F", types::Bit::get(), false);
 
       bind_macro("let", 
 		 [](Macro self, 
