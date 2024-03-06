@@ -1,0 +1,14 @@
+(check 42
+  (let [x 42] x))
+
+(check 42
+  (let [x 42 y x] y))
+
+(check 2
+  (let [x 1 y 2 z 3] y))
+
+(check 1
+  (let [x 1] (let [x 2]) x))
+
+(check 1
+  (let [x 1] (let [] x)))
