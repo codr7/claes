@@ -1,7 +1,4 @@
 * add load macro
-** add path method
-** add path type
-** tests.claes
 * add if macro
 * add benchmark macro
 * fib

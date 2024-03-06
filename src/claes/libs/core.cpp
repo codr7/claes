@@ -15,6 +15,7 @@
 #include "claes/types/method.hpp"
 #include "claes/types/nil.hpp"
 #include "claes/types/pair.hpp"
+#include "claes/types/path.hpp"
 #include "claes/types/reg.hpp"
 #include "claes/types/string.hpp"
 #include "claes/types/vector.hpp"
@@ -29,6 +30,7 @@ namespace claes::libs {
     bind_type(types::Method::get());
     bind_type(types::Nil::get());
     bind_type(types::Pair::get());
+    bind_type(types::Path::get());
     bind_type(types::Reg::get());
     bind_type(types::String::get());
     bind_type(types::Vector::get());
@@ -128,6 +130,17 @@ namespace claes::libs {
 		 vm.emit<ops::EndFrame>();
 		 return nullopt;
 	       });
+
+    bind_method("path", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  const auto s = stack.pop().as(types::String::get());
+		  stack.push(types::Path::get(), s);
+		  return nullopt;
+		});
 
     bind_macro("trace", 
 	       [](const Macro self, 
