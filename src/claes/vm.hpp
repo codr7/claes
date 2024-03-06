@@ -12,6 +12,8 @@ namespace claes {
   struct Reg;
   struct Stack;
 
+  static const int VERSION = 1;
+
   struct VM {
     vector<Frame> frames;
     vector<Op> ops;
