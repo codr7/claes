@@ -131,6 +131,22 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_macro("load", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) {
+		 Stack stack;
+		 
+		 if (auto e = vm.eval(args.peek(), env, stack); e) {
+		   return e;
+		 }
+		 
+		 const auto path = stack.pop().as(types::Path::get());
+		 return vm.load(path, env, loc);
+	       });
+
     bind_method("path", 
 		[](const Method self, 
 		   VM &vm, 
@@ -139,6 +155,24 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  const auto s = stack.pop().as(types::String::get());
 		  stack.push(types::Path::get(), s);
+		  return nullopt;
+		});
+
+    bind_method("say", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  for (int i = 0; i < arity; i++) {
+		    if (i) {
+		      cout << ' ';
+		    }
+		    
+		    cout << stack.pop();
+		  }
+ 
+		  cout << endl;
 		  return nullopt;
 		});
 

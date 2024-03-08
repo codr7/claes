@@ -1,4 +1,3 @@
-* add load macro
 * add if macro
 * add benchmark macro
 * fib

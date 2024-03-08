@@ -1,6 +1,9 @@
 #ifndef CLAES_OP_HPP
 #define CLAES_OP_HPP
 
+#include <ostream>
+#include <memory>
+
 namespace claes {
   using namespace std;
 
@@ -8,11 +11,10 @@ namespace claes {
     enum struct Code {BEGIN_FRAME, BENCHMARK, BRANCH, 
 		      CALL_DIRECT, CALL_INDIRECT, CHECK,
 		      END_FRAME,
-		      GET_REG,
-		      MAKE_PAIR,
-		      MAKE_VECTOR,
+		      GET_REG, GOTO,
+		      MAKE_PAIR, MAKE_VECTOR,
 		      PUSH, PUSH_ITEM, PUSH_REG, 
-		      STOP, 
+		      SET_PATH, STOP, 
 		      TODO, TRACE};
 
     struct Imp {

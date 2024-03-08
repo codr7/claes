@@ -7,7 +7,9 @@
 #include "claes/ops/call_indirect.hpp"
 #include "claes/ops/check.hpp"
 #include "claes/ops/get_reg.hpp"
+#include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
+#include "claes/ops/set_path.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
@@ -17,7 +19,7 @@
 #include "claes/vm.hpp"
 
 #define DISPATCH(next_pc)						\
-  goto *dispatch[static_cast<int>((op = ops[pc = (next_pc)]).op_code())] \
+  goto *dispatch[static_cast<int>((op = ops[(pc = (next_pc))]).op_code())]
 
 namespace claes {
   using namespace std;
@@ -25,14 +27,13 @@ namespace claes {
   E VM::eval(const PC start_pc, Stack &stack) {
     static const void* dispatch[] = {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
-      &&CALL_DIRECT, &&CALL_INDIRECT, &&CHECK,
-      &&END_FRAME,
-      &&GET_REG,
-      &&MAKE_PAIR, &&MAKE_VECTOR,
-      &&PUSH,
-      &&PUSH_ITEM, &&PUSH_REG,
-      &&STOP,
-      &&TODO, &&TRACE};
+	&&CALL_DIRECT, &&CALL_INDIRECT, &&CHECK,
+	&&END_FRAME,
+	&&GET_REG, &&GOTO,
+	&&MAKE_PAIR, &&MAKE_VECTOR,
+	&&PUSH, &&PUSH_ITEM, &&PUSH_REG,
+	&&SET_PATH, &&STOP,
+	&&TODO, &&TRACE};
 
     Op op;
     DISPATCH(start_pc);
@@ -111,6 +112,10 @@ namespace claes {
 
     DISPATCH(pc+1);
 
+  GOTO: {}
+
+    DISPATCH(op.as<ops::Goto>().pc);
+
   MAKE_PAIR: {
       auto right = stack.pop();
       auto left = stack.pop();
@@ -144,12 +149,19 @@ namespace claes {
 
     DISPATCH(pc+1);
 
+  SET_PATH: {
+      path = op.as<ops::SetPath>().path;
+    }
+
+    DISPATCH(pc+1);
+
   STOP: {
       pc++;
       return nullopt;
     }
 
   TODO: {
+      pc++;
       return Error(op.as<ops::Todo>().loc, "Todo");
     }
 

@@ -1,6 +1,10 @@
 #ifndef CLAES_VM_HPP
 #define CLAES_VM_HPP
 
+
+#include <filesystem>
+#include <iostream>
+
 #include "claes/common.hpp"
 #include "claes/frame.hpp"
 #include "claes/op.hpp"
@@ -9,13 +13,16 @@
 
 namespace claes {
   struct Error;
+  struct Form;
   struct Reg;
   struct Stack;
 
   static const int VERSION = 1;
+  namespace fs = filesystem;
 
   struct VM {
     vector<Frame> frames;
+    fs::path path;
     vector<Op> ops;
     PC pc = 0;
     bool trace = false;
@@ -49,6 +56,7 @@ namespace claes {
     }
 
     E eval(const PC start_pc, Stack &stack);
+    E eval(const Form &form, Env &env, Stack &stack);
 
     const Cell &get_reg(const Reg &reg) const {
       const auto &f = *next(frames.rbegin(), reg.frame_offset);
@@ -60,6 +68,8 @@ namespace claes {
       return f.regs[reg.index];
     }
   
+    E load(fs::path path, Env &env, const Loc &loc);
+
     void repl(istream &in, ostream &out);
 
     void push_reg(const Cell &value) {

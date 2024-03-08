@@ -64,8 +64,8 @@ void read_tests() {
   const auto call_form = fs.pop().as<forms::Call>();
   const auto target = call_form.target.as<forms::Id>();
   assert(target.name == "foo");
-  const auto argument = call_form.arguments.peek().as<forms::Literal>();
-  assert(argument.value.as(types::String::get()) == "bar");
+  const auto arg = call_form.args.peek().as<forms::Literal>();
+  assert(arg.value.as(types::String::get()) == "bar");
 }
 
 void stack_tests() {

@@ -18,6 +18,7 @@ namespace claes {
       
     struct Imp {
       Loc loc;
+
       Imp(const Loc &loc): loc(loc) {}
       virtual ~Imp() {}
       virtual E emit(VM &vm, Env &env, Forms &args) const = 0;
