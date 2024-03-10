@@ -61,6 +61,22 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
+    bind_method("-", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  types::I64::Value v = 0;
+		    
+		  while (arity--) {
+		    v -= stack.pop().as(types::I64::get());
+		  }
+
+		  stack.push(types::I64::get(), v);
+		  return nullopt;
+		});
+
     bind_method("=", 
 		[](const Method self, 
 		   VM &vm, 

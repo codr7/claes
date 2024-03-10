@@ -19,6 +19,9 @@
 (check 6
   (+ 1 2 3))
 
+(check 42
+  (- (- 42)))
+
 (check 1
   (if T 1 2))
 
@@ -50,3 +53,15 @@
 (check 42
   (^ foo [x] x)
   (foo 42))
+
+(check 55
+  (^ fib[n]
+    (if (< n 2) n (+ (fib (- n 1)) (fib (- n 2)))))
+
+  (fib 10))
+
+(check 55
+  (^ fib[n a b]
+    (if (> n 1) (fib (- n 1) b (+ a b)) (if (= n 0) a b)))
+
+  (fib 10 0 1))
