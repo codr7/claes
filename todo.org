@@ -1,6 +1,4 @@
-* add ^-macro
-** add call frames
-** add return op
+* fix method arg test
 
 * fib
 

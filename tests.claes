@@ -42,3 +42,11 @@
 
 (check F
   (> 3 2 2))
+
+(check 42
+  (^ foo [] 42)
+  (foo))
+
+(check 42
+  (^ foo [x] x)
+  (foo 42))

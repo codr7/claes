@@ -11,7 +11,7 @@
 
 namespace claes {
   E VM::eval(const Form &form, Env &env, Stack &stack) {
-    const auto goto_pc = emit<ops::Todo>(form.imp->loc);
+    const auto skip_pc = emit<ops::Todo>(form.imp->loc);
     const auto start_pc = emit_pc();    
     Forms emit_args;
 
@@ -20,7 +20,7 @@ namespace claes {
     }
     
     emit<ops::Stop>();
-    ops[goto_pc].imp = make_shared<ops::Goto>(emit_pc());
+    ops[skip_pc].imp = make_shared<ops::Goto>(emit_pc());
   
     if (auto e = eval(start_pc, stack); e) {
       return e;

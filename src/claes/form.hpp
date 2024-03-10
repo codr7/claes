@@ -33,8 +33,8 @@ namespace claes {
     Form(shared_ptr<const Imp> imp): imp(imp) {}
 
     template <typename T>
-    const T &as() const { 
-      return *static_cast<const T *>(imp.get()); 
+    const T *as() const { 
+      return dynamic_cast<const T *>(imp.get()); 
     }
 
     E emit(VM &vm, Env &env, Forms &args) const {

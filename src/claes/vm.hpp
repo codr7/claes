@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <iostream>
 
+#include "claes/call.hpp"
 #include "claes/common.hpp"
 #include "claes/frame.hpp"
 #include "claes/op.hpp"
@@ -22,10 +23,16 @@ namespace claes {
 
   struct VM {
     vector<Frame> frames;
+    Call *call = nullptr;
     fs::path path;
     vector<Op> ops;
     PC pc = 0;
     bool trace = false;
+
+    void begin_call(const Cell &target, const Loc &loc, const PC ret_pc) {
+      begin_frame();
+      call = new Call(call, target, loc, ret_pc);
+    }
 
     void begin_frame() {
       frames.emplace_back();
@@ -51,6 +58,13 @@ namespace claes {
       return ops.size();
     }
 
+    Call *end_call() {
+      auto result = call;
+      call = call->parent;
+      end_frame();
+      return result;
+    }
+
     void end_frame() {
       frames.pop_back();
     }
@@ -58,12 +72,12 @@ namespace claes {
     E eval(const PC start_pc, Stack &stack);
     E eval(const Form &form, Env &env, Stack &stack);
 
-    const Cell &get_reg(const Reg &reg) const {
+    const optional<Cell> &get_reg(const Reg &reg) const {
       const auto &f = *next(frames.rbegin(), reg.frame_offset);
       return f.regs[reg.index];
     }
 
-    Cell &get_reg(const Reg &reg) {
+    optional<Cell> &get_reg(const Reg &reg) {
       auto &f = *next(frames.rbegin(), reg.frame_offset);
       return f.regs[reg.index];
     }
@@ -72,8 +86,13 @@ namespace claes {
 
     void repl(istream &in, ostream &out);
 
-    void push_reg(const Cell &value) {
-      frames.back().regs.push_back(value);
+    Reg push_reg(const optional<Cell> value = nullopt) {
+      return frames.back().push_reg(value);
+    }
+
+    void set_reg(const Reg &reg, const Cell &value) {
+      auto &f = *next(frames.rbegin(), reg.frame_offset);
+      f.regs[reg.index] = value;
     }
   };
 }

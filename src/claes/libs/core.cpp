@@ -9,6 +9,8 @@
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_reg.hpp"
+#include "claes/ops/return.hpp"
+#include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
@@ -126,6 +128,79 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
+    bind_macro("^", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		 optional<string> name;
+		 auto f = my_args.peek();
+
+		 if (auto idf = f.as<forms::Id>(); idf) {
+		   name = idf->name;
+		   my_args.pop();
+		 } 
+
+		 Forms method_args = my_args.pop().as<forms::Vector>()->items;
+		 const auto skip_pc = vm.emit<ops::Todo>(loc);
+		 const auto start_pc = vm.emit_pc();
+
+		 Method method(name ? *name : "lambda", 		
+			       [start_pc](const Method self, 
+				  VM &vm, 
+				  Stack &stack, 
+				  int arity,
+				  const Loc &loc) -> E { 
+				 const auto target = Cell(types::Method::get(), self);
+				 vm.begin_call(target, loc, vm.pc);
+				 vm.pc = start_pc;
+				 return nullopt;
+			       });
+		 
+		 if (name) {
+		   env.bind(method.imp->name, 
+			    Cell(types::Method::get(), method));
+		 }
+
+		 Env body_env(env.imp);
+		 
+		 for (auto p = body_env.imp->parent; p; p = p->parent) {
+		   for (auto b: p->bindings) {
+		     if (b.second.type == types::Reg::get()) {
+		       auto v = b.second.as(types::Reg::get());
+		       v.frame_offset++;
+
+		       if (body_env.imp->bindings.find(b.first) == 
+			   body_env.imp->bindings.end()) {
+			 body_env.bind(b.first, Cell(types::Reg::get(), v));
+		       }
+		     }
+		   }
+		 }
+
+		 for (auto a = method_args.items.rbegin(); a != method_args.items.rend(); a--) {
+		   const auto name = a->as<forms::Id>()->name;
+		   const auto reg = vm.push_reg();
+		   body_env.bind(name, types::Reg::get(), reg);
+		   vm.emit<ops::SetReg>(reg);
+		 }
+
+		 if (auto e = my_args.emit(vm, body_env); e) {
+		   return e;
+		 }
+
+		 vm.emit<ops::Return>();
+		 vm.ops[skip_pc].imp = make_shared<ops::Goto>(vm.emit_pc());
+		 
+		 if (!name) {
+		   vm.emit<ops::Push>(Cell(types::Method::get(), method));
+		 }
+
+		 return nullopt;
+	       });
+
     bind_macro("benchmark", 
 	       [](const Macro self, 
 		  VM &vm, 
@@ -217,7 +292,7 @@ namespace claes::libs {
 		  const Loc &loc) -> E {
 		 Forms my_args(args);
 		 const auto &binding_forms = 
-		   my_args.pop().as<forms::Vector>().items;
+		   my_args.pop().as<forms::Vector>()->items;
 		 vm.emit<ops::BeginFrame>();
 		 Env body_env(env.imp);
 		 auto i = 0;
@@ -228,7 +303,7 @@ namespace claes::libs {
 		   const auto &name_form = *bf;
 		   const auto &value_form = *(++bf);
 
-		   body_env.bind(name_form.as<forms::Id>().name, 
+		   body_env.bind(name_form.as<forms::Id>()->name, 
 				 Cell(types::Reg::get(), i++));
 
 		   Forms value_args;

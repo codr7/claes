@@ -14,7 +14,8 @@ namespace claes {
 		      GET_REG, GOTO,
 		      MAKE_PAIR, MAKE_VECTOR,
 		      PUSH, PUSH_ITEM, PUSH_REG, 
-		      SET_PATH, STOP, 
+		      RETURN,
+		      SET_PATH, SET_REG, STOP, 
 		      TODO, TRACE};
 
     struct Imp {

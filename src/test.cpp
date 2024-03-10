@@ -56,16 +56,16 @@ void read_tests() {
   assert(n == 3);
 
   const auto id_form = fs.pop().as<forms::Id>();
-  assert(id_form.name == "foo");
+  assert(id_form->name == "foo");
 
   const auto literal_form = fs.pop().as<forms::Literal>();
-  assert(literal_form.value.as(types::I64::get()) == 42);
+  assert(literal_form->value.as(types::I64::get()) == 42);
 
   const auto call_form = fs.pop().as<forms::Call>();
-  const auto target = call_form.target.as<forms::Id>();
-  assert(target.name == "foo");
-  const auto arg = call_form.args.peek().as<forms::Literal>();
-  assert(arg.value.as(types::String::get()) == "bar");
+  const auto target = call_form->target.as<forms::Id>();
+  assert(target->name == "foo");
+  const auto arg = call_form->args.peek().as<forms::Literal>();
+  assert(arg->value.as(types::String::get()) == "bar");
 }
 
 void stack_tests() {

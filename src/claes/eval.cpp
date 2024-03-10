@@ -10,6 +10,7 @@
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/set_path.hpp"
+#include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
@@ -32,7 +33,8 @@ namespace claes {
 	&&GET_REG, &&GOTO,
 	&&MAKE_PAIR, &&MAKE_VECTOR,
 	&&PUSH, &&PUSH_ITEM, &&PUSH_REG,
-	&&SET_PATH, &&STOP,
+	&&RETURN,
+	&&SET_PATH, &&SET_REG, &&STOP,
 	&&TODO, &&TRACE};
 
     Op op;
@@ -107,7 +109,7 @@ namespace claes {
     DISPATCH(pc+1);
 
   GET_REG: {
-      stack.push(get_reg(op.as<ops::GetReg>().reg));
+      stack.push(*get_reg(op.as<ops::GetReg>().reg));
     }    
 
     DISPATCH(pc+1);
@@ -149,9 +151,23 @@ namespace claes {
 
     DISPATCH(pc+1);
 
+  RETURN: {
+      auto c = end_call();
+      pc = c->ret_pc;
+      delete c;
+    }
+
+    DISPATCH(pc);
+
   SET_PATH: {
       path = op.as<ops::SetPath>().path;
     }
+
+    DISPATCH(pc+1);
+
+  SET_REG: {
+      set_reg(op.as<ops::GetReg>().reg, stack.pop());
+    }    
 
     DISPATCH(pc+1);
 

@@ -3,10 +3,17 @@
 
 #include <vector>
 #include "claes/cell.hpp"
+#include "claes/reg.hpp"
 
 namespace claes {
   struct Frame {
-    vector<Cell> regs;
+    vector<optional<Cell>> regs;
+
+    Reg push_reg(const optional<Cell> value = nullopt) {
+      Reg result(regs.size());
+      regs.push_back(value);
+      return result;
+    }
   };
 }
 
