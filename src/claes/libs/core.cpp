@@ -59,6 +59,26 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
+    bind_method("=", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  auto v = stack.pop();
+		  auto result = true;
+
+		  while (!stack.empty()) {
+		    if (stack.pop() != v) {
+		      result = false;
+		      break;
+		    }
+		  }
+
+		  stack.push(types::Bit::get(), result);
+		  return nullopt;
+		});
+
     bind_macro("benchmark", 
 	       [](const Macro self, 
 		  VM &vm, 

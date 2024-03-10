@@ -2,6 +2,9 @@
 ** add call frames
 ** add return op
 
+* add '<'/'>' functions
+** add order/cpmpare
+
 * fib
 
 * add iters

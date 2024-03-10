@@ -1,0 +1,20 @@
+(^ fib[n]
+  (if (< n 2) n (+ (fib (-1 n)) (fib (-1 n)))))
+
+(say (benchmark 100 (fib 20)))
+
+(^ fib [n lookup]
+  (or (lookup n)
+      (let [result (if (< n 2) n (+ (fib (- n 1) lookup)
+                                    (fib (- n 2) lookup)))] 
+        (lookup n result)
+	result)))
+
+(say (benchmark 10000 (fib 70 {})))
+
+(^ fib[n a b]
+  (if (> n 1) (fib (-1 n) b (+ a b)) (if (=0 n) a b)))
+
+(say (benchmark 10000 (fib 70 0 1)))
+
+(say (register-count) "registers allocated")
