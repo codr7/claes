@@ -18,3 +18,9 @@
 
 (check 6
   (+ 1 2 3))
+
+(check 1
+  (if T 1 2))
+
+(check 2
+  (if F 1 2))

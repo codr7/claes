@@ -2,11 +2,14 @@
 #include "claes/forms/vector.hpp"
 #include "claes/libs/core.hpp"
 #include "claes/ops/begin_frame.hpp"
+#include "claes/ops/branch.hpp"
 #include "claes/ops/check.hpp"
 #include "claes/ops/end_frame.hpp"
+#include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_reg.hpp"
 #include "claes/ops/stop.hpp"
+#include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/i64.hpp"
@@ -75,6 +78,41 @@ namespace claes::libs {
 		 }
 		   
 		 vm.emit<ops::Stop>();
+		 return nullopt;
+	       });
+
+    bind_macro("if", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		   
+		 if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+		   return e;
+		 }
+
+		 const auto if_pc = vm.emit<ops::Todo>(loc);
+		 
+		 if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+		   return e;
+		 }
+
+		 const optional<PC> skip_pc = my_args.empty() 
+		   ? -1 
+		   : vm.emit<ops::Todo>(loc);
+
+		 vm.ops[if_pc].imp = make_shared<ops::Branch>(vm.emit_pc());
+		 
+		 if (skip_pc) {
+		   if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+		     return e;
+		   }
+
+		   vm.ops[*skip_pc].imp = make_shared<ops::Goto>(vm.emit_pc());
+		 }
+
 		 return nullopt;
 	       });
 

@@ -1,5 +1,9 @@
-* add if macro
 * add benchmark macro
+
+* add ^-macro
+** add call frames
+** add return op
+
 * fib
 
 * add iters
@@ -13,6 +17,8 @@
 ** pass to constructor
 *** add field
 *** use instead of delete
+** benchmark
 
 1:2
 1:2:3
+
