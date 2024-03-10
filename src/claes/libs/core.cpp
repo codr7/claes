@@ -68,9 +68,14 @@ namespace claes::libs {
 		   int arity,
 		   const Loc &loc) -> E {
 		  types::I64::Value v = 0;
-		    
+
 		  while (arity--) {
-		    v -= stack.pop().as(types::I64::get());
+		    const auto a = stack.pop().as(types::I64::get());
+		    if (arity) {
+		      v -= a;
+		    } else {
+		      v += a;
+		    }
 		  }
 
 		  stack.push(types::I64::get(), v);

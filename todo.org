@@ -1,4 +1,8 @@
-* debug fib tests
+* use vm specific alloc for Call
+** benchmark
+
+4604
+2419
 
 * add iters
 ** add iter type
@@ -7,11 +11,18 @@
 ** push value default
 ** implement for pair/integer/vector/string
 
+* aoc
+
 * use vm specific alloc for Env imps
 ** pass to constructor
 *** add field
 *** use instead of delete
 ** benchmark
+
+
+  (^ fib[n]
+    (say n)
+    (if (< n 2) n (+ (fib (- n 1)) (fib (- n 2)))))
 
 1:2
 1:2:3
