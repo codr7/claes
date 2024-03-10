@@ -1,5 +1,3 @@
-* fix method arg test
-
 * fib
 
 * add iters

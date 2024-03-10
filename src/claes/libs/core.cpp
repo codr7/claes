@@ -180,12 +180,18 @@ namespace claes::libs {
 		   }
 		 }
 
-		 for (auto a = method_args.items.rbegin(); a != method_args.items.rend(); a--) {
+		 vm.begin_frame();
+
+		 for (auto a = method_args.items.rbegin(); 
+		      a != method_args.items.rend(); 
+		      a++) {
 		   const auto name = a->as<forms::Id>()->name;
 		   const auto reg = vm.push_reg();
 		   body_env.bind(name, types::Reg::get(), reg);
-		   vm.emit<ops::SetReg>(reg);
+		   vm.emit<ops::PushReg>();
 		 }
+
+		 vm.end_frame();
 
 		 if (auto e = my_args.emit(vm, body_env); e) {
 		   return e;
