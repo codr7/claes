@@ -2,6 +2,7 @@
 #include "claes/forms/vector.hpp"
 #include "claes/libs/core.hpp"
 #include "claes/ops/begin_frame.hpp"
+#include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
 #include "claes/ops/check.hpp"
 #include "claes/ops/end_frame.hpp"
@@ -57,6 +58,31 @@ namespace claes::libs {
 		  stack.push(types::I64::get(), v);
 		  return nullopt;
 		});
+
+    bind_macro("benchmark", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		 Stack stack;
+
+		 if (auto e = vm.eval(args.peek(), env, stack); e) {
+		   return e;
+		 }
+		 
+		 const auto n = stack.pop().as(types::I64::get());
+		 vm.emit<ops::Benchmark>(n);  
+		 Env body_env(env.imp);
+		 
+		 if (auto e = my_args.emit(vm, body_env); e) {
+		   return e;
+		 }
+		 
+		 vm.emit<ops::Stop>();
+		 return nullopt;
+	       });
 
     bind_macro("check", 
 	       [](const Macro self, 

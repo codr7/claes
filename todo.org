@@ -1,5 +1,3 @@
-* add benchmark macro
-
 * add ^-macro
 ** add call frames
 ** add return op
