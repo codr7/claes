@@ -17,6 +17,11 @@ namespace claes::types {
 
     Pair(const string &name): Type::Imp(name) {}
 
+    virtual strong_ordering compare(const Cell &left, 
+				    const Cell &right) const override {
+      return left.as(get()) <=> right.as(get());
+    }
+
     virtual void dump(const Cell &value, ostream &out) const override {
       const auto &p = value.as(get());
       out << p.first << ':' << p.second;

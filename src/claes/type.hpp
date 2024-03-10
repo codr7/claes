@@ -26,6 +26,7 @@ namespace claes {
 		     const Loc &loc) const;
 
       virtual Cell clone(const Cell &value) const;
+      virtual strong_ordering compare(const Cell &left, const Cell &right) const = 0;
       virtual void dump(const Cell &value, ostream &out) const = 0;      
 
       virtual E emit_call(const Cell &value,
@@ -71,6 +72,10 @@ namespace claes {
     }
 
     Cell clone(const Cell &value) const;
+
+    strong_ordering compare(const Cell &left, const Cell &right) const {
+      return imp->compare(left, right);
+    }
 
     void dump(const Cell &value, ostream &out) const {
       imp->dump(value, out);
@@ -119,6 +124,10 @@ namespace claes {
     TType(const string &name, Args&&...args):
       Type(make_shared<const T>(name, std::forward<Args>(args)...)) {}
   };
+
+  inline strong_ordering operator<=>(const Type &left, const Type &right) {
+    return left.imp->name <=> right.imp->name;
+  }
 
   inline ostream &operator <<(ostream &out, const Type &type) {
     out << "(Type " << type.imp->name << ')';

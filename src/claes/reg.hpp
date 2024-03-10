@@ -11,11 +11,19 @@ namespace claes {
     Reg(int index): frame_offset(0), index(index) {}
   };
 
-  inline bool operator ==(const Reg &left, const Reg &right) {
+  inline bool operator==(const Reg &left, const Reg &right) {
     return left.frame_offset == right.frame_offset && left.index == right.index;
   }
 
-  inline ostream &operator <<(ostream &out, const Reg &value) {
+  inline strong_ordering operator<=>(const Reg &left, const Reg &right) {
+    if (left.frame_offset != right.frame_offset) {
+      return left.frame_offset <=> right.frame_offset;
+    }
+
+    return left.index <=> right.index;
+  }
+
+  inline ostream &operator<<(ostream &out, const Reg &value) {
     out << "(Reg " << 
       value.frame_offset << ':' <<  
       value.index << ')';

@@ -51,7 +51,7 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  types::I64::Value v = 0;
 		    
-		  while (!stack.empty()) {
+		  while (arity--) {
 		    v += stack.pop().as(types::I64::get());
 		  }
 
@@ -67,11 +67,58 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  auto v = stack.pop();
 		  auto result = true;
+		  arity--;
 
-		  while (!stack.empty()) {
+		  while (arity--) {
 		    if (stack.pop() != v) {
 		      result = false;
 		      break;
+		    }
+		  }
+
+		  stack.push(types::Bit::get(), result);
+		  return nullopt;
+		});
+
+    bind_method("<", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  auto v = stack.pop();
+		  auto result = true;
+		  arity--;
+
+		  while(arity--) {
+		    if (const auto nv = stack.pop(); v <= nv) {
+		      result = false;
+		      break;
+		    } else {
+		      v = nv;
+		    }
+		  }
+
+		  stack.push(types::Bit::get(), result);
+		  return nullopt;
+		});
+
+    bind_method(">", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  auto v = stack.pop();
+		  auto result = true;
+		  arity--;
+
+		  while(arity--) {
+		    if (const auto nv = stack.pop(); v >= nv) {
+		      result = false;
+		      break;
+		    } else {
+		      v = nv;
 		    }
 		  }
 

@@ -37,8 +37,12 @@ namespace claes {
     }
   };
 
-  inline bool operator ==(const Macro &left, const Macro &right) {
+  inline bool operator==(const Macro &left, const Macro &right) {
     return left.imp.get() == right.imp.get();
+  }
+
+  inline strong_ordering operator<=>(const Macro &left, const Macro &right) {
+    return left.imp->name <=> right.imp->name;
   }
 
   inline ostream &operator <<(ostream &out, const Macro &macro) {

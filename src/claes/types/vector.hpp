@@ -18,6 +18,30 @@ namespace claes::types {
 
     Vector(const string &name): Type::Imp(name) {}
 
+    virtual strong_ordering compare(const Cell &left, 
+				    const Cell &right) const override {
+      auto lvs = left.as(get()), rvs = right.as(get());
+
+      for (const auto &li = lvs.begin(), 
+	     &ri = rvs.begin();;) {
+	if (li == lvs.end()) {
+	  return strong_ordering::less;
+	}
+
+	if (ri == rvs.end()) {
+	  return strong_ordering::greater;
+	}
+
+	auto lv = *li, rv = *ri;
+
+	if (const auto r = lv <=> rv; r != strong_ordering::equal) {
+	  return r;
+	}
+      }
+
+      return strong_ordering::equal;
+    }
+
     virtual void dump(const Cell &value, ostream &out) const override {
       out << '[';
       

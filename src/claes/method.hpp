@@ -28,11 +28,15 @@ namespace claes {
     }
   };
 
-  inline bool operator ==(const Method &left, const Method &right) {
+  inline bool operator==(const Method &left, const Method &right) {
     return left.imp.get() == right.imp.get();
   }
 
-  inline ostream &operator <<(ostream &out, const Method &method) {
+  inline strong_ordering operator<=>(const Method &left, const Method &right) {
+    return left.imp->name <=> right.imp->name;
+  }
+
+  inline ostream &operator<<(ostream &out, const Method &method) {
     out << "(Method " << method.imp->name << ')';
     return out;
   }

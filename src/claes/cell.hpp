@@ -87,6 +87,14 @@ namespace claes {
     return left.type.eq(left, right);
   }
 
+  inline strong_ordering operator<=>(const Cell &left, const Cell &right) {
+    if (left.type == right.type) {
+      return left.type.compare(left, right);
+    }
+
+    return left.type <=> right.type;
+  }
+
   inline ostream &operator <<(ostream &out, const Cell &cell) {
     cell.dump(out);
     return out;
