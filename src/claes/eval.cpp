@@ -49,6 +49,12 @@ namespace claes {
   BENCHMARK: {
       const auto n = op.as<ops::Benchmark>().repetitions;
       const auto start_pc = pc+1;
+
+      for (auto i = 0; i < n; i++) {
+	Stack s;
+	if (auto e = eval(start_pc, s); e) { return e; }
+      }
+
       Timer t;
 
       for (auto i = 0; i < n; i++) {
@@ -154,7 +160,7 @@ namespace claes {
   RETURN: {
       auto c = end_call();
       pc = c->ret_pc;
-      delete c;
+      call_alloc.free(c);
     }
 
     DISPATCH(pc);

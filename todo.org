@@ -1,8 +1,5 @@
-* use vm specific alloc for Call
-** benchmark
-
-4604
-2419
+4693
+2388
 
 * add iters
 ** add iter type

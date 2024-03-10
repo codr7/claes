@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <iostream>
 
+#include "claes/alloc.hpp"
 #include "claes/call.hpp"
 #include "claes/common.hpp"
 #include "claes/frame.hpp"
@@ -23,6 +24,7 @@ namespace claes {
 
   struct VM {
     vector<Frame> frames;
+    Alloc<Call, 64> call_alloc;
     Call *call = nullptr;
     fs::path path;
     vector<Op> ops;
@@ -31,7 +33,7 @@ namespace claes {
 
     void begin_call(const Cell &target, const Loc &loc, const PC ret_pc) {
       begin_frame();
-      call = new Call(call, target, loc, ret_pc);
+      call = call_alloc.acquire(call, target, loc, ret_pc);
     }
 
     void begin_frame() {
