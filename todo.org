@@ -1,8 +1,14 @@
 4693
 2388
 
-* add vector ref type
-** ref counted imp
+* add Cell/Type.push
+** return result
+** implement for pair, vector, string
+** implement for nil
+*** return value
+** default implement
+*** return pair
+** add rune type
 
 * add for macro
 
