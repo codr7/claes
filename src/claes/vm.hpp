@@ -1,7 +1,6 @@
 #ifndef CLAES_VM_HPP
 #define CLAES_VM_HPP
 
-
 #include <filesystem>
 #include <iostream>
 
@@ -19,7 +18,7 @@ namespace claes {
   struct Reg;
   struct Stack;
 
-  static const int VERSION = 1;
+  static const int VERSION = 2;
   namespace fs = filesystem;
 
   struct VM {

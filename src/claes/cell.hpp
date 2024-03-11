@@ -16,7 +16,7 @@ namespace claes {
       type(type), value(static_cast<T::Value>(value)) {}
 
     template <typename T>
-    Cell(const TType<T> &type, const T &&value): 
+    Cell(const TType<T> &type, T &&value): 
       type(type), value(std::move(value)) {}
 
     Cell(const Cell &source): 
@@ -28,6 +28,12 @@ namespace claes {
     const Cell &operator =(const Cell &source) {
       type = source.type;
       value = source.value;
+      return *this;
+    }
+
+    const Cell &operator =(Cell &&source) {
+      type = std::move(source.type);
+      value = std::move(source.value);
       return *this;
     }
 
