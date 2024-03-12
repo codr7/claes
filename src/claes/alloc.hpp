@@ -19,7 +19,16 @@ namespace claes {
       return slabs.emplace_back();
     }
 
-    T *alloc() {
+    // Returns an initialized object
+    template <typename...Args>
+    T *get(Args&&...args) {
+      auto *s = get_slot();
+      *s = T(std::forward<Args>(args)...);
+      return s;
+    }
+
+    // Returns a pointer to the next available slot
+    T *get_slot() {
       if (!free_slots.empty()) {
 	auto s = free_slots.back();
 	free_slots.pop_back();
@@ -28,13 +37,6 @@ namespace claes {
 
       Slab &s = (slabs.empty() || n == N) ? push_slab() : slabs.back();
       return reinterpret_cast<T *>(&s[n++]);
-    }
-
-    template <typename...Args>
-    T *get(Args&&...args) {
-      auto *s = alloc();
-      *s = T(std::forward<Args>(args)...);
-      return s;
     }
 
     void free(T *pointer) {
