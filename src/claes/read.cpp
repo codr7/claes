@@ -1,3 +1,4 @@
+#include <iostream>
 #include <map>
 
 #include "claes/forms/call.hpp"
@@ -60,6 +61,7 @@ namespace claes {
     const vector<Reader> readers {
       read_ws, 
       read_i64, 
+      read_rune,
       read_string,
       read_pair,
       read_vector,
@@ -118,7 +120,9 @@ namespace claes {
     char c = 0;
     
     while (in.get(c)) {
-      if (!isgraph(c) ||  c == '(' || c == ')' || c == '[' || c == ']' || c == ':') {
+      if (!isgraph(c) ||  
+	  c == '(' || c == ')' || c == '[' || c == ']' || c == '\\' || c == '"' || 
+	  c == ':') {
 	in.unget();
 	break;
       }
@@ -158,6 +162,7 @@ namespace claes {
       return ReadT(false, Error(loc, "Missing right part of pair"));
     }
 
+    out.push<forms::Pair>(form_loc, left, out.pop_back());
     read_ws(in, out, loc);
 
     if (in.get(c)) { 
@@ -170,8 +175,30 @@ namespace claes {
       }
     }
 
-    auto right = out.pop_back();
-    out.push<forms::Pair>(form_loc, left, right);
+    return ReadT(true, nullopt);
+  }
+
+  ReadT read_rune(istream &in, Forms &out, Loc &loc) {
+    const auto form_loc = loc;
+    char c = 0;
+    
+    if (!in.get(c)) {
+      return ReadT(false, nullopt);
+    }
+    
+    if (c != '\\') {
+      in.unget();
+      return ReadT(false, nullopt);
+    }
+  
+    loc.column++;
+    
+    if (!in.get(c)) {
+      return ReadT(false, Error(form_loc, "Invalid rune literal"));
+    }
+  
+    loc.column++;
+    out.push<forms::Literal>(form_loc, Cell(types::Rune::get(), c));
     return ReadT(true, nullopt);
   }
 

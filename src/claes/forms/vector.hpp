@@ -11,7 +11,12 @@ namespace claes::forms {
 
     Forms items;
     Vector(const Loc &loc, const Forms items): Form::Imp(loc), items(items) {}
-    virtual E emit(VM &vm, Env &env, Forms &arguments) const;
+
+    virtual void dump(ostream &out) const override {
+      out << '[' << items << ']';
+    }
+
+    virtual E emit(VM &vm, Env &env, Forms &arguments) const override;
   };
 }
 

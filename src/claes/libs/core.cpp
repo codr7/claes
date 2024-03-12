@@ -38,6 +38,7 @@ namespace claes::libs {
     bind_type(types::Pair::get());
     bind_type(types::Path::get());
     bind_type(types::Reg::get());
+    bind_type(types::Rune::get());
     bind_type(types::String::get());
     bind_type(types::Vector::get());
 
@@ -388,6 +389,27 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  const auto s = stack.pop().as(types::String::get());
 		  stack.push(types::Path::get(), s);
+		  return nullopt;
+		});
+
+    bind_method("push", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  struct Rec {
+		    static Cell call(int arity, Stack &stack) {
+		      if (--arity) {
+			const auto v = stack.pop();
+			return call(arity, stack).push(v);
+		      }
+		    
+		      return stack.pop();
+		    }
+		  };
+
+		  stack.push(Rec::call(arity, stack));
 		  return nullopt;
 		});
 

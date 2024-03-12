@@ -63,6 +63,11 @@ namespace claes::types {
     virtual bool is_true(const Cell &value) const override {
       return !value.as(get()).imp->items.empty();
     }
+
+    virtual Cell push(const Cell &target, const Cell &item) const override {
+      target.as(get()).imp->items.push_back(item);
+      return target;
+    }
   };
 }
 

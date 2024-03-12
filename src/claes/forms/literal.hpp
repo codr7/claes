@@ -10,6 +10,10 @@ namespace claes::forms {
     Literal(const Loc &loc, const Cell &value): 
       Form::Imp(loc), value(value) {}
 
+    virtual void dump(ostream &out) const override {
+      out << value;
+    }
+
     virtual E emit(VM &vm, Env &env, Forms &arguments) const override {
       return value.emit_literal(vm, env, arguments, loc);
     }

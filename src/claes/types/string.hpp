@@ -1,9 +1,7 @@
 #ifndef CLAES_TYPES_STRING_HPP
 #define CLAES_TYPES_STRING_HPP
 
-#include <cstdint>
-#include "claes/cell.hpp"
-#include "claes/type.hpp"
+#include "claes/types/rune.hpp"
 
 namespace claes::types {
   using namespace claes;
@@ -33,6 +31,12 @@ namespace claes::types {
 
     virtual bool is_true(const Cell &value) const override {
       return !value.as(get()).empty();
+    }
+
+    virtual Cell push(const Cell &target, const Cell &item) const override {
+      auto s = target.as(get());
+      s.push_back(item.as(Rune::get()));
+      return Cell(get(), s);
     }
   };
 }

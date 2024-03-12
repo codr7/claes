@@ -21,8 +21,9 @@ namespace claes {
 
       Imp(const Loc &loc): loc(loc) {}
       virtual ~Imp() {}
+      virtual void dump(ostream &out) const = 0;
       virtual E emit(VM &vm, Env &env, Forms &args) const = 0;
-
+      
       virtual E emit_call(VM &vm, 
 			  Env &env, 
 			  const Forms &args, 
@@ -48,6 +49,11 @@ namespace claes {
       return imp->emit_call(vm, env, args, loc);
     }
   };
+
+  inline ostream &operator<<(ostream &out, const Form &v) {
+    v.imp->dump(out);
+    return out;
+  }
 
   struct Forms {
     deque<Form> items;
@@ -77,7 +83,7 @@ namespace claes {
     }
 
     Form pop_back() {
-      auto f = peek();
+      auto f = items.back();
       items.pop_back();
       return f;
     }
@@ -87,6 +93,21 @@ namespace claes {
       return items.emplace_back(make_shared<T>(loc, std::forward<Args>(args)...));
     }
   };
+
+  inline ostream &operator<<(ostream &out, const Forms &fs) {
+    auto i = 0;
+
+    for (const auto &f: fs.items) {
+      if (i++) {
+	out << ' ';
+      }
+
+      f.imp->dump(out);
+    }
+
+    return out;
+  }
+
 }
 
 #endif

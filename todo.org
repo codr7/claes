@@ -1,14 +1,10 @@
 4693
 2388
 
-* add Cell/Type.push
-** return result
-** implement for pair, vector, string
-** implement for nil
-*** return value
-** default implement
-*** return pair
-** add rune type
+* add Cell/Type.peek/pop
+** self default
+** first för pair
+** peek/pop för vector/string
 
 * add for macro
 

@@ -16,7 +16,11 @@ namespace claes::forms {
     Pair(const Loc &loc, const Form &left, const Form &right): 
       Form::Imp(loc), left(left), right(right) {}
 
-    virtual E emit(VM &vm, Env &env, Forms &args) const;
+    virtual void dump(ostream &out) const override {
+      out << left << ':' << right;
+    }
+
+    virtual E emit(VM &vm, Env &env, Forms &args) const override;
   };
 }
 

@@ -83,6 +83,10 @@ namespace claes {
     bool is_true() const { 
       return type.is_true(*this); 
     }
+
+    Cell push(const Cell &item) const {
+      return type.push(*this, item);
+    }
   };
 
   inline bool operator ==(const Cell &left, const Cell &right) {

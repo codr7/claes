@@ -50,6 +50,18 @@
   (> 3 2 2))
 
 (check 42
+  (push _ 42))
+
+(check 1:2
+  (push 1 2))
+
+(check "abc"
+  (push "ab" \c))
+
+(check [1 2 3]
+  (push [] 1 2 3))
+
+(check 42
   (^ foo [] 42)
   (foo))
 

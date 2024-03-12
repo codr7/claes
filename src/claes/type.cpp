@@ -1,6 +1,8 @@
 #include "claes/cell.hpp"
 #include "claes/ops/push.hpp"
+#include "claes/stack.hpp"
 #include "claes/type.hpp"
+#include "claes/types/pair.hpp"
 #include "claes/vm.hpp"
 
 namespace claes {
@@ -27,5 +29,13 @@ namespace claes {
 			    const Loc &loc) const {
     vm.emit<ops::Push>(value);
     return nullopt;
+  }
+
+  Cell Type::Imp::push(const Cell &target, const Cell &item) const {
+    return Cell(types::Pair::get(), make_pair(target, item));
+  }
+
+  Cell Type::push(const Cell &target, const Cell &item) const {
+    return imp->push(target, item);
   }
 }

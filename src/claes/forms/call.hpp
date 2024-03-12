@@ -17,7 +17,17 @@ namespace claes::forms {
     Call(const Loc &loc, const Form &target, const Forms args): 
       Form::Imp(loc), target(target), args(args) {}
 
-    virtual E emit(VM &vm, Env &env, Forms &args) const {
+    virtual void dump(ostream &out) const override {
+      out << '(' << target;
+
+      if (!args.empty()) {
+	out << ' ' << args;
+      }
+      
+      out << ')';
+    }
+
+    virtual E emit(VM &vm, Env &env, Forms &args) const override {
       return target.emit_call(vm, env, this->args, loc);
     }
   };

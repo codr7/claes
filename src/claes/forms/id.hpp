@@ -10,9 +10,14 @@ namespace claes::forms {
     };
 
     string name;
+
     Id(const Loc &loc, const string &name): 
       Form::Imp(loc), name(name) {}
     
+    virtual void dump(ostream &out) const override {
+      out << name;
+    }
+
     virtual E emit(VM &vm, Env &env, Forms &arguments) const override;
 
     virtual E emit_call(VM &vm, 
