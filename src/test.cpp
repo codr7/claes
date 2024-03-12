@@ -25,7 +25,7 @@ void alloc_tests() {
   vector<int *> ps;
 
   for (int i = 0; i < MAX; i++) {
-    ps.push_back(a.acquire(i));
+    ps.push_back(a.get(i));
   }
 
   for (auto p: ps) {
@@ -35,7 +35,7 @@ void alloc_tests() {
   ps.clear();
 
   for (int i = 0; i < MAX; i++) {
-    ps.push_back(a.acquire(i));
+    ps.push_back(a.get(i));
   }
 }
 

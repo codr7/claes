@@ -19,7 +19,7 @@ namespace claes {
       return slabs.emplace_back();
     }
 
-    T *acquire() {
+    T *alloc() {
       if (!free_slots.empty()) {
 	auto s = free_slots.back();
 	free_slots.pop_back();
@@ -31,8 +31,8 @@ namespace claes {
     }
 
     template <typename...Args>
-    T *acquire(Args&&...args) {
-      auto *s = acquire();
+    T *get(Args&&...args) {
+      auto *s = alloc();
       *s = T(std::forward<Args>(args)...);
       return s;
     }

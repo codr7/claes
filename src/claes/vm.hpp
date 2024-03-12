@@ -32,7 +32,7 @@ namespace claes {
 
     void begin_call(const Cell &target, const Loc &loc, const PC ret_pc) {
       begin_frame();
-      call = call_alloc.acquire(call, target, loc, ret_pc);
+      call = call_alloc.get(call, target, loc, ret_pc);
     }
 
     void begin_frame() {
