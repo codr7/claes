@@ -8,9 +8,12 @@
 namespace claes {
   using namespace std;
   
+  // T is the kind of object you wish to allocate, N the slab size
   template <typename T, size_t N>
   struct Alloc {
-    struct Slab { typename aligned_storage<sizeof(T), alignof(T)>::type slots[N]; };
+    struct Slab { 
+      typename aligned_storage<sizeof(T), alignof(T)>::type slots[N]; 
+    };
     
     Slab &push_slab() {
       n = 0;
@@ -39,8 +42,11 @@ namespace claes {
       free_slots.push_back(pointer);
     }
 
+    // Using a deque instead of vector here since we need stable pointers
     deque<Slab> slabs;
     vector<T *> free_slots;
+
+    // Number of used slots in currently active slab
     size_t n = 0;
   };
 }
