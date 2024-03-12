@@ -11,9 +11,7 @@ namespace claes {
   // T is the kind of object you wish to allocate, N the slab size
   template <typename T, size_t N>
   struct Alloc {
-    struct Slab { 
-      typename aligned_storage<sizeof(T), alignof(T)>::type slots[N]; 
-    };
+    using Slab = array<typename aligned_storage<sizeof(T), alignof(T)>::type, N>; 
     
     Slab &push_slab() {
       n = 0;
@@ -28,7 +26,7 @@ namespace claes {
       }
 
       Slab &s = (slabs.empty() || n == N) ? push_slab() : slabs.back();
-      return reinterpret_cast<T *>(&s.slots[n++]);
+      return reinterpret_cast<T *>(&s[n++]);
     }
 
     template <typename...Args>

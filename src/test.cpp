@@ -54,17 +54,18 @@ void read_tests() {
   auto [n, e] = read_forms(in, fs, loc);
   assert(!e);
   assert(n == 3);
+  
+  const auto id_form = fs.pop();
+  assert(id_form.as<forms::Id>()->name == "foo");
 
-  const auto id_form = fs.pop().as<forms::Id>();
-  assert(id_form->name == "foo");
+  const auto literal_form = fs.pop();
+  assert(literal_form.as<forms::Literal>()->value.as(types::I64::get()) == 42);
 
-  const auto literal_form = fs.pop().as<forms::Literal>();
-  assert(literal_form->value.as(types::I64::get()) == 42);
-
-  const auto call_form = fs.pop().as<forms::Call>();
-  const auto target = call_form->target.as<forms::Id>();
+  const auto call_form = fs.pop();
+  const auto call = call_form.as<forms::Call>();
+  const auto target = call->target.as<forms::Id>();
   assert(target->name == "foo");
-  const auto arg = call_form->args.peek().as<forms::Literal>();
+  const auto arg = call->args.peek().as<forms::Literal>();
   assert(arg->value.as(types::String::get()) == "bar");
 }
 
