@@ -18,7 +18,7 @@ namespace claes {
     Cell(const Cell &source): 
       type(source.type), value(source.value) {}
     
-    const Cell &operator =(const Cell &source) {
+    const Cell &operator=(const Cell &source) {
       type = source.type;
       value = source.value;
       return *this;
@@ -76,7 +76,7 @@ namespace claes {
     }
   };
 
-  inline bool operator ==(const Cell &left, const Cell &right) {
+  inline bool operator==(const Cell &left, const Cell &right) {
     if (left.type != right.type) {
       return false;
     }
@@ -92,7 +92,7 @@ namespace claes {
     return left.type <=> right.type;
   }
 
-  inline ostream &operator <<(ostream &out, const Cell &cell) {
+  inline ostream &operator<<(ostream &out, const Cell &cell) {
     cell.dump(out);
     return out;
   }
