@@ -8,9 +8,10 @@
 namespace claes {
   using namespace std;
   
-  // T is the kind of object you wish to allocate, N the slab size
+  // T is the kind of object to be allocated, N the slab size
   template <typename T, size_t N>
   struct Alloc {
+    //A slab is a properly aligned chunk of memory with space for N objects
     using Slab = array<typename aligned_storage<sizeof(T), alignof(T)>::type, N>; 
     
     Slab &push_slab() {
@@ -40,7 +41,7 @@ namespace claes {
       free_slots.push_back(pointer);
     }
 
-    // Using a deque instead of vector here since we need stable pointers
+    // Using deque instead of vector here since we need stable pointers
     deque<Slab> slabs;
     vector<T *> free_slots;
 
