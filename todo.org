@@ -24,11 +24,3 @@
 *** use instead of delete
 ** benchmark
 
-
-  (^ fib[n]
-    (say n)
-    (if (< n 2) n (+ (fib (- n 1)) (fib (- n 2)))))
-
-1:2
-1:2:3
-
