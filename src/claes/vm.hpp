@@ -72,6 +72,7 @@ namespace claes {
 
     E eval(const PC start_pc, Stack &stack);
     E eval(const Form &form, Env &env, Stack &stack);
+    pair<optional<Cell>, E> eval(const Form &form, Env &env);
 
     const optional<Cell> &get_reg(const Reg &reg) const {
       const auto &f = *next(frames.rbegin(), reg.frame_offset);

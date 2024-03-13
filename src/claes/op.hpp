@@ -10,6 +10,7 @@ namespace claes {
   struct Op {
     enum struct Code {BEGIN_FRAME, BENCHMARK, BRANCH, 
 		      CALL_DIRECT, CALL_INDIRECT, CHECK,
+		      DECREMENT,
 		      END_FRAME,
 		      GET_REG, GOTO,
 		      MAKE_PAIR, MAKE_VECTOR,

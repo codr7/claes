@@ -8,6 +8,7 @@
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/read.hpp"
+#include "claes/stack.hpp"
 #include "claes/vm.hpp"
 
 namespace claes {
@@ -28,6 +29,16 @@ namespace claes {
     }
 
     return nullopt;
+  }
+
+  pair<optional<Cell>, E> VM::eval(const Form &form, Env &env) {
+    Stack stack;
+
+    if (auto e = eval(form, env, stack); e) {
+      return make_pair(nullopt, e);
+    }
+
+    return make_pair(stack.pop(), nullopt);
   }
 
   E VM::load(fs::path path, Env &env, const Loc &loc) {

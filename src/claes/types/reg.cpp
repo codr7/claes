@@ -9,10 +9,10 @@ namespace claes::types {
   }
 
   E Reg::emit_id(const Cell &value,
-		      VM &vm, 
-		      Env &env, 
-		      Forms &args,
-		      const Loc &loc) const {
+		 VM &vm, 
+		 Env &env, 
+		 Forms &args,
+		 const Loc &loc) const {
     vm.emit<ops::GetReg>(value.as(get()));
     return nullopt;
   }

@@ -6,6 +6,7 @@
 #include "claes/ops/call_direct.hpp"
 #include "claes/ops/call_indirect.hpp"
 #include "claes/ops/check.hpp"
+#include "claes/ops/decrement.hpp"
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
@@ -30,6 +31,7 @@ namespace claes {
     static const void* dispatch[] = {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
 	&&CALL_DIRECT, &&CALL_INDIRECT, &&CHECK,
+	&&DECREMENT,
 	&&END_FRAME,
 	&&GET_REG, &&GOTO,
 	&&MAKE_PAIR, &&MAKE_VECTOR,
@@ -109,6 +111,15 @@ namespace claes {
 
     DISPATCH(pc);
 
+  DECREMENT: {
+      const auto &d = op.as<ops::Decrement>();
+      auto &v = get_reg(d.target_reg);
+      v->as(types::I64::get()) -= d.delta;
+      stack.push(*v);
+    }
+
+    DISPATCH(pc+1);
+
   END_FRAME: {
       end_frame();
     }
@@ -152,8 +163,8 @@ namespace claes {
     DISPATCH(pc+1);
 
   PUSH_VALUES: {
-      const auto pvo = op.as<ops::PushValues>();
-      auto &target = get_reg(pvo.target_reg);
+      const auto pv = op.as<ops::PushValues>();
+      auto &target = get_reg(pv.target_reg);
 
       struct Rec {
 	static void call(int arity, Cell &target, Stack &stack) {
@@ -165,7 +176,7 @@ namespace claes {
 	}
       };
       
-      Rec::call(pvo.n, *target, stack);
+      Rec::call(pv.n, *target, stack);
     }
 
     DISPATCH(pc+1);

@@ -1,9 +1,10 @@
 4693
 2388
 
-* add increment/decrement/zero ops
-** require target regs
-** delta field in ops
+* add zero op
+** require target reg like decrement
+** add Zero op
+** add =0 macro
 ** benchmark
 
 * add ref support
@@ -45,4 +46,5 @@
 * use vm specific alloc for Ref imps
 * use vm specific alloc for Env imps
 
-
+* add increment op
+** like decrement
