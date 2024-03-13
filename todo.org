@@ -6,6 +6,10 @@
 
 * skip decrement delta
 
+* add Cell::say
+** override for string
+** use in say
+
 * add zero op
 ** require target reg like decrement
 ** add Zero op
