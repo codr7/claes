@@ -302,6 +302,32 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_method("dump", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  struct Rec {
+		    static void call(Stack &stack, const int i, const int max) {
+		      if (i < max) {
+			const auto v = stack.pop();
+			call(stack, i+1, max);
+
+			if (i != max-1) {
+			  cout << ' ' << v;
+			} else {
+			  cout << v;
+			}
+		      }
+		    }
+		  };
+		  
+		  Rec::call(stack, 0, arity);
+		  cout << endl;
+		  return nullopt;
+		});
+
     bind_macro("if", 
 	       [](const Macro self, 
 		  VM &vm, 
@@ -459,10 +485,10 @@ namespace claes::libs {
 			call(stack, i+1, max);
 
 			if (i != max-1) {
-			  cout << ' ' << v;
-			} else {
-			  cout << v;
-			}
+			  cout << ' ';
+			} 
+
+			v.say(cout);
 		      }
 		    }
 		  };

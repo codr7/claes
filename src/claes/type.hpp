@@ -58,6 +58,10 @@ namespace claes {
       }
 
       virtual void push(Cell &target, const Cell &item) const;
+      
+      virtual void say(const Cell &value, ostream &out) const {
+	dump(value, out);
+      }
     };
 
     shared_ptr<const Imp> imp;
@@ -116,6 +120,10 @@ namespace claes {
     }
 
     void push(Cell &target, const Cell &item) const;
+
+    void say(const Cell &value, ostream &out) const {
+      imp->say(value, out);
+    }
   };
 
   inline bool operator ==(const Type &left, const Type &right) {

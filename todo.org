@@ -1,11 +1,6 @@
 3910
 2178
 
-* add Cell::say
-** copy & rename say method to dump
-** use Cell::say in say method
-** override for string
-
 * add zero op
 ** require target reg like decrement
 ** add Zero op

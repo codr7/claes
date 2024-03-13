@@ -74,6 +74,10 @@ namespace claes {
     void push(const Cell &item) {
       type.push(*this, item);
     }
+
+    void say(ostream &out) const {
+      type.say(*this, out);
+    }
   };
 
   inline bool operator==(const Cell &left, const Cell &right) {

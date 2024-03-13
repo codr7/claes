@@ -36,6 +36,10 @@ namespace claes::types {
     virtual void push(Cell &target, const Cell &item) const override {
       target.as(get()).push_back(item.as(Rune::get()));
     }
+
+    virtual void say(const Cell &value, ostream &out) const override {
+      out << value.as(get());
+    }
   };
 }
 
