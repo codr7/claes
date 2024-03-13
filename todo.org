@@ -7,11 +7,18 @@
 ** benchmark
 
 * add ref support
-** convert vector ref type
+** convert vector to ref
+** add Ref type
 ** add & reader
 ** add Ref form
 ** add call support
 *** get without args and set with arg
+
+* add vector call support
+** get / set depending on arity
+
+* add string call support
+** get / set depending on arity
 
 * add traits::Stack::peek/pop
 ** self default
@@ -29,6 +36,10 @@
 *** return iter value
 ** push value default
 ** implement for pair/integer/vector/string
+
+* add Map type
+** add {} reader
+** Value = map<Cell, Cell>
 
 * aoc
 * use vm specific alloc for Ref imps
