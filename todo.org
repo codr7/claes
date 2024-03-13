@@ -1,14 +1,10 @@
 3910
 2178
 
-* override pair push
-** delegate to second
-
-* skip decrement delta
-
 * add Cell::say
+** copy & rename say method to dump
+** use Cell::say in say method
 ** override for string
-** use in say
 
 * add zero op
 ** require target reg like decrement

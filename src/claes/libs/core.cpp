@@ -298,17 +298,7 @@ namespace claes::libs {
 		   return Error(loc, "Invalid decrement target: ", *target);
 		 }
 
-		 types::I64::Value delta = 1;
-
-		 if (!my_args.empty()) {
-		   if (auto [v, e] = vm.eval(my_args.pop(), env); e) {
-		     return e;
-		   } else {
-		     delta = v->as(types::I64::get());
-		   }
-		 }
-
-		 vm.emit<ops::Decrement>(target->as(types::Reg::get()), delta);
+		 vm.emit<ops::Decrement>(target->as(types::Reg::get()));
 		 return nullopt;
 	       });
 

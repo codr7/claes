@@ -114,7 +114,7 @@ namespace claes {
   DECREMENT: {
       const auto &d = op.as<ops::Decrement>();
       auto &v = get_reg(d.target_reg);
-      v->as(types::I64::get()) -= d.delta;
+      v->as(types::I64::get())--;
       stack.push(*v);
     }
 

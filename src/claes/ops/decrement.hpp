@@ -9,13 +9,12 @@ namespace claes::ops {
   
   struct Decrement: Op::Imp {
     Reg target_reg;
-    types::I64::Value delta;
     
-    Decrement(const Reg target_reg, types::I64::Value delta): 
-      Op::Imp(Op::Code::DECREMENT), target_reg(target_reg), delta(delta) {}
+    Decrement(const Reg target_reg): 
+      Op::Imp(Op::Code::DECREMENT), target_reg(target_reg) {}
     
     virtual void trace(ostream &out) const override {
-      out << "Decrement target_reg: " << target_reg << " delta: " << delta;
+      out << "Decrement target_reg: " << target_reg;
     }
   };
 }
