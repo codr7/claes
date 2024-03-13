@@ -1,5 +1,10 @@
-4693
-2388
+3910
+2178
+
+* override pair push
+** delegate to second
+
+* skip decrement delta
 
 * add zero op
 ** require target reg like decrement

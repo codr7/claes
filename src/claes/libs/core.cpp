@@ -291,11 +291,11 @@ namespace claes::libs {
 		 const auto target = env.find(target_name);
 		 
 		 if (!target) {
-		   return Error(loc, "Unknown push destination: ", target_name);
+		   return Error(loc, "Unknown decrement target: ", target_name);
 		 }
 
 		 if (target->type != types::Reg::get()) {
-		   return Error(loc, "Invalid push destination: ", *target);
+		   return Error(loc, "Invalid decrement target: ", *target);
 		 }
 
 		 types::I64::Value delta = 1;
@@ -462,14 +462,22 @@ namespace claes::libs {
 		   Stack &stack, 
 		   int arity,
 		   const Loc &loc) -> E {
-		  for (int i = 0; i < arity; i++) {
-		    if (i) {
-		      cout << ' ';
+		  struct Rec {
+		    static void call(Stack &stack, const int i, const int max) {
+		      if (i < max) {
+			const auto v = stack.pop();
+			call(stack, i+1, max);
+
+			if (i != max-1) {
+			  cout << ' ' << v;
+			} else {
+			  cout << v;
+			}
+		      }
 		    }
-		    
-		    cout << stack.pop();
-		  }
- 
+		  };
+		  
+		  Rec::call(stack, 0, arity);
 		  cout << endl;
 		  return nullopt;
 		});
