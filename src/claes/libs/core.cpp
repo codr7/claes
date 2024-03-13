@@ -85,39 +85,6 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_macro("-1", 
-	       [](const Macro self, 
-		  VM &vm, 
-		  Env &env, 
-		  const Forms &args, 
-		  const Loc &loc) -> E {
-		 Forms my_args(args);
-		 const auto target_form = my_args.pop();
-		 const auto target_name = target_form.as<forms::Id>()->name;
-		 const auto target = env.find(target_name);
-		 
-		 if (!target) {
-		   return Error(loc, "Unknown push destination: ", target_name);
-		 }
-
-		 if (target->type != types::Reg::get()) {
-		   return Error(loc, "Invalid push destination: ", *target);
-		 }
-
-		 types::I64::Value delta = 1;
-
-		 if (!my_args.empty()) {
-		   if (auto [v, e] = vm.eval(my_args.pop(), env); e) {
-		     return e;
-		   } else {
-		     delta = v->as(types::I64::get());
-		   }
-		 }
-
-		 vm.emit<ops::Decrement>(target->as(types::Reg::get()), delta);
-		 return nullopt;
-	       });
-
     bind_method("=", 
 		[](const Method self, 
 		   VM &vm, 
@@ -309,6 +276,39 @@ namespace claes::libs {
 		 }
 		   
 		 vm.emit<ops::Stop>();
+		 return nullopt;
+	       });
+
+    bind_macro("dcr", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		 const auto target_form = my_args.pop();
+		 const auto target_name = target_form.as<forms::Id>()->name;
+		 const auto target = env.find(target_name);
+		 
+		 if (!target) {
+		   return Error(loc, "Unknown push destination: ", target_name);
+		 }
+
+		 if (target->type != types::Reg::get()) {
+		   return Error(loc, "Invalid push destination: ", *target);
+		 }
+
+		 types::I64::Value delta = 1;
+
+		 if (!my_args.empty()) {
+		   if (auto [v, e] = vm.eval(my_args.pop(), env); e) {
+		     return e;
+		   } else {
+		     delta = v->as(types::I64::get());
+		   }
+		 }
+
+		 vm.emit<ops::Decrement>(target->as(types::Reg::get()), delta);
 		 return nullopt;
 	       });
 

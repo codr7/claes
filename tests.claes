@@ -27,7 +27,12 @@
 
 (check 2
   (let [x 3]
-    (-1 x)))
+    (dcr x)))
+
+(check 2
+  (let [x 3]
+    (dcr x)
+    x))
 
 (check 1
   (if T 1 2))
