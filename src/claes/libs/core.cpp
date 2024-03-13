@@ -9,6 +9,7 @@
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_reg.hpp"
+#include "claes/ops/push_values.hpp"
 #include "claes/ops/return.hpp"
 #include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
@@ -392,27 +393,35 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("push", 
-		[](const Method self, 
-		   VM &vm, 
-		   Stack &stack, 
-		   int arity,
-		   const Loc &loc) -> E {
-		  struct Rec {
-		    static Cell call(int arity, Stack &stack) {
-		      if (--arity) {
-			const auto v = stack.pop();
-			return call(arity, stack).push(v);
-		      }
-		    
-		      return stack.pop();
-		    }
-		  };
+    bind_macro("push", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		 const auto target_form = my_args.pop();
+		 const auto target_name = target_form.as<forms::Id>()->name;
+		 const auto target = env.find(target_name);
 
-		  stack.push(Rec::call(arity, stack));
-		  return nullopt;
-		});
+		 if (!target) {
+		   return Error(loc, "Unknown push destination: ", target_name);
+		 }
 
+		 if (target->type != types::Reg::get()) {
+		   return Error(loc, "Invalid push destination: ", *target);
+		 }
+
+		 const auto arity = my_args.items.size();
+
+		 if (auto e = my_args.emit(vm, env); e) {
+		   return e;
+		 }
+
+		 vm.emit<ops::PushValues>(loc, target->as(types::Reg::get()), arity);
+		 return nullopt;
+	       });
+    
     bind_method("say", 
 		[](const Method self, 
 		   VM &vm, 

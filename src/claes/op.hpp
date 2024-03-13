@@ -13,7 +13,7 @@ namespace claes {
 		      END_FRAME,
 		      GET_REG, GOTO,
 		      MAKE_PAIR, MAKE_VECTOR,
-		      PUSH, PUSH_ITEM, PUSH_REG, 
+		      PUSH, PUSH_REG, PUSH_VALUES, PUSH_VECTOR_ITEM,
 		      RETURN,
 		      SET_PATH, SET_REG, STOP, 
 		      TODO, TRACE};

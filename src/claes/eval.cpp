@@ -9,6 +9,7 @@
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
+#include "claes/ops/push_values.hpp"
 #include "claes/ops/set_path.hpp"
 #include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
@@ -32,7 +33,7 @@ namespace claes {
 	&&END_FRAME,
 	&&GET_REG, &&GOTO,
 	&&MAKE_PAIR, &&MAKE_VECTOR,
-	&&PUSH, &&PUSH_ITEM, &&PUSH_REG,
+	&&PUSH, &&PUSH_REG, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
 	&&RETURN,
 	&&SET_PATH, &&SET_REG, &&STOP,
 	&&TODO, &&TRACE};
@@ -144,17 +145,36 @@ namespace claes {
 
     DISPATCH(pc+1);
 
-  PUSH_ITEM: {
-      const auto item = stack.pop();
-      stack.peek().as(types::Vector::get()).imp->items.push_back(item);
-    }
-    
-    DISPATCH(pc+1);
-
   PUSH_REG: {
       push_reg(stack.pop());
     }
 
+    DISPATCH(pc+1);
+
+  PUSH_VALUES: {
+      const auto pvo = op.as<ops::PushValues>();
+      auto &target = get_reg(pvo.target_reg);
+
+      struct Rec {
+	static void call(int arity, Cell &target, Stack &stack) {
+	  if (arity--) {
+	    const auto v = stack.pop();
+	    call(arity, target, stack);
+	    target.push(v);
+	  }
+	}
+      };
+      
+      Rec::call(pvo.n, *target, stack);
+    }
+
+    DISPATCH(pc+1);
+
+  PUSH_VECTOR_ITEM: {
+      const auto item = stack.pop();
+      stack.peek().as(types::Vector::get()).imp->items.push_back(item);
+    }
+    
     DISPATCH(pc+1);
 
   RETURN: {

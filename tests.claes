@@ -50,16 +50,24 @@
   (> 3 2 2))
 
 (check 42
-  (push _ 42))
+  (let [x _] 
+    (push x 42)
+    x))
 
 (check 1:2
-  (push 1 2))
+  (let [x 2]
+    (push x 1)
+    x))
 
 (check "abc"
-  (push "ab" \c))
+  (let [x "a"]
+    (push x \b \c)
+    x))
 
 (check [1 2 3]
-  (push [] 1 2 3))
+  (let [x [1]]
+    (push x 2 3)
+    x))
 
 (check 42
   (^ foo [] 42)
@@ -69,13 +77,10 @@
   (^ foo [x] x)
   (foo 42))
 
-(check 55
-  (^ fib[n]
-    (if (< n 2) n (+ (fib (- n 1)) (fib (- n 2)))))
-
-  (fib 10))
+(load (path "fib.claes"))
 
 (check 55
-  (^ fib[n a b]
-    (if (> n 1) (fib (- n 1) b (+ a b)) (if (= n 0) a b)))
-  (fib 10 0 1))
+  (fib-rec 10))
+
+(check 55
+  (fib-tail 10 0 1))

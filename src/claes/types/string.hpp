@@ -33,10 +33,8 @@ namespace claes::types {
       return !value.as(get()).empty();
     }
 
-    virtual Cell push(const Cell &target, const Cell &item) const override {
-      auto s = target.as(get());
-      s.push_back(item.as(Rune::get()));
-      return Cell(get(), s);
+    virtual void push(Cell &target, const Cell &item) const override {
+      target.as(get()).push_back(item.as(Rune::get()));
     }
   };
 }

@@ -64,9 +64,8 @@ namespace claes::types {
       return !value.as(get()).imp->items.empty();
     }
 
-    virtual Cell push(const Cell &target, const Cell &item) const override {
+    virtual void push(Cell &target, const Cell &item) const override {
       target.as(get()).imp->items.push_back(item);
-      return target;
     }
   };
 }

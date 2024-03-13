@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <ostream>
+
 #include "claes/cell.hpp"
 #include "claes/type.hpp"
 
@@ -36,8 +37,8 @@ namespace claes::types {
       return false;
     }
 
-    virtual Cell push(const Cell &target, const Cell &item) const override {
-      return item;
+    virtual void push(Cell &target, const Cell &item) const override {
+      target = item;
     }
   };
 }

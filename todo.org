@@ -1,10 +1,24 @@
 4693
 2388
 
-* add Cell/Type.peek/pop
+* add increment/decrement/zero ops
+** require target regs
+** delta field in ops
+** benchmark
+
+* add ref support
+** convert vector ref type
+** add & reader
+** add Ref form
+** add call support
+*** get without args and set with arg
+
+* add traits::Stack::peek/pop
 ** self default
+*** set nil on pop
 ** first för pair
 ** peek/pop för vector/string
+** pop for i64
 
 * add for macro
 
@@ -17,10 +31,7 @@
 ** implement for pair/integer/vector/string
 
 * aoc
-
+* use vm specific alloc for Ref imps
 * use vm specific alloc for Env imps
-** pass to constructor
-*** add field
-*** use instead of delete
-** benchmark
+
 

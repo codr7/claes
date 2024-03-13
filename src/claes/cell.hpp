@@ -71,8 +71,8 @@ namespace claes {
       return type.is_true(*this); 
     }
 
-    Cell push(const Cell &item) const {
-      return type.push(*this, item);
+    void push(const Cell &item) {
+      type.push(*this, item);
     }
   };
 

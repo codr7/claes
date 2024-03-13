@@ -1,3 +1,4 @@
+#include <cerrno>
 #include <fstream>
 #include <iostream>
 
@@ -32,11 +33,11 @@ namespace claes {
   E VM::load(fs::path path, Env &env, const Loc &loc) {
     const auto p = this->path / path;
     const auto prev_path = this->path;
-    this->path = p.root_path();
+    this->path = p.root_path() / p.relative_path().remove_filename();
     ifstream in(p);
-      
+     
     if (in.fail()) {
-      return Error(loc, "Failed opening file: ", p);
+      return Error(loc, "Failed opening file ", p, ":\n", strerror(errno));
     }
 
     Loc load_loc(path, 1, 1);

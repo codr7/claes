@@ -57,7 +57,7 @@ namespace claes {
 	return true;
       }
 
-      virtual Cell push(const Cell &target, const Cell &item) const;
+      virtual void push(Cell &target, const Cell &item) const;
     };
 
     shared_ptr<const Imp> imp;
@@ -115,7 +115,7 @@ namespace claes {
       return imp->is_true(value);
     }
 
-    Cell push(const Cell &target, const Cell &item) const;
+    void push(Cell &target, const Cell &item) const;
   };
 
   inline bool operator ==(const Type &left, const Type &right) {

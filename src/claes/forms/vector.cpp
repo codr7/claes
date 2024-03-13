@@ -1,6 +1,6 @@
 #include "claes/forms/vector.hpp"
 #include "claes/ops/make_vector.hpp"
-#include "claes/ops/push_item.hpp"
+#include "claes/ops/push_vector_item.hpp"
 #include "claes/vm.hpp"
 
 namespace claes::forms {
@@ -12,7 +12,7 @@ namespace claes::forms {
 	return e;
       }
 
-      vm.emit<ops::PushItem>();
+      vm.emit<ops::PushVectorItem>();
     }
 
     return nullopt;
