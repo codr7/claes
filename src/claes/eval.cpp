@@ -118,7 +118,11 @@ namespace claes {
   CHECK: {
       const auto expected = stack.pop();
       Stack s;
-      eval(pc+1, s);
+
+      if (auto e = eval(pc+1, s); e) {
+	return e;
+      }
+      
       const auto actual = s.pop();
 
       if (actual != expected) {

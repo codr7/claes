@@ -23,7 +23,8 @@
       
       vm.emit<ops::SetRef>(found->as(types::Reg::get()));
 
-* try changing Cell/Type::call target to non const
+* implement Ref.call
+** change Cell/Type::call target to non const
 
 * add ref support
 ** add call support
