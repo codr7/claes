@@ -3,6 +3,7 @@
 
 #include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
+#include "claes/forms/ref.hpp"
 #include "claes/forms/pair.hpp"
 #include "claes/forms/literal.hpp"
 #include "claes/forms/vector.hpp"
@@ -60,12 +61,15 @@ namespace claes {
   ReadT read_form(istream &in, Forms &out, Loc &loc) {
     const vector<Reader> readers {
       read_ws, 
+
+      read_call,
       read_i64, 
+      read_pair,
+      read_ref,
       read_rune,
       read_string,
-      read_pair,
       read_vector,
-      read_call,
+
       read_id
     };
     
@@ -175,6 +179,31 @@ namespace claes {
       }
     }
 
+    return ReadT(true, nullopt);
+  }
+
+  ReadT read_ref(istream &in, Forms &out, Loc &loc) {
+    char c = 0;
+
+    if (!in.get(c)) { 
+      return ReadT(false, nullopt); 
+    }
+
+    if (c != '&') {
+      in.unget();
+      return ReadT(false, nullopt);
+    }
+
+    const auto form_loc = loc;
+    loc.column++;
+
+    if (auto ok = read_form(in, out, loc); ok.second) {
+      return ok;
+    } else if (!ok.first) {
+      return ReadT(false, Error(loc, "Invalid reference"));
+    }
+
+    out.push<forms::Ref>(form_loc, out.pop_back());
     return ReadT(true, nullopt);
   }
 

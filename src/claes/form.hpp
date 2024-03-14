@@ -23,11 +23,8 @@ namespace claes {
       virtual ~Imp() {}
       virtual void dump(ostream &out) const = 0;
       virtual E emit(VM &vm, Env &env, Forms &args) const = 0;
-      
-      virtual E emit_call(VM &vm, 
-			  Env &env, 
-			  const Forms &args, 
-			  const Loc &loc) const;
+      virtual E emit_call(VM &vm, Env &env, const Forms &args, const Loc &loc) const;
+      virtual E emit_ref(VM &vm, Env &env, Forms &args, const Loc &loc) const;
     };
 
     shared_ptr<const Imp> imp;
@@ -47,6 +44,13 @@ namespace claes {
 		const Forms &args, 
 		const Loc &loc) const {
       return imp->emit_call(vm, env, args, loc);
+    }
+
+    E emit_ref(VM &vm, 
+	       Env &env, 
+	       Forms &args, 
+	       const Loc &loc) const {
+      return imp->emit_ref(vm, env, args, loc);
     }
   };
 

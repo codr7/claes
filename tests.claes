@@ -85,6 +85,14 @@
     x))
 
 (check 42
+  (&42))
+
+(check &2
+  (let [x &1]
+    (x 2)
+    x))
+
+(check 42
   (^ foo [] 42)
   (foo))
 

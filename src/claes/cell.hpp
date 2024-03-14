@@ -67,6 +67,13 @@ namespace claes {
       return type.emit_literal(*this, vm, env, args, loc);
     }
 
+    E emit_ref(VM &vm, 
+	       Env &env, 
+	       Forms &args,
+	       const Loc &loc) const {
+      return type.emit_ref(*this, vm, env, args, loc);
+    }
+
     bool is_true() const { 
       return type.is_true(*this); 
     }

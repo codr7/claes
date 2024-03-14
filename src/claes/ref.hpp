@@ -9,6 +9,8 @@ namespace claes {
       Cell value;
       int ref_count = 1;
 
+      Imp(const Cell &value): value(value) {}
+      
       void deref() {
 	if (!--ref_count) {
 	  delete this;
@@ -18,7 +20,7 @@ namespace claes {
 
     Imp *imp;
 
-    Ref(): imp(new Imp()) {}
+    Ref(const Cell &value): imp(new Imp(value)) {}
     
     Ref(const Ref &source): imp(source.imp) {
       imp->ref_count++;

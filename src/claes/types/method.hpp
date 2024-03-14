@@ -38,6 +38,12 @@ namespace claes::types {
 			const Forms &args,
 			const Loc &loc) const override;
 
+    virtual E emit_ref(const Cell &value,
+		       VM &vm, 
+		       Env &env, 
+		       Forms &args,
+		       const Loc &loc) const override;
+
     virtual bool eq(const Cell &left, const Cell &right) const override;
   };
 }

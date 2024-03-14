@@ -24,6 +24,11 @@ namespace claes::forms {
 			Env &env, 
 			const Forms &arguments, 
 			const Loc &loc) const override;
+
+    virtual E emit_ref(VM &vm, 
+		       Env &env, 
+		       Forms &arguments, 
+		       const Loc &loc) const override;
   };
 }
 

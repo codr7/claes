@@ -51,6 +51,12 @@ namespace claes {
 			     Forms &args,
 			     const Loc &loc) const;
 
+      virtual E emit_ref(const Cell &value,
+			 VM &vm, 
+			 Env &env, 
+			 Forms &args,
+			 const Loc &loc) const;
+
       virtual bool eq(const Cell &left, const Cell &right) const = 0;
 
       virtual bool is_true(const Cell &value) const {
@@ -109,6 +115,14 @@ namespace claes {
 		   Forms &args,
 		   const Loc &loc) const {
       return imp->emit_literal(value, vm, env, args, loc);
+    }
+
+    E emit_ref(const Cell &value,
+	       VM &vm, 
+	       Env &env, 
+	       Forms &args,
+	       const Loc &loc) const {
+      return imp->emit_ref(value, vm, env, args, loc);
     }
     
     bool eq(const Cell &left, const Cell &right) const {

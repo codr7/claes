@@ -14,7 +14,7 @@ namespace claes::types {
     using Value = int64_t;
 
     static TType<I64> get() {
-      static TType<I64> t("Í64");
+      static TType<I64> t("I64");
       return t;
     } 
     

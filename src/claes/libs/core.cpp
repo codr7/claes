@@ -24,6 +24,7 @@
 #include "claes/types/nil.hpp"
 #include "claes/types/pair.hpp"
 #include "claes/types/path.hpp"
+#include "claes/types/ref.hpp"
 #include "claes/types/reg.hpp"
 #include "claes/types/string.hpp"
 #include "claes/types/vector.hpp"
@@ -39,6 +40,7 @@ namespace claes::libs {
     bind_type(types::Nil::get());
     bind_type(types::Pair::get());
     bind_type(types::Path::get());
+    bind_type(types::Ref::get());
     bind_type(types::Reg::get());
     bind_type(types::Rune::get());
     bind_type(types::String::get());

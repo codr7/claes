@@ -5,13 +5,16 @@
 #include "claes/ops/branch.hpp"
 #include "claes/ops/call_direct.hpp"
 #include "claes/ops/call_indirect.hpp"
+#include "claes/ops/call_reg.hpp"
 #include "claes/ops/check.hpp"
 #include "claes/ops/decrement.hpp"
+#include "claes/ops/deref.hpp"
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_values.hpp"
 #include "claes/ops/set_path.hpp"
+#include "claes/ops/set_ref.hpp"
 #include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
@@ -19,6 +22,7 @@
 #include "claes/timer.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/pair.hpp"
+#include "claes/types/ref.hpp"
 #include "claes/types/vector.hpp"
 #include "claes/vm.hpp"
 
@@ -31,15 +35,15 @@ namespace claes {
   E VM::eval(const PC start_pc, Stack &stack) {
     static const void* dispatch[] = {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
-	&&CALL_DIRECT, &&CALL_INDIRECT, &&CHECK,
-	&&DECREMENT,
-	&&END_FRAME, &&EQZ,
-	&&GET_REG, &&GOTO,
-	&&MAKE_PAIR, &&MAKE_VECTOR,
-	&&PUSH, &&PUSH_REG, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
-	&&RETURN,
-	&&SET_PATH, &&SET_REG, &&STOP,
-	&&TODO, &&TRACE};
+      &&CALL_DIRECT, &&CALL_INDIRECT, &&CALL_REG, &&CHECK,
+      &&DECREMENT, &&DEREF, 
+      &&END_FRAME, &&EQZ,
+      &&GET_REG, &&GOTO,
+      &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
+      &&PUSH, &&PUSH_REG, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
+      &&RETURN,
+      &&SET_PATH, &&SET_REF, &&SET_REG, &&STOP,
+      &&TODO, &&TRACE};
 
     Op op;
     DISPATCH(start_pc);
@@ -98,6 +102,18 @@ namespace claes {
     
     DISPATCH(pc);
 
+  CALL_REG: {
+      const auto &cr = op.as<ops::CallReg>();
+      const auto &t = get_reg(cr.target_reg);
+      pc++;
+
+      if (auto e = t->call(*this, stack, cr.arity, cr.loc); e) {
+	return e;
+      }
+    }
+    
+    DISPATCH(pc);
+
   CHECK: {
       const auto expected = stack.pop();
       Stack s;
@@ -119,6 +135,12 @@ namespace claes {
       stack.push(*v);
     }
 
+    DISPATCH(pc+1);
+
+  DEREF: {
+      stack.push(stack.pop().as(types::Ref::get()).imp->value);
+    }
+    
     DISPATCH(pc+1);
 
   END_FRAME: {
@@ -147,8 +169,15 @@ namespace claes {
 
   MAKE_PAIR: {
       auto right = stack.pop();
-      auto left = stack.pop();
-      stack.push(types::Pair::get(), make_pair(left, right));
+      auto &left = stack.peek();
+      left = Cell(types::Pair::get(), make_pair(left, right));
+    }
+    
+    DISPATCH(pc+1);
+
+  MAKE_REF: {
+      auto &target = stack.peek();
+      target = Cell(types::Ref::get(), Ref(target));
     }
     
     DISPATCH(pc+1);
@@ -207,6 +236,13 @@ namespace claes {
 
   SET_PATH: {
       path = op.as<ops::SetPath>().path;
+    }
+
+    DISPATCH(pc+1);
+
+  SET_REF: {
+      auto &r = get_reg(op.as<ops::SetRef>().target_reg)->as(types::Ref::get());
+      r.imp->value = stack.pop();
     }
 
     DISPATCH(pc+1);

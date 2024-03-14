@@ -1,10 +1,29 @@
 3773
 2064
 
+      forms::Id *t;
+
+      if (t = target.as(forms::Id); !t) {
+	return Error(loc, "Invalid reference update target: ", target);
+      }
+      
+      auto found = env.find(t->name);
+
+      if (!found) {
+	return Error(loc, "Unknown identifier: ", t->name);
+      }
+
+      if (found->type != types::Reg::get()) {
+	return Error(loc, "Invalid reference update target: " + *found);
+      }
+
+      if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+	return e;
+      }
+      
+      vm.emit<ops::SetRef>(found->as(types::Reg::get()));
+
 * add ref support
-** add & reader
-** add Ref type
-** add Ref form
 ** add call support
 *** get without args and set with arg
 

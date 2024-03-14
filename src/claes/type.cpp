@@ -1,8 +1,8 @@
 #include "claes/cell.hpp"
 #include "claes/ops/push.hpp"
-//#include "claes/stack.hpp"
 #include "claes/type.hpp"
 #include "claes/types/pair.hpp"
+#include "claes/types/ref.hpp"
 #include "claes/vm.hpp"
 
 namespace claes {
@@ -28,6 +28,15 @@ namespace claes {
 			    Forms &args,
 			    const Loc &loc) const {
     vm.emit<ops::Push>(value);
+    return nullopt;
+  }
+
+  E Type::Imp::emit_ref(const Cell &value,
+			VM &vm, 
+			Env &env, 
+			Forms &args,
+			const Loc &loc) const {
+    vm.emit<ops::Push>(Cell(types::Ref::get(), Ref(value)));
     return nullopt;
   }
 
