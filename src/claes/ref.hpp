@@ -37,6 +37,11 @@ namespace claes {
       return *this;
     }
   };
+
+  inline ostream &operator<<(ostream &out, const Ref &r) {
+    out << r.imp->value;
+    return out;
+  }
 }
 
 #endif

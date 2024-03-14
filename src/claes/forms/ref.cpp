@@ -1,6 +1,7 @@
 #include "claes/env.hpp"
 #include "claes/forms/ref.hpp"
 #include "claes/ops/deref.hpp"
+#include "claes/ops/set_ref.hpp"
 #include "claes/vm.hpp"
 
 namespace claes::forms {
@@ -17,9 +18,18 @@ namespace claes::forms {
       }
       
       vm.emit<ops::Deref>();
-      return nullopt;
+    } else {
+      if (auto e = emit(vm, env, my_args); e) {
+	return e;
+      }      
+
+      if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+	return e;
+      }
+      
+      vm.emit<ops::SetRef>();
     } 
     
-    return Error(loc, "Invalid reference update target: &", target);
+    return nullopt;
   }
 }

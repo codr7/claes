@@ -15,6 +15,7 @@
 #include "claes/ops/push_values.hpp"
 #include "claes/ops/set_path.hpp"
 #include "claes/ops/set_ref.hpp"
+#include "claes/ops/set_ref_direct.hpp"
 #include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/ops/todo.hpp"
@@ -42,7 +43,7 @@ namespace claes {
       &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
       &&PUSH, &&PUSH_REG, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
       &&RETURN,
-      &&SET_PATH, &&SET_REF, &&SET_REG, &&STOP,
+      &&SET_PATH, &&SET_REF, &&SET_REF_DIRECT, &&SET_REG, &&STOP,
       &&TODO, &&TRACE};
 
     Op op;
@@ -241,8 +242,16 @@ namespace claes {
     DISPATCH(pc+1);
 
   SET_REF: {
-      auto &r = get_reg(op.as<ops::SetRef>().target_reg)->as(types::Ref::get());
-      r.imp->value = stack.pop();
+      const auto v = stack.pop();
+      auto &r = stack.peek().as(types::Ref::get());
+      r.imp->value = v;
+    }
+
+    DISPATCH(pc+1);
+
+  SET_REF_DIRECT: {
+      const auto v = stack.pop();
+      op.as<ops::SetRefDirect>().target.imp->value = v;
     }
 
     DISPATCH(pc+1);
