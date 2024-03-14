@@ -36,6 +36,22 @@ namespace claes {
       items.emplace_back(type, value);
     }
   };
+
+  inline ostream &operator<<(ostream &out, const Stack &s) {
+    out << '[';
+    auto i = 0;
+    
+    for (const auto &v: s.items) {
+      if (i++) {
+	out << ' ';
+      }
+      
+      out << v;
+    }
+    
+    out << ']';
+    return out;
+  }
 }
 
 #endif

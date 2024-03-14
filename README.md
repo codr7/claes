@@ -61,6 +61,23 @@ New runtime bindings may be introduced using `let`.
 3
 ```
 
+## methods
+New methods may be defined using `^`.
+
+```
+  (^ foo [x]
+    x)
+
+  (foo 42)
+```
+
+Leaving out the name creates a lambda.
+
+```
+  (let [f (^ [x] x)]
+    (call f 42))
+```
+
 ## references
 Most types are value types; that is, you can't modify their values outside of the scope they are bound in. References reintroduce action at a distance in a more explicit manner. New references may be formed by prefixing any expression with `&`.
 

@@ -292,6 +292,26 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_method("call", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  Stack s;
+
+		  const auto
+		    i = next(stack.items.begin(), 1),
+		    j = next(stack.items.begin(), arity);
+		  
+		  move(i, j, back_inserter(s.items));
+		  stack.items.erase(i, j);
+		  auto target = stack.pop();
+		  auto e = target.call(vm, s, s.items.size(), loc);
+		  stack = s;
+		  return e;
+		});
+    
     bind_macro("check", 
 	       [](const Macro self, 
 		  VM &vm, 

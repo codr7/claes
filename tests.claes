@@ -107,6 +107,9 @@
   (^ foo [x] x)
   (foo 42))
 
+(check 42
+ (call (^ [x] x) 42))
+
 (load (path "fib.claes"))
 
 (check 55
