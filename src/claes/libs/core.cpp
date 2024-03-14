@@ -298,18 +298,11 @@ namespace claes::libs {
 		   Stack &stack, 
 		   int arity,
 		   const Loc &loc) -> E {
-		  Stack s;
-
-		  const auto
-		    i = next(stack.items.begin(), 1),
-		    j = next(stack.items.begin(), arity);
-		  
-		  move(i, j, back_inserter(s.items));
-		  stack.items.erase(i, j);
+		  rotate(stack.items.rbegin(),
+			 stack.items.rbegin() + 1,
+			 stack.items.rend());
 		  auto target = stack.pop();
-		  auto e = target.call(vm, s, s.items.size(), loc);
-		  stack = s;
-		  return e;
+		  return target.call(vm, stack, arity-1, loc);
 		});
     
     bind_macro("check", 
