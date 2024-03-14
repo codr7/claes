@@ -27,11 +27,11 @@
 
 (check 2
   (let [x 3]
-    (dcr x)))
+    (-1 x)))
 
 (check 2
   (let [x 3]
-    (dcr x)
+    (-1 x)
     x))
 
 (check 1
