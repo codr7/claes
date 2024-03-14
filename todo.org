@@ -26,10 +26,6 @@
 * implement Ref.call
 ** change Cell/Type::call target to non const
 
-* add ref support
-** add call support
-*** get without args and set with arg
-
 * add vector call support
 ** get / set depending on arity
 
