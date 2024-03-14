@@ -14,7 +14,7 @@ namespace claes {
     return imp->clone(value);
   }
 
-  E Type::Imp::call(const Cell &target, 
+  E Type::Imp::call(Cell &target, 
 		    VM &vm, 
 		    Stack &stack, 
 		    int arity,

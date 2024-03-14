@@ -84,7 +84,8 @@ namespace claes {
       const auto &cd = op.as<ops::CallDirect>();
       pc++;
 
-      if (auto e = cd.target.call(*this, stack, cd.arity, cd.loc); e) {
+      auto t = cd.target;
+      if (auto e = t.call(*this, stack, cd.arity, cd.loc); e) {
 	return e;
       }
     }
@@ -93,7 +94,7 @@ namespace claes {
 
   CALL_INDIRECT: {
       const auto &ci = op.as<ops::CallIndirect>();
-      const auto target = stack.pop();
+      auto target = stack.pop();
       pc++;
 
       if (auto e = target.call(*this, stack, ci.arity, ci.loc); e) {
@@ -105,7 +106,7 @@ namespace claes {
 
   CALL_REG: {
       const auto &cr = op.as<ops::CallReg>();
-      const auto &t = get_reg(cr.target_reg);
+      auto &t = get_reg(cr.target_reg);
       pc++;
 
       if (auto e = t->call(*this, stack, cr.arity, cr.loc); e) {

@@ -6,7 +6,7 @@
 #include "claes/vm.hpp"
 
 namespace claes::types {
-  E Method::call(const Cell &target, 
+  E Method::call(Cell &target, 
 		 VM &vm, 
 		 Stack &stack, 
 		 int arity,

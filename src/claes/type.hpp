@@ -19,7 +19,7 @@ namespace claes {
       Imp(const string &name): name(name) {}
       virtual ~Imp() {}
 
-      virtual E call(const Cell &target, 
+      virtual E call(Cell &target, 
 		     VM &vm, 
 		     Stack &stack, 
 		     int arity,
@@ -75,7 +75,7 @@ namespace claes {
     template <typename T>
     Type(shared_ptr<const T> imp): imp(imp) {}
 
-    E call(const Cell &target, 
+    E call(Cell &target, 
 	   VM &vm, 
 	   Stack &stack, 
 	   int arity,

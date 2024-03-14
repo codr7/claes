@@ -17,7 +17,7 @@ namespace claes::types {
 
     Ref(const string &name): Type::Imp(name) {}
 
-    virtual E call(const Cell &target, 
+    virtual E call(Cell &target, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,

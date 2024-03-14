@@ -1,15 +1,24 @@
 #include "claes/form.hpp"
 #include "claes/ops/set_ref_direct.hpp"
+#include "claes/stack.hpp"
 #include "claes/types/ref.hpp"
 #include "claes/vm.hpp"
 
 namespace claes::types {
-  E Ref::call(const Cell &target, 
+  E Ref::call(Cell &target, 
 	      VM &vm, 
 	      Stack &stack, 
 	      int arity,
 	      const Loc &loc) const {
-    return Error(loc, "Calling not implemented for references");
+    if (arity == 0) {
+      stack.push(target.as(get()).imp->value);
+    } else {
+      auto &s = stack.peek();
+      target.as(get()).imp->value = s;
+      s = target;
+    }
+
+    return nullopt;
   }
 
   E Ref::emit_call(const Cell &value,

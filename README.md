@@ -28,7 +28,7 @@ To me, Lisp is all about ergonomics.<br/>
 I've tried to capture some of the pragmatism of Common Lisp and combine it with good ideas from Scheme, Clojure, Perl, Python and Ruby; while taking the opportunity to scratch a couple of personal itches along the way.
 
 ## References
-Most types are value types; that is, you can't modify their values outside of the scope they are bound in. References reintroduce action at a distance in a more formal manner. New references may be formed by prefixing any expression with `&`.
+Most types are value types; that is, you can't modify their values outside of the scope they are bound in. References reintroduce action at a distance in a more explicit manner. New references may be formed by prefixing any expression with `&`.
 
 ```
   &42
@@ -48,6 +48,13 @@ When called with an argument, the referenced value is updated.
 
 ```
   (&_ 42)
+
+&42
+```
+```
+  (let [x &_]
+    (x 42)
+    x)
 
 &42
 ```

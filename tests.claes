@@ -90,9 +90,10 @@
 (check &42
   (&_ 42))
 
-(check &2
-  (let [x &1]
-    (x 2)))
+(check &42
+  (let [x &_]
+    (x 42)
+    x))
 
 (check 42
   (^ foo [] 42)
