@@ -1,11 +1,5 @@
 3936
-2142
-
-* add zero op
-** require target reg like decrement
-** add Zero op
-** add =0 macro
-** benchmark
+2133
 
 * add ref support
 ** convert vector to ref

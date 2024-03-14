@@ -17,6 +17,7 @@
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
 #include "claes/timer.hpp"
+#include "claes/types/bit.hpp"
 #include "claes/types/pair.hpp"
 #include "claes/types/vector.hpp"
 #include "claes/vm.hpp"
@@ -32,7 +33,7 @@ namespace claes {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
 	&&CALL_DIRECT, &&CALL_INDIRECT, &&CHECK,
 	&&DECREMENT,
-	&&END_FRAME,
+	&&END_FRAME, &&EQZ,
 	&&GET_REG, &&GOTO,
 	&&MAKE_PAIR, &&MAKE_VECTOR,
 	&&PUSH, &&PUSH_REG, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
@@ -122,6 +123,14 @@ namespace claes {
 
   END_FRAME: {
       end_frame();
+    }
+    
+    DISPATCH(pc+1);
+
+  EQZ: {
+      auto &v = stack.peek();
+      bool z = !v.as(types::I64::get());
+      v = Cell(types::Bit::get(), z);
     }
     
     DISPATCH(pc+1);

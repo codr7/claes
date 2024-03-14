@@ -11,7 +11,7 @@ namespace claes {
     enum struct Code {BEGIN_FRAME, BENCHMARK, BRANCH, 
 		      CALL_DIRECT, CALL_INDIRECT, CHECK,
 		      DECREMENT,
-		      END_FRAME,
+		      END_FRAME, EQZ,
 		      GET_REG, GOTO,
 		      MAKE_PAIR, MAKE_VECTOR,
 		      PUSH, PUSH_REG, PUSH_VALUES, PUSH_VECTOR_ITEM,

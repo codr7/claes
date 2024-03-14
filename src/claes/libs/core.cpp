@@ -129,6 +129,17 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
+    bind_method("=0", 
+		[](const Method self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  auto &v = stack.peek();
+		  v = Cell(types::Bit::get(), !v.as(types::I64::get()));
+		  return nullopt;
+		});
+
     bind_method("<", 
 		[](const Method self, 
 		   VM &vm, 
