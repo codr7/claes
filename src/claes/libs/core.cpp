@@ -315,6 +315,35 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_macro("define", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+
+		 for (auto bf = my_args.items.begin(); 
+		      bf != my_args.items.end(); 
+		      bf++) {
+		   const auto &name_form = *bf;
+		   const auto &value_form = *(++bf);
+		   auto [v, e] = vm.eval(value_form, env);
+
+		   if (e) {
+		     return e;
+		   }
+
+		   if (!v) {
+		     return Error(loc, "Invalid binding");
+		   }
+		   
+		   env.bind(name_form.as<forms::Id>()->name, *v);
+		 }
+
+		 return nullopt;
+	       });
+    
     bind_macro("do", 
 	       [](const Macro self, 
 		  VM &vm, 

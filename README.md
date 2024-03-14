@@ -27,6 +27,40 @@ To me, Lisp is all about ergonomics.<br/>
 <br/>
 I've tried to capture some of the pragmatism of Common Lisp and combine it with good ideas from Scheme, Clojure, Perl, Python and Ruby; while taking the opportunity to scratch a couple of personal itches along the way.
 
+## bindings
+Bindings come in two flavors, unscoped compile time and scoped runtime.
+
+### compile time
+New compile time bindings may be introduced using `define`.
+
+```
+  (^ foo []
+    (define bar (do (say "compiling") 1)
+            baz 2)
+    (+ bar baz))
+
+compiling
+
+  (foo)
+
+3
+
+  bar
+
+Error in repl@1:1:
+Unknown identifier: bar
+```
+
+### runtime
+New runtime bindings may be introduced using `let`.
+
+```
+  (let [x 1 y (+ x 2)]
+    (+ x y))
+
+3
+```
+
 ## References
 Most types are value types; that is, you can't modify their values outside of the scope they are bound in. References reintroduce action at a distance in a more explicit manner. New references may be formed by prefixing any expression with `&`.
 

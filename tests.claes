@@ -34,6 +34,10 @@
     (-1 x)
     x))
 
+(check 3
+  (define foo 1 bar 2)
+  (+ foo bar))
+  
 (check 1
   (if T 1 2))
 
