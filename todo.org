@@ -1,11 +1,9 @@
 3773
 2064
 
-* add vector call support
-** get / set depending on arity
-
 * add string call support
 ** get / set depending on arity
+** like vector
 
 * add Type.peek/pop
 ** self default

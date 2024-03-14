@@ -16,6 +16,31 @@ namespace claes::types {
     }    
 
     Vector(const string &name): Type::Imp(name) {}
+    
+    virtual E call(Cell &target, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) const override {
+      switch (arity) {
+      case 1: {
+	const auto i = stack.pop().as(types::I64::get());
+	stack.push(target.as(get())[i]);
+	break;
+      }
+      case 2: {
+	const auto v = stack.pop();
+	const auto i = stack.pop().as(types::I64::get());
+	target.as(get())[i] = v;
+	stack.push(target);
+	break;
+      }
+      default:
+	return Error(loc, "Invalid vector call");
+      }
+
+      return nullopt;
+    }
 
     virtual strong_ordering compare(const Cell &left, 
 				    const Cell &right) const override {
