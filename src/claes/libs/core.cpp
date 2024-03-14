@@ -56,15 +56,12 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  types::I64::Value v = 0;
 		    
-		  while (arity--) {
-		    if (arity) {
-		      v += stack.pop().as(types::I64::get());
-		    } else {
-		      auto &s = stack.peek();
-		      s = Cell(types::I64::get(), v + s.as(types::I64::get()));
-		    }
+		  while (--arity) {
+		    v += stack.pop().as(types::I64::get());
 		  }
 
+		  auto &s = stack.peek();
+		  s = Cell(types::I64::get(), v + s.as(types::I64::get()));
 		  return nullopt;
 		});
 
@@ -76,16 +73,13 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  types::I64::Value v = 0;
 
-		  while (arity--) {
-		    if (arity) {
-		      const auto a = stack.pop().as(types::I64::get());
-		      v -= a;
-		    } else {
-		      auto &s = stack.peek();
-		      s = Cell(types::I64::get(), v + s.as(types::I64::get()));
-		    }
+		  while (--arity) {
+		    const auto a = stack.pop().as(types::I64::get());
+		    v -= a;
 		  }
 
+		  auto &s = stack.peek();
+		  s = Cell(types::I64::get(), v + s.as(types::I64::get()));
 		  return nullopt;
 		});
 
@@ -122,18 +116,15 @@ namespace claes::libs {
 		  auto result = true;
 		  arity--;
 
-		  while (arity--) {
-		    if (arity) {
-		      if (stack.pop() != v) {
-			result = false;
-			break;
-		      }
-		    } else {
-		      auto &s = stack.peek();
-		      s = Cell(types::Bit::get(), result && s == v);
+		  while (--arity) {
+		    if (stack.pop() != v) {
+		      result = false;
+		      break;
 		    }
 		  }
 
+		  auto &s = stack.peek();
+		  s = Cell(types::Bit::get(), result && s == v);
 		  return nullopt;
 		});
 
@@ -158,19 +149,16 @@ namespace claes::libs {
 		  auto result = true;
 		  arity--;
 
-		  while(arity--) {
-		    if (arity) {
-		      if (const auto nv = stack.pop(); nv >= v) {
-			result = false;
-		      } else {
-			v = nv;
-		      }
+		  while(--arity) {
+		    if (const auto nv = stack.pop(); nv >= v) {
+		      result = false;
 		    } else {
-		      auto &nv = stack.peek();
-		      nv = Cell(types::Bit::get(), result && nv < v);		      
+		      v = nv;
 		    }
 		  }
 
+		  auto &nv = stack.peek();
+		  nv = Cell(types::Bit::get(), result && nv < v);
 		  return nullopt;
 		});
 
@@ -184,20 +172,17 @@ namespace claes::libs {
 		  auto result = true;
 		  arity--;
 
-		  while(arity--) {
-		    if (arity) {
-		      if (const auto nv = stack.pop(); nv <= v) {
-			result = false;
-			break;
-		      } else {
-			v = nv;
-		      }
+		  while(--arity) {
+		    if (const auto nv = stack.pop(); nv <= v) {
+		      result = false;
+		      break;
 		    } else {
-		      auto &nv = stack.peek();
-		      nv = Cell(types::Bit::get(), result && nv > v);		      
+		      v = nv;
 		    }
 		  }
 
+		  auto &nv = stack.peek();
+		  nv = Cell(types::Bit::get(), result && nv > v);		      
 		  return nullopt;
 		});
 
