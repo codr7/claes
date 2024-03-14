@@ -1,6 +1,9 @@
 3773
 2064
 
+* add define macro
+** like let but bind at compile time and no body
+
 * add vector call support
 ** get / set depending on arity
 
