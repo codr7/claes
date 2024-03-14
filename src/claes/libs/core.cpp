@@ -315,6 +315,16 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_macro("do", 
+	       [](const Macro self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		 return my_args.emit(vm, env);
+	       });
+    
     bind_method("dump", 
 		[](const Method self, 
 		   VM &vm, 
