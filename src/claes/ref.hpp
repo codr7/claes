@@ -1,13 +1,12 @@
-#ifndef CLAES_VECTOR_HPP
-#define CLAES_VECTOR_HPP
+#ifndef CLAES_REF_HPP
+#define CLAES_REF_HPP
 
-#include <vector>
 #include "claes/cell.hpp"
 
 namespace claes {
-  struct Vector {
+  struct Ref {
     struct Imp {
-      vector<Cell> items;
+      Cell value;
       int ref_count = 1;
 
       void deref() {
@@ -18,17 +17,18 @@ namespace claes {
     };
 
     Imp *imp;
-    Vector(): imp(new Imp()) {}
+
+    Ref(): imp(new Imp()) {}
     
-    Vector(const Vector &source): imp(source.imp) {
+    Ref(const Ref &source): imp(source.imp) {
       imp->ref_count++;
     }
 
-    ~Vector() {
+    ~Ref() {
       imp->deref();
     }
     
-    const Vector &operator=(const Vector &source) {
+    const Ref &operator=(const Ref &source) {
       imp->deref();
       imp = source.imp;
       imp->ref_count++;

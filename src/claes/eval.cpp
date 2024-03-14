@@ -192,7 +192,7 @@ namespace claes {
 
   PUSH_VECTOR_ITEM: {
       const auto item = stack.pop();
-      stack.peek().as(types::Vector::get()).imp->items.push_back(item);
+      stack.peek().as(types::Vector::get()).push_back(item);
     }
     
     DISPATCH(pc+1);

@@ -2,9 +2,8 @@
 2064
 
 * add ref support
-** convert vector to ref
-** add Ref type
 ** add & reader
+** add Ref type
 ** add Ref form
 ** add call support
 *** get without args and set with arg
@@ -15,7 +14,7 @@
 * add string call support
 ** get / set depending on arity
 
-* add traits::Stack::peek/pop
+* add Type.peek/pop
 ** self default
 *** set nil on pop
 ** first för pair

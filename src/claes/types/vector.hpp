@@ -1,14 +1,14 @@
 #ifndef CLAES_TYPES_VECTOR_HPP
 #define CLAES_TYPES_VECTOR_HPP
 
+#include <vector>
 #include "claes/type.hpp"
-#include "claes/vector.hpp"
 
 namespace claes::types {
   using namespace claes;
 
   struct Vector: Type::Imp {
-    using Value = claes::Vector;
+    using Value = vector<Cell>;
     
     static TType<Vector> get() {
       static TType<Vector> t("Vector");
@@ -21,13 +21,13 @@ namespace claes::types {
 				    const Cell &right) const override {
       auto lvs = left.as(get()), rvs = right.as(get());
 
-      for (const auto &li = lvs.imp->items.begin(), 
-	     &ri = rvs.imp->items.begin();;) {
-	if (li == lvs.imp->items.end()) {
+      for (const auto &li = lvs.begin(), 
+	     &ri = rvs.begin();;) {
+	if (li == lvs.end()) {
 	  return strong_ordering::less;
 	}
 
-	if (ri == rvs.imp->items.end()) {
+	if (ri == rvs.end()) {
 	  return strong_ordering::greater;
 	}
 
@@ -45,7 +45,7 @@ namespace claes::types {
       out << '[';
       
       auto i = 0;
-      for (const auto &it: value.as(get()).imp->items) {
+      for (const auto &it: value.as(get())) {
 	if (i++ > 0) {
 	  out << ' ';
 	}
@@ -57,15 +57,15 @@ namespace claes::types {
     }
     
     virtual bool eq(const Cell &left, const Cell &right) const override {
-      return left.as(get()).imp->items == right.as(get()).imp->items;
+      return left.as(get()) == right.as(get());
     }
 
     virtual bool is_true(const Cell &value) const override {
-      return !value.as(get()).imp->items.empty();
+      return !value.as(get()).empty();
     }
 
     virtual void push(Cell &target, const Cell &item) const override {
-      target.as(get()).imp->items.push_back(item);
+      target.as(get()).push_back(item);
     }
   };
 }
