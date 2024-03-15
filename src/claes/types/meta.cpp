@@ -4,6 +4,14 @@
 #include "claes/vm.hpp"
 
 namespace claes::types {
+  E Meta::call(Cell &target, 
+	       VM &vm, 
+	       Stack &stack, 
+	       int arity,
+	       const Loc &loc) const {
+    return target.as(get()).call(vm, stack, arity, loc);
+  }
+
   void Meta::dump(const Cell &value, ostream &out) const {
     out << value.as(get());
   }

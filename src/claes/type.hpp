@@ -19,6 +19,11 @@ namespace claes {
       Imp(const string &name): name(name) {}
       virtual ~Imp() {}
 
+      virtual E call(VM &vm, 
+		     Stack &stack, 
+		     int arity,
+		     const Loc &loc) const;
+
       virtual E call(Cell &target, 
 		     VM &vm, 
 		     Stack &stack, 
@@ -33,9 +38,7 @@ namespace claes {
 			  VM &vm, 
 			  Env &env, 
 			  const Forms &args,
-			  const Loc &loc) const {
-	return Error(loc, "Invalid call target: ", value);
-      }
+			  const Loc &loc) const;
 
       virtual E emit_id(const Cell &value,
 			VM &vm, 
@@ -74,6 +77,13 @@ namespace claes {
 
     template <typename T>
     Type(shared_ptr<const T> imp): imp(imp) {}
+
+    E call(VM &vm, 
+	   Stack &stack, 
+	   int arity,
+	   const Loc &loc) const {
+      return imp->call(vm, stack, arity, loc);
+    }
 
     E call(Cell &target, 
 	   VM &vm, 

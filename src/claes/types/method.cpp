@@ -17,26 +17,6 @@ namespace claes::types {
   void Method::dump(const Cell &value, ostream &out) const {
     out << value.as(get());
   }
-
-  E Method::emit_call(const Cell &value,
-		     VM &vm, 
-		     Env &env, 
-		     const Forms &args,
-		     const Loc &loc) const {
-    Forms my_args(args);
-    auto arity = 0;
-
-    for (auto a: args.items) {
-      if (auto e = a.emit(vm, env, my_args); e) {
-	return e;
-      }
-
-      arity++;
-    }
-
-    vm.emit<ops::CallDirect>(value, arity, loc);
-    return nullopt;
-  }
   
   E Method::emit_ref(const Cell &value,
 		    VM &vm, 

@@ -22,6 +22,12 @@ namespace claes::types {
       return left.as(get()) <=> right.as(get());
     }
 
+    virtual E call(Cell &target, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) const override;
+
     virtual void dump(const Cell &value, ostream &out) const override;
     
     virtual E emit_ref(const Cell &value,

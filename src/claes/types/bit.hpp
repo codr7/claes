@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <ostream>
 #include "claes/cell.hpp"
+#include "claes/stack.hpp"
 #include "claes/type.hpp"
 
 namespace claes::types {
@@ -18,6 +19,15 @@ namespace claes::types {
     }
     
     Bit(const string &name): Type::Imp(name) {}
+
+    virtual E call(VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) const override {
+      auto &v = stack.peek();
+      v = Cell(get(), v.is_true());
+      return nullopt;
+    }
 
     virtual strong_ordering compare(const Cell &left, 
 				    const Cell &right) const override {

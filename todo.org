@@ -1,6 +1,10 @@
 3773
 2064
 
+* add String meta call
+** vararg
+** use say
+
 * add string call support
 ** get / set depending on arity
 ** like vector
