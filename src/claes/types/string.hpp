@@ -1,6 +1,7 @@
 #ifndef CLAES_TYPES_STRING_HPP
 #define CLAES_TYPES_STRING_HPP
 
+#include "claes/stack.hpp"
 #include "claes/types/rune.hpp"
 
 namespace claes::types {
@@ -15,6 +16,29 @@ namespace claes::types {
     }    
 
     String(const string &name): Type::Imp(name) {}
+
+    virtual E call(VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) const override {
+      stringstream buffer;
+
+      struct Rec {
+	static void call(int arity, Stack &stack, ostream &out) {
+	  if (arity) {
+	    const auto v = stack.pop();
+	    call(arity-1, stack, out);
+	    v.say(out);
+	  } else {
+	    stack.peek().say(out);
+	  }
+	}
+      };
+      
+      Rec::call(arity-1, stack, buffer);
+      stack.peek() = Cell(get(), buffer.str());
+      return nullopt;
+    }
 
     virtual strong_ordering compare(const Cell &left, 
 				    const Cell &right) const override {

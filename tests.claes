@@ -89,6 +89,9 @@
     (push x \b \c)
     x))
 
+(check "foo42T"
+ (String "foo" 42 T))
+
 (check [1 2 3]
   (let [x [1]]
     (push x 2 3)
