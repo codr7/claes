@@ -1,6 +1,11 @@
 3773
 2064
 
+* switch frame from optioonal to raw cells
+** default to NIL()
+*** add NIL/T/F() functions with static data
+** benchmark
+
 * add string call support
 ** get / set depending on arity
 ** like vector

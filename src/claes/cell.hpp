@@ -87,6 +87,11 @@ namespace claes {
     }
   };
 
+  const Cell &NIL();
+
+  const Cell &T();  
+  const Cell &F();
+  
   inline bool operator==(const Cell &left, const Cell &right) {
     if (left.type != right.type) {
       return false;

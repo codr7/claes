@@ -46,9 +46,9 @@ namespace claes::libs {
     bind_type(types::String::get());
     bind_type(types::Vector::get());
 
-    bind("_", types::Nil::get(), nullptr);
-    bind("T", types::Bit::get(), true);
-    bind("F", types::Bit::get(), false);
+    bind("_", NIL());
+    bind("T", T());
+    bind("F", F());
 
     bind_method("+", 
 		[](const Method self, 
