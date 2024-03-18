@@ -30,6 +30,10 @@ namespace claes {
     PC pc = 0;
     bool trace = false;
 
+    VM() {
+      begin_frame();
+    }
+    
     void begin_call(const Cell &target, const Loc &loc) {
       begin_frame();
       call = call_alloc.get(call, target, loc, pc);
@@ -88,7 +92,7 @@ namespace claes {
 
     void repl(istream &in, ostream &out);
 
-    Reg push_reg(const Cell &value = NIL()) {
+    Reg push_reg(const Cell &value) {
       return frames.back().push_reg(value);
     }
 
