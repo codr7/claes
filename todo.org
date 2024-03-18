@@ -1,10 +1,5 @@
-3808
-1958
-
-* switch to single regs array
-** push size_t offsets in frames
-** truncate regs to offset on end frame
-** benchmark
+3263
+1526
 
 * change PushReg to PushRegs
 ** add n field

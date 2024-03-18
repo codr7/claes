@@ -7,7 +7,6 @@
 #include "claes/alloc.hpp"
 #include "claes/call.hpp"
 #include "claes/common.hpp"
-#include "claes/frame.hpp"
 #include "claes/op.hpp"
 #include "claes/reg.hpp"
 #include "claes/ops/trace.hpp"
@@ -22,12 +21,13 @@ namespace claes {
   namespace fs = filesystem;
 
   struct VM {
-    vector<Frame> frames;
+    vector<size_t> frames;
     Alloc<Call, 64> call_alloc;
     Call *call = nullptr;
-    fs::path path;
     vector<Op> ops;
+    fs::path path;
     PC pc = 0;
+    vector<Cell> regs;  
     bool trace = false;
 
     VM() {
@@ -40,7 +40,7 @@ namespace claes {
     }
 
     void begin_frame() {
-      frames.emplace_back();
+      frames.push_back(regs.size());
     }
 
     template <typename T, typename...Args>
@@ -71,6 +71,10 @@ namespace claes {
     }
 
     void end_frame() {
+      for (auto i = 0; i < regs.size() - frames.back(); i++) {
+	regs.pop_back();
+      }
+      
       frames.pop_back();
     }
 
@@ -80,12 +84,12 @@ namespace claes {
 
     const Cell &get_reg(const Reg &reg) const {
       const auto &f = *next(frames.rbegin(), reg.frame_offset);
-      return f.regs[reg.index];
+      return regs[f + reg.index];
     }
 
     Cell &get_reg(const Reg &reg) {
       auto &f = *next(frames.rbegin(), reg.frame_offset);
-      return f.regs[reg.index];
+      return regs[f + reg.index];
     }
   
     E load(fs::path path, Env &env, const Loc &loc);
@@ -93,12 +97,14 @@ namespace claes {
     void repl(istream &in, ostream &out);
 
     Reg push_reg(const Cell &value) {
-      return frames.back().push_reg(value);
+      Reg result(regs.size());
+      regs.push_back(value);
+      return result;
     }
 
     void set_reg(const Reg &reg, const Cell &value) {
       auto &f = *next(frames.rbegin(), reg.frame_offset);
-      f.regs[reg.index] = value;
+      regs[f + reg.index] = value;
     }
   };
 }
