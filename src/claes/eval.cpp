@@ -84,6 +84,7 @@ namespace claes {
       const auto &cd = op.as<ops::CallDirect>();
       pc++;
       auto t = cd.target;
+      
       if (auto e = t.call(*this, stack, cd.arity, cd.loc); e) {
 	return e;
       }
@@ -107,7 +108,7 @@ namespace claes {
       auto &t = get_reg(cr.target_reg);
       pc++;
 
-      if (auto e = t->call(*this, stack, cr.arity, cr.loc); e) {
+      if (auto e = t.call(*this, stack, cr.arity, cr.loc); e) {
 	return e;
       }
     }
@@ -135,8 +136,8 @@ namespace claes {
   DECREMENT: {
       const auto &d = op.as<ops::Decrement>();
       auto &v = get_reg(d.target_reg);
-      v->as(types::I64::get())--;
-      stack.push(*v);
+      v.as(types::I64::get())--;
+      stack.push(v);
     }
 
     DISPATCH(pc+1);
@@ -162,7 +163,7 @@ namespace claes {
     DISPATCH(pc+1);
 
   GET_REG: {
-      stack.push(*get_reg(op.as<ops::GetReg>().reg));
+      stack.push(get_reg(op.as<ops::GetReg>().reg));
     }    
 
     DISPATCH(pc+1);
@@ -218,7 +219,7 @@ namespace claes {
 	}
       };
       
-      Rec::call(pv.n, *target, stack);
+      Rec::call(pv.n, target, stack);
     }
 
     DISPATCH(pc+1);

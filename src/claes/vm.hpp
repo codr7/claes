@@ -74,12 +74,12 @@ namespace claes {
     E eval(const Form &form, Env &env, Stack &stack);
     pair<optional<Cell>, E> eval(const Form &form, Env &env);
 
-    const optional<Cell> &get_reg(const Reg &reg) const {
+    const Cell &get_reg(const Reg &reg) const {
       const auto &f = *next(frames.rbegin(), reg.frame_offset);
       return f.regs[reg.index];
     }
 
-    optional<Cell> &get_reg(const Reg &reg) {
+    Cell &get_reg(const Reg &reg) {
       auto &f = *next(frames.rbegin(), reg.frame_offset);
       return f.regs[reg.index];
     }
@@ -88,7 +88,7 @@ namespace claes {
 
     void repl(istream &in, ostream &out);
 
-    Reg push_reg(const optional<Cell> value = nullopt) {
+    Reg push_reg(const Cell &value = NIL()) {
       return frames.back().push_reg(value);
     }
 

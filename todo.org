@@ -1,10 +1,5 @@
-3773
-2064
-
-* switch frame from optioonal to raw cells
-** default to NIL()
-*** add NIL/T/F() functions with static data
-** benchmark
+3808
+1958
 
 * add string call support
 ** get / set depending on arity

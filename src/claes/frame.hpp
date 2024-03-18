@@ -7,9 +7,9 @@
 
 namespace claes {
   struct Frame {
-    vector<optional<Cell>> regs;
+    vector<Cell> regs;
 
-    Reg push_reg(const optional<Cell> value = nullopt) {
+    Reg push_reg(const Cell &value = NIL()) {
       Reg result(regs.size());
       regs.push_back(value);
       return result;
