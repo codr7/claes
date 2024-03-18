@@ -214,7 +214,7 @@ namespace claes::libs {
 				  int arity,
 				  const Loc &loc) -> E { 
 				 const auto target = Cell(types::Method::get(), self);
-				 vm.begin_call(target, loc, vm.pc);
+				 vm.begin_call(target, loc);
 				 vm.pc = start_pc;
 				 return nullopt;
 			       });

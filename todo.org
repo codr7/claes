@@ -1,6 +1,18 @@
 3808
 1958
 
+* add reg_count &arg to emit functions
+** use instead of frames to track
+*** drop calls to begin/end_frame
+
+* drop vm.frames
+** move regs to vm
+*** truncate on end frame
+** track reg_offset in vm
+*** use in get_reg()
+
+* start default frame in vm constructor
+
 * add string call support
 ** get / set depending on arity
 ** like vector

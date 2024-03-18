@@ -30,9 +30,9 @@ namespace claes {
     PC pc = 0;
     bool trace = false;
 
-    void begin_call(const Cell &target, const Loc &loc, const PC ret_pc) {
+    void begin_call(const Cell &target, const Loc &loc) {
       begin_frame();
-      call = call_alloc.get(call, target, loc, ret_pc);
+      call = call_alloc.get(call, target, loc, pc);
     }
 
     void begin_frame() {
