@@ -12,18 +12,19 @@
 #include "claes/ops/trace.hpp"
 
 namespace claes {
+  namespace fs = filesystem;
+
   struct Error;
   struct Form;
   struct Reg;
   struct Stack;
 
   static const int VERSION = 2;
-  namespace fs = filesystem;
 
   struct VM {
-    vector<size_t> frames;
-    Alloc<Call, 64> call_alloc;
     Call *call = nullptr;
+    Alloc<Call, 64> call_alloc;
+    vector<size_t> frames;
     vector<Op> ops;
     fs::path path;
     PC pc = 0;
