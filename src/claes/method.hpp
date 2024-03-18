@@ -9,7 +9,11 @@ namespace claes {
   struct VM;
 
   struct Method {
-    using Body = function<E (const Method &method, VM &vm, Stack &stack, int arity, const Loc &loc)>;
+    using Body = function<E (const Method &method,
+			     VM &vm,
+			     Stack &stack,
+			     int arity,
+			     const Loc &loc)>;
 
     struct Imp {
       Body body;

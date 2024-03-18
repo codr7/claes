@@ -1,6 +1,16 @@
 3808
 1958
 
+* switch to single regs array
+** push size_t offsets in frames
+** truncate regs to offset on end frame
+** benchmark
+
+* change PushReg to PushRegs
+** add n field
+** emit one op for all values in let/^
+** benchmark
+
 * add string call support
 ** get / set depending on arity
 ** like vector
