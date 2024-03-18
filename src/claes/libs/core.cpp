@@ -51,7 +51,7 @@ namespace claes::libs {
     bind("F", F());
 
     bind_method("+", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -68,7 +68,7 @@ namespace claes::libs {
 		});
 
     bind_method("-", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -86,7 +86,7 @@ namespace claes::libs {
 		});
 
     bind_macro("-1", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -109,7 +109,7 @@ namespace claes::libs {
 	       });
 
     bind_method("=", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -131,7 +131,7 @@ namespace claes::libs {
 		});
 
     bind_method("=0", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -142,7 +142,7 @@ namespace claes::libs {
 		});
 
     bind_method("<", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -165,7 +165,7 @@ namespace claes::libs {
 		});
 
     bind_method(">", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -189,7 +189,7 @@ namespace claes::libs {
 		});
 
     bind_macro("^", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -208,7 +208,7 @@ namespace claes::libs {
 		 const auto start_pc = vm.emit_pc();
 
 		 Method method(name ? *name : "lambda", 		
-			       [start_pc](const Method self, 
+			       [start_pc](const Method &self, 
 				  VM &vm, 
 				  Stack &stack, 
 				  int arity,
@@ -266,7 +266,7 @@ namespace claes::libs {
 	       });
 
     bind_macro("benchmark", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -291,7 +291,7 @@ namespace claes::libs {
 	       });
 
     bind_method("call", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -304,7 +304,7 @@ namespace claes::libs {
 		});
     
     bind_macro("check", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -327,7 +327,7 @@ namespace claes::libs {
 	       });
 
     bind_macro("define", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -356,7 +356,7 @@ namespace claes::libs {
 	       });
     
     bind_macro("do", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -366,7 +366,7 @@ namespace claes::libs {
 	       });
     
     bind_method("dump", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -392,7 +392,7 @@ namespace claes::libs {
 		});
 
     bind_macro("if", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -427,7 +427,7 @@ namespace claes::libs {
 	       });
 
     bind_macro("let", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -480,7 +480,7 @@ namespace claes::libs {
 	       });
 
     bind_macro("load", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -496,7 +496,7 @@ namespace claes::libs {
 	       });
 
     bind_method("path", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -507,7 +507,7 @@ namespace claes::libs {
 		});
 
     bind_macro("push", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
@@ -536,7 +536,7 @@ namespace claes::libs {
 	       });
     
     bind_method("say", 
-		[](const Method self, 
+		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
@@ -562,7 +562,7 @@ namespace claes::libs {
 		});
 
     bind_macro("trace", 
-	       [](const Macro self, 
+	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
 		  const Forms &args, 
