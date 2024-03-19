@@ -24,14 +24,6 @@ namespace claes::iters {
 
       return make_pair(nullopt, nullopt);
     };
-
-    virtual void dump(ostream &out) const {
-      if (value) {
-	out << *value;
-      } else {
-	out << '_';
-      }
-    }
   };
 }
 

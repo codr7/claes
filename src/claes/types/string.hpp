@@ -57,6 +57,8 @@ namespace claes::types {
       return !value.as(get()).empty();
     }
 
+    virtual Cell iter(const Cell &target) const override;
+
     virtual void push(Cell &target, const Cell &item) const override {
       target.as(get()).push_back(item.as(Rune::get()));
     }

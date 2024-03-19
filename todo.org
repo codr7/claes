@@ -2,12 +2,12 @@
 1551
 
 * add apply macro
-
-* implement Pair::iter
-* implement String::iter
-* implement Vector::iter
+** use for string iter test
 
 * add for macro
+
+* implement Pair::iter
+* implement Vector::iter
 
 * add Type.peek/pop
 ** self default

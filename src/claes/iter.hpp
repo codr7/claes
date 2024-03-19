@@ -1,6 +1,8 @@
 #ifndef CLAES_ITER_HPP
 #define CLAES_ITER_HPP
 
+#include "claes/cell.hpp"
+
 namespace claes {
   struct Iter {
     using Result = pair<optional<Cell>, E>;
@@ -21,7 +23,9 @@ namespace claes {
 	}
       }
 
-      virtual void dump(ostream &out) const = 0;
+      virtual void dump(ostream &out) const {
+	out << this;
+      }
 
       virtual bool eq(const Iter &other) const {
 	return this == other.imp;
