@@ -268,6 +268,39 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_method("apply", 
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) -> E {
+		  auto it = stack.pop().iter().as(types::Iter::get());
+		  arity -= 2;
+
+		  rotate(stack.items.begin(),
+			 stack.items.begin() + stack.items.size() - arity,
+			 stack.items.end());
+
+		  auto t = stack.pop();
+
+		  for (;;) {
+		    const auto [v, e] = it.next();
+
+		    if (e) {
+		      return e;
+		    }
+
+		    if (!v) {
+		      break;
+		    }
+
+		    stack.push(*v);
+		    arity++;
+		  }
+
+		  return t.call(vm, stack, arity, loc);
+		});
+
     bind_macro("benchmark", 
 	       [](const Macro &self, 
 		  VM &vm, 

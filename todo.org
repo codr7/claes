@@ -1,9 +1,6 @@
 3345
 1551
 
-* add apply macro
-** use for string iter test
-
 * add for macro
 
 * implement Pair::iter

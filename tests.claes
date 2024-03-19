@@ -124,8 +124,8 @@
 (check 42
   ((iter (iter 42))))
 
-(check \a
-  ((iter "abc")))
+(check [\a \b \c]
+  (apply Vector \a "bc"))
 
 (check 42
   (^ foo [] 42)
