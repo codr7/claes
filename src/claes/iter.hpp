@@ -10,7 +10,10 @@ namespace claes {
 
       virtual ~Imp() {}
       virtual Result next() = 0;
-      virtual strong_ordering compare(const Iter &other) const = 0;
+      
+      virtual strong_ordering compare(const Iter &other) const {
+	return this <=> other.imp;    
+      }
 
       void deref() {
 	if (!--ref_count) {
@@ -19,7 +22,10 @@ namespace claes {
       }
 
       virtual void dump(ostream &out) const = 0;
-      virtual bool eq(const Iter &other) const = 0;
+
+      virtual bool eq(const Iter &other) const {
+	return this == other.imp;
+      }
     };
 
     Imp *imp;

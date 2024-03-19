@@ -1,11 +1,11 @@
 3345
 1551
 
-* add iters
-** implement for Iter type, return self
-** implement for Integer/Pair/String/Vector
-
 * add apply macro
+
+* implement Pair::iter
+* implement String::iter
+* implement Vector::iter
 
 * add for macro
 

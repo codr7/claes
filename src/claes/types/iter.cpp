@@ -23,4 +23,8 @@ namespace claes::types {
 
     return nullopt;
   }
+
+  Cell Iter::iter(const Cell &target) const {
+    return target;
+  }
 }

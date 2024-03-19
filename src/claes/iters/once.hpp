@@ -25,44 +25,12 @@ namespace claes::iters {
       return make_pair(nullopt, nullopt);
     };
 
-    virtual strong_ordering compare(const Iter &other) const {
-      const auto &ov = dynamic_cast<const Once &>(*other.imp).value;
-
-      if (value && !ov) {
-	return strong_ordering::greater;
-      }
-
-      if (!value && ov) {
-	return strong_ordering::less;
-      }
-
-      if (!value && !ov) {
-	return strong_ordering::equal;
-      }
-
-      return *value <=> *ov;
-    }
-
     virtual void dump(ostream &out) const {
       if (value) {
 	out << *value;
       } else {
 	out << '_';
       }
-    }
-    
-    virtual bool eq(const Iter &other) const {
-      const auto &ov = dynamic_cast<const Once &>(*other.imp).value;
-
-      if (!value && !ov) {
-	return true;
-      }
-
-      if (!value || !ov) {
-	return false;
-      }
-
-      return value == ov;
     }
   };
 }

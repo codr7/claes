@@ -35,6 +35,8 @@ namespace claes::types {
     virtual bool eq(const Cell &left, const Cell &right) const override {      
       return left.as(get()) == right.as(get());
     }
+
+    virtual Cell iter(const Cell &target) const override;
   };
 }
 
