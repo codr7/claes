@@ -12,6 +12,7 @@
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
+#include "claes/ops/push_regs.hpp"
 #include "claes/ops/push_values.hpp"
 #include "claes/ops/set_path.hpp"
 #include "claes/ops/set_ref.hpp"
@@ -41,7 +42,7 @@ namespace claes {
       &&END_FRAME, &&EQZ,
       &&GET_REG, &&GOTO,
       &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
-      &&PUSH, &&PUSH_REG, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
+      &&PUSH, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
       &&RETURN,
       &&SET_PATH, &&SET_REF, &&SET_REF_DIRECT, &&SET_REG, &&STOP,
       &&TODO, &&TRACE};
@@ -199,8 +200,14 @@ namespace claes {
 
     DISPATCH(pc+1);
 
-  PUSH_REG: {
-      push_reg(stack.pop());
+  PUSH_REGS: {
+      const auto
+	i = stack.items.end() - op.as<ops::PushRegs>().n,
+	j = stack.items.end();
+
+      reverse(i, j);
+      move(i, j, back_inserter(regs));
+      stack.items.erase(i, j);
     }
 
     DISPATCH(pc+1);
@@ -210,10 +217,10 @@ namespace claes {
       auto &target = get_reg(pv.target_reg);
 
       struct Rec {
-	static void call(int arity, Cell &target, Stack &stack) {
-	  if (arity--) {
+	static void call(const int arity, Cell &target, Stack &stack) {
+	  if (arity) {
 	    const auto v = stack.pop();
-	    call(arity, target, stack);
+	    call(arity-1, target, stack);
 	    target.push(v);
 	  }
 	}

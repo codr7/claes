@@ -17,6 +17,22 @@ namespace claes::types {
 
     Vector(const string &name): Type::Imp(name) {}
     
+    virtual E call(VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const Loc &loc) const override {
+      vector<Cell> result;
+
+      const auto
+	i = stack.items.end() - arity,
+	j = stack.items.end();
+
+      move(i, j, back_inserter(result));
+      stack.items.erase(i, j);
+      stack.push(get(), result);
+      return nullopt;
+    }
+
     virtual E call(Cell &target, 
 		   VM &vm, 
 		   Stack &stack, 

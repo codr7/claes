@@ -1,14 +1,5 @@
-3263
-1526
-
-* change PushReg to PushRegs
-** add n field
-** emit one op for all values in let/^
-** benchmark
-
-* add string call support
-** get / set depending on arity
-** like vector
+3345
+1551
 
 * add Type.peek/pop
 ** self default
@@ -16,6 +7,8 @@
 ** first för pair
 ** peek/pop för vector/string
 ** pop for i64
+
+* replace Rec with move/erase
 
 * add for macro
 
@@ -37,3 +30,5 @@
 
 * add increment op
 ** like decrement
+
+* enable PushRegs(n) in let macro

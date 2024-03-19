@@ -9,7 +9,7 @@
 #include "claes/ops/end_frame.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
-#include "claes/ops/push_reg.hpp"
+#include "claes/ops/push_regs.hpp"
 #include "claes/ops/push_values.hpp"
 #include "claes/ops/return.hpp"
 #include "claes/ops/set_reg.hpp"
@@ -246,10 +246,10 @@ namespace claes::libs {
 		      a != method_args.items.rend(); 
 		      a++) {
 		   const auto name = a->as<forms::Id>()->name;
-		   const auto reg = Reg(reg_count++);
-		   body_env.bind(name, types::Reg::get(), reg);
-		   vm.emit<ops::PushReg>();
+		   body_env.bind(name, types::Reg::get(), reg_count++);
 		 }
+
+		 vm.emit<ops::PushRegs>(reg_count);
 
 		 if (auto e = my_args.emit(vm, body_env); e) {
 		   return e;
@@ -437,7 +437,7 @@ namespace claes::libs {
 		   my_args.pop().as<forms::Vector>()->items;
 		 vm.emit<ops::BeginFrame>();
 		 Env body_env(env.imp);
-		 auto i = 0;
+		 auto reg_count = 0;
 
 		 for (auto bf = binding_forms.items.begin(); 
 		      bf != binding_forms.items.end(); 
@@ -446,7 +446,7 @@ namespace claes::libs {
 		   const auto &value_form = *(++bf);
 
 		   body_env.bind(name_form.as<forms::Id>()->name, 
-				 Cell(types::Reg::get(), i++));
+				 Cell(types::Reg::get(), reg_count++));
 
 		   Forms value_args;
 
@@ -454,9 +454,9 @@ namespace claes::libs {
 		     return e;
 		   }
 
-		   vm.emit<ops::PushReg>();
+		   vm.emit<ops::PushRegs>(1);
 		 }
- 		 
+
 		 for (auto p = body_env.imp->parent; p; p = p->parent) {
 		   for (auto b: p->bindings) {
 		     if (b.second.type == types::Reg::get()) {

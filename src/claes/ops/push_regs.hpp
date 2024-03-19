@@ -1,5 +1,5 @@
-#ifndef CLAES_OPS_PUSH_REG_HPP
-#define CLAES_OPS_PUSH_REG_HPP
+#ifndef CLAES_OPS_PUSH_REGS_HPP
+#define CLAES_OPS_PUSH_REGS_HPP
 
 #include "claes/cell.hpp"
 #include "claes/common.hpp"
@@ -8,11 +8,13 @@
 namespace claes::ops {
   using namespace claes;
   
-  struct PushReg: Op::Imp {
-    PushReg(): Op::Imp(Op::Code::PUSH_REG) {}
+  struct PushRegs: Op::Imp {
+    int n;
+    
+    PushRegs(const int n): Op::Imp(Op::Code::PUSH_REGS), n(n) {}
     
     virtual void trace(ostream &out) const override {
-      out << "PushReg";
+      out << "PushRegs n: " << n;
     }
   };
 }

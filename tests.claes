@@ -93,6 +93,9 @@
  (String "foo" 42 T))
 
 (check [1 2 3]
+  (Vector 1 2 3))
+
+(check [1 2 3]
   (let [x [1]]
     (push x 2 3)
     x))
