@@ -326,19 +326,6 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_method("call", 
-		[](const Method &self, 
-		   VM &vm, 
-		   Stack &stack, 
-		   int arity,
-		   const Loc &loc) -> E {
-		  rotate(stack.items.rbegin(),
-			 stack.items.rbegin() + 1,
-			 stack.items.rend());
-		  auto target = stack.pop();
-		  return target.call(vm, stack, arity-1, loc);
-		});
-    
     bind_macro("check", 
 	       [](const Macro &self, 
 		  VM &vm, 
