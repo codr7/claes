@@ -8,6 +8,7 @@
 #include "claes/ops/decrement.hpp"
 #include "claes/ops/end_frame.hpp"
 #include "claes/ops/goto.hpp"
+#include "claes/ops/iter.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_regs.hpp"
 #include "claes/ops/push_values.hpp"
@@ -18,6 +19,7 @@
 #include "claes/stack.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/i64.hpp"
+#include "claes/types/iter.hpp"
 #include "claes/types/meta.hpp"
 #include "claes/types/macro.hpp"
 #include "claes/types/method.hpp"
@@ -34,6 +36,7 @@ namespace claes::libs {
   Core::Core(): Env() {
     bind_type(types::Bit::get());
     bind_type(types::I64::get());
+    bind_type(types::Iter::get());
     bind_type(types::Meta::get());
     bind_type(types::Macro::get());
     bind_type(types::Method::get());
@@ -425,6 +428,23 @@ namespace claes::libs {
 
 		 return nullopt;
 	       });
+
+    bind_macro("iter", 
+	       [](const Macro &self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		 
+		 if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+		   return e;
+		 }
+
+		 vm.emit<ops::Iter>();
+		 return nullopt;
+	       });
+
 
     bind_macro("let", 
 	       [](const Macro &self, 

@@ -1,8 +1,10 @@
 #include "claes/cell.hpp"
 #include "claes/form.hpp"
+#include "claes/iters/once.hpp"
 #include "claes/ops/call_direct.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/type.hpp"
+#include "claes/types/iter.hpp"
 #include "claes/types/pair.hpp"
 #include "claes/types/ref.hpp"
 #include "claes/vm.hpp"
@@ -70,8 +72,17 @@ namespace claes {
     return nullopt;
   }
 
+
+  Cell Type::Imp::iter(const Cell &target) const {
+    return Cell(types::Iter::get(), iters::Once::make(target)); 
+  }
+
   void Type::Imp::push(Cell &target, const Cell &item) const {
     target = Cell(types::Pair::get(), make_pair(item, target));
+  }
+
+  Cell Type::iter(const Cell &target) const {
+    return imp->iter(target);
   }
 
   void Type::push(Cell &target, const Cell &item) const {

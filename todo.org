@@ -1,6 +1,14 @@
 3345
 1551
 
+* add iters
+** implement for Iter type, return self
+** implement for Integer/Pair/String/Vector
+
+* add apply macro
+
+* add for macro
+
 * add Type.peek/pop
 ** self default
 *** set nil on pop
@@ -9,16 +17,6 @@
 ** pop for i64
 
 * replace Rec with move/erase
-
-* add for macro
-
-* add iters
-** ref counted imp
-** add iter type
-** add value.iter
-*** return iter value
-** push value default
-** implement for pair/integer/vector/string
 
 * add Map type
 ** add {} reader

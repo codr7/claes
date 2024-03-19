@@ -41,6 +41,7 @@ namespace claes {
       &&DECREMENT, &&DEREF, 
       &&END_FRAME, &&EQZ,
       &&GET_REG, &&GOTO,
+      &&ITER,
       &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
       &&PUSH, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
       &&RETURN,
@@ -172,6 +173,12 @@ namespace claes {
   GOTO: {}
 
     DISPATCH(op.as<ops::Goto>().pc);
+
+  ITER: {
+      stack.push(stack.pop().iter());
+    }
+    
+    DISPATCH(pc+1);
 
   MAKE_PAIR: {
       auto right = stack.pop();

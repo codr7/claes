@@ -78,6 +78,10 @@ namespace claes {
       return type.is_true(*this); 
     }
 
+    Cell iter() const {
+      return type.iter(*this);
+    }
+
     void push(const Cell &item) {
       type.push(*this, item);
     }

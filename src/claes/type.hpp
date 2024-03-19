@@ -66,6 +66,8 @@ namespace claes {
 	return true;
       }
 
+      virtual Cell iter(const Cell &target) const;
+      
       virtual void push(Cell &target, const Cell &item) const;
       
       virtual void say(const Cell &value, ostream &out) const {
@@ -143,6 +145,7 @@ namespace claes {
       return imp->is_true(value);
     }
 
+    Cell iter(const Cell &target) const;
     void push(Cell &target, const Cell &item) const;
 
     void say(const Cell &value, ostream &out) const {

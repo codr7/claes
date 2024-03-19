@@ -13,6 +13,7 @@ namespace claes {
 		      DECREMENT, DEREF,
 		      END_FRAME, EQZ,
 		      GET_REG, GOTO,
+		      ITER,
 		      MAKE_PAIR, MAKE_REF, MAKE_VECTOR,
 		      PUSH, PUSH_REGS, PUSH_VALUES, PUSH_VECTOR_ITEM,
 		      RETURN,

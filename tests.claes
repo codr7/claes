@@ -119,6 +119,9 @@
     x))
 
 (check 42
+  ((iter 42)))
+
+(check 42
   (^ foo [] 42)
   (foo))
 
