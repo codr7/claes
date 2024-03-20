@@ -1,8 +1,6 @@
 3345
 1551
 
-* add for macro
-
 * implement Pair::iter
 * implement Vector::iter
 

@@ -12,6 +12,7 @@ namespace claes {
 		      CALL_DIRECT, CALL_INDIRECT, CALL_REG, CHECK,
 		      DECREMENT, DEREF,
 		      END_FRAME, EQZ,
+		      FOR,
 		      GET_REG, GOTO,
 		      ITER,
 		      MAKE_PAIR, MAKE_REF, MAKE_VECTOR,

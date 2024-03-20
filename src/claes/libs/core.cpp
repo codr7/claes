@@ -7,6 +7,7 @@
 #include "claes/ops/check.hpp"
 #include "claes/ops/decrement.hpp"
 #include "claes/ops/end_frame.hpp"
+#include "claes/ops/for.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/iter.hpp"
 #include "claes/ops/push.hpp"
@@ -414,6 +415,45 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
+    bind_macro("for", 
+	       [](const Macro &self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+		 const auto var_form = my_args.pop();
+		 const auto var_id = var_form.as<forms::Id>();
+
+		 if (!var_id) {
+		   return Error(loc, "Expected identifier: ", var_form);
+		 }
+
+
+		 vm.emit<ops::BeginFrame>();
+		 vm.emit<ops::Push>(NIL());
+
+		 if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+		   return e;
+		 }
+
+		 vm.emit<ops::Iter>();
+		 vm.emit<ops::PushRegs>(2);
+		 
+		 const auto for_pc = vm.emit<ops::Todo>(loc);
+		 Env body_env(env.imp);
+		 env.bind(var_id->name, Cell(types::Reg::get(), Reg(1)));
+
+		 if (auto e = my_args.emit(vm, body_env); e) {
+		   return e;
+		 }
+		 
+		 vm.emit<ops::Goto>(for_pc);
+		 vm.ops[for_pc].imp = make_shared<ops::For>(vm.emit_pc());
+		 vm.emit<ops::EndFrame>();
+		 return nullopt;
+	       });
+
     bind_macro("if", 
 	       [](const Macro &self, 
 		  VM &vm, 
@@ -495,20 +535,6 @@ namespace claes::libs {
 		   }
 
 		   vm.emit<ops::PushRegs>(1);
-		 }
-
-		 for (auto p = body_env.imp->parent; p; p = p->parent) {
-		   for (auto b: p->bindings) {
-		     if (b.second.type == types::Reg::get()) {
-		       auto v = b.second.as(types::Reg::get());
-		       v.frame_offset++;
-
-		       if (body_env.imp->bindings.find(b.first) == 
-			   body_env.imp->bindings.end()) {
-			 body_env.bind(b.first, Cell(types::Reg::get(), v));
-		       }
-		     }
-		   }
 		 }
 
 		 if (auto e = my_args.emit(vm, body_env); e) {

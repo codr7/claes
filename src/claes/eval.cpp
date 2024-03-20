@@ -9,6 +9,7 @@
 #include "claes/ops/check.hpp"
 #include "claes/ops/decrement.hpp"
 #include "claes/ops/deref.hpp"
+#include "claes/ops/for.hpp"
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/push.hpp"
@@ -23,6 +24,7 @@
 #include "claes/stack.hpp"
 #include "claes/timer.hpp"
 #include "claes/types/bit.hpp"
+#include "claes/types/iter.hpp"
 #include "claes/types/pair.hpp"
 #include "claes/types/ref.hpp"
 #include "claes/types/vector.hpp"
@@ -40,6 +42,7 @@ namespace claes {
       &&CALL_DIRECT, &&CALL_INDIRECT, &&CALL_REG, &&CHECK,
       &&DECREMENT, &&DEREF, 
       &&END_FRAME, &&EQZ,
+      &&FOR,
       &&GET_REG, &&GOTO,
       &&ITER,
       &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
@@ -163,6 +166,21 @@ namespace claes {
     }
     
     DISPATCH(pc+1);
+
+  FOR: {
+      auto &source = get_reg(0);
+
+      if (auto [v, e] = source.as(types::Iter::get()).next(); e) {
+	return e;
+      } else if (v) {
+	set_reg(1, *v);
+	pc++;
+      } else {
+	pc = op.as<ops::For>().end_pc;
+      }
+    }
+    
+    DISPATCH(pc);
 
   GET_REG: {
       stack.push(get_reg(op.as<ops::GetReg>().reg));
@@ -291,8 +309,8 @@ namespace claes {
     }
 
   TRACE: {
-      cout << pc << ' ';
-      ops[++pc].trace(cout);
+      cout << ++pc << ' ';
+      ops[pc].trace(cout);
       cout << endl;
     }
 

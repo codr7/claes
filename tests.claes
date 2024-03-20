@@ -50,6 +50,12 @@
 (check 2
   (if F 1 2))
 
+(check [\a \b \c]
+  (let [result []]
+    (for c "abc"
+      (push result c))
+    result))
+
 (check T
   (=0 0))
 

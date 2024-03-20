@@ -22,7 +22,20 @@ namespace claes {
       map<string, Cell> bindings;
       int ref_count = 1;
 
-      Imp(Imp *parent): parent(parent) {}
+      Imp(Imp *parent): parent(parent) {
+	for (auto p = parent; p; p = p->parent) {
+	  for (auto b: p->bindings) {
+	    if (b.second.type == types::Reg::get()) {
+	      auto v = b.second.as(types::Reg::get());
+	      v.frame_offset++;
+	      
+	      if (bindings.find(b.first) == bindings.end()) {
+		bind(b.first, Cell(types::Reg::get(), v));
+	      }
+	    }
+	  }
+	}
+      }
 
       void bind(const string &name, const Cell &value) {
 	if (auto found = bindings.find(name); found != bindings.end()) {
