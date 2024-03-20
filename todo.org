@@ -4,6 +4,13 @@
 * implement Pair::iter
 * implement Vector::iter
 
+* implement tail calls
+** change to Goto(start_pc) in ^
+** loop body
+*** remember last call to self
+*** clear for anything except goto/trace
+*** replace with goto start_pc if set
+
 * add Type.peek/pop
 ** self default
 *** set nil on pop
