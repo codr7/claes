@@ -17,11 +17,11 @@
 ** add {} reader
 ** Value = map<Cell, Cell>
 
-* aoc
+* aoc1
+
 * use vm specific alloc for Ref imps
+
 * use vm specific alloc for Env imps
 
 * add increment op
 ** like decrement
-
-* enable PushRegs(n) in let macro
