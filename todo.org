@@ -10,6 +10,7 @@
 *** remember last call to self
 *** clear for anything except goto/trace
 *** replace with goto start_pc if set
+** benchmark
 
 * add Type.peek/pop
 ** self default

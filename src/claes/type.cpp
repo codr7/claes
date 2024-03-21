@@ -1,6 +1,6 @@
 #include "claes/cell.hpp"
 #include "claes/form.hpp"
-#include "claes/iters/once.hpp"
+#include "claes/iters/repeat.hpp"
 #include "claes/ops/call_direct.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/type.hpp"
@@ -74,7 +74,7 @@ namespace claes {
 
 
   Cell Type::Imp::iter(const Cell &target) const {
-    return Cell(types::Iter::get(), iters::Once::make(target)); 
+    return Cell(types::Iter::get(), iters::Repeat::make(target, 1)); 
   }
 
   void Type::Imp::push(Cell &target, const Cell &item) const {

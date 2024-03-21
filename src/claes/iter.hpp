@@ -8,19 +8,12 @@ namespace claes {
     using Result = pair<optional<Cell>, E>;
 
     struct Imp {
-      int ref_count = 1;
-
       virtual ~Imp() {}
       virtual Result next() = 0;
+      virtual Imp *clone() const = 0;
       
       virtual strong_ordering compare(const Iter &other) const {
-	return this <=> other.imp;    
-      }
-
-      void deref() {
-	if (!--ref_count) {
-	  delete this;
-	}
+	return this <=> other.imp.get();    
       }
 
       virtual void dump(ostream &out) const {
@@ -28,28 +21,14 @@ namespace claes {
       }
 
       virtual bool eq(const Iter &other) const {
-	return this == other.imp;
+	return this == other.imp.get();
       }
     };
 
-    Imp *imp;
+    unique_ptr<Imp> imp;
 
     Iter(Imp *imp): imp(imp) {}
-
-    Iter(const Iter &source): imp(source.imp) {
-      imp->ref_count++;
-    }
-
-    ~Iter() {
-      imp->deref();
-    }
-    
-    const Iter &operator=(const Iter &source) {
-      imp->deref();
-      imp = source.imp;
-      imp->ref_count++;
-      return *this;
-    }
+    Iter(const Iter &source): imp(source.imp->clone()) {}
 
     Result next() {
       return imp->next();

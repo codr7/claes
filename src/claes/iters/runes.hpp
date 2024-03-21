@@ -17,10 +17,14 @@ namespace claes::iters {
     string target;
     string::const_iterator i, end;
     
-    Runes(const string &target): 
-      target(target), i(this->target.begin()), end(this->target.end()) {}
+    Runes(const string &target, const size_t i = 0): 
+      target(target), i(this->target.begin() + i), end(this->target.end()) {}
 
-    virtual Iter::Result next() {
+    virtual Imp *clone() const override {
+      return new Runes(target, i - target.begin());
+    }
+
+    virtual Iter::Result next() override {
       if (i != end) {
 	return make_pair(Cell(types::Rune::get(), *i++), nullopt);
       }
