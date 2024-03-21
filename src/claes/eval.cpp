@@ -294,7 +294,7 @@ namespace claes {
     DISPATCH(pc+1);
 
   SET_REG: {
-      set_reg(op.as<ops::GetReg>().reg, stack.pop());
+      set_reg(op.as<ops::SetReg>().reg, stack.pop());
     }    
 
     DISPATCH(pc+1);

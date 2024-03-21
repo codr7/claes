@@ -651,6 +651,41 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
+    bind_macro("set", 
+	       [](const Macro &self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 Forms my_args(args);
+
+		 for (auto a = my_args.items.begin(); 
+		      a != my_args.items.end();) {
+		   const auto &name_form = *a++;
+		   const auto &name = name_form.as<forms::Id>()->name;
+		   auto v = env.find(name);
+
+		   if (!v) {
+		     return Error(loc, "Unknown identifier: ", name);
+		   }
+		   
+		   if (v->type != types::Reg::get()) {
+		     return Error(loc, "Expected register: ", *v);
+		   }
+
+		   const auto &value_form = *a++;		   
+		   Forms value_args;
+
+		   if (auto e = value_form.emit(vm, env, value_args); e) {
+		     return e;
+		   }
+
+		   vm.emit<ops::SetReg>(v->as(types::Reg::get()));
+		 }
+
+		 return nullopt;
+	       });
+
     bind_macro("trace", 
 	       [](const Macro &self, 
 		  VM &vm, 

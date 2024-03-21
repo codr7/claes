@@ -114,13 +114,13 @@ When called with an argument, the referenced value is updated.
 `for` may be used to iterate through any sequence.
 
 ```
-  (for i 3
-    (say i))
+  (^ sum [n]
+    (let [result 0]
+      (for i n
+        (set result (+ result i)))
+      result))
 
-0
-1
-2
-_
+6
 ```
 
 Recursion is another option, tail call optimization is guaranteed to be performed where applicable.
@@ -128,10 +128,10 @@ Recursion is another option, tail call optimization is guaranteed to be performe
 ```
   (^ sum [n]
     (^ helper [i result]
-      (if (= i 0)
+      (if (= i n)
         result
-	(helper (- i 1) (+ result i))))
-    (helper (- n 1) 0))
+	(helper (+ i 1) (+ result i))))
+    (helper 0 0))
 
   (sum 4)
 

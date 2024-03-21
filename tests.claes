@@ -144,16 +144,9 @@
 (check 42
  ((^ [x] x) 42))
 
-(check 6
-  (^ sum [n]
-    (^ helper [i result]
-      (if (= i 0)
-        result
-	(helper (- i 1) (+ result i))))
-    (helper (- n 1) 0))
-
-  (sum 4))
-
+(check 1
+  (let [x 0] (set x 1) x))
+  
 (load (path "fib.claes"))
 
 (check 55
