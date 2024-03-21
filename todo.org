@@ -21,6 +21,10 @@
 ** add {} reader
 ** Value = map<Cell, Cell>
 
+* add filter macro
+* add reduce macro
+* add map macro
+
 * aoc1
 
 * use vm specific alloc for Ref imps
