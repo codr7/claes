@@ -56,7 +56,7 @@ New runtime bindings may be introduced using `let`.
 
 ```
   (let [x 1 y (+ x 2)]
-    (+ x y))
+    y)
 
 3
 ```
@@ -108,4 +108,32 @@ When called with an argument, the referenced value is updated.
     x)
 
 &42
+```
+
+## loops
+`for` may be used to iterate through any sequence.
+
+```
+  (for i 3
+    (say i))
+
+0
+1
+2
+_
+```
+
+Recursion is another option, tail call optimization is guaranteed to be performed where applicable.
+
+```
+  (^ sum [n]
+    (^ helper [i result]
+      (if (= i 0)
+        result
+	(helper (- i 1) (+ result i))))
+    (helper (- n 1) 0))
+
+  (sum 4)
+
+6
 ```

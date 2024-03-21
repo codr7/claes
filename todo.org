@@ -1,10 +1,6 @@
 3342
 1244
 
-* try converting call to stack allocated
-** change parent to optional<Call>
-** benchmark
-
 * implement Pair::iter
 * implement Vector::iter
 

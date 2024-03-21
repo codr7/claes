@@ -36,6 +36,8 @@ namespace claes::types {
     virtual bool is_true(const Cell &value) const override {
       return value.as(get()) != 0;
     }
+
+    virtual Cell iter(const Cell &target) const override;
   };
 }
 

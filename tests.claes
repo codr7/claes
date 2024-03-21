@@ -124,11 +124,11 @@
     (x 42)
     x))
 
-(check 42
-  ((iter 42)))
+(check T
+  ((iter T)))
 
-(check 42
-  ((iter (iter 42))))
+(check T
+  ((iter (iter T))))
 
 (check [\a \b \c]
   (apply Vector \a "bc"))
@@ -143,6 +143,16 @@
 
 (check 42
  ((^ [x] x) 42))
+
+(check 6
+  (^ sum [n]
+    (^ helper [i result]
+      (if (= i 0)
+        result
+	(helper (- i 1) (+ result i))))
+    (helper (- n 1) 0))
+
+  (sum 4))
 
 (load (path "fib.claes"))
 
