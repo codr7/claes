@@ -1,16 +1,12 @@
-3345
-1551
+3342
+1244
+
+* try converting call to stack allocated
+** change parent to optional<Call>
+** benchmark
 
 * implement Pair::iter
 * implement Vector::iter
-
-* implement tail calls
-** change to Goto(start_pc) in ^
-** loop body
-*** remember last call to self
-*** clear for anything except goto/trace
-*** replace with goto start_pc if set
-** benchmark
 
 * add Type.peek/pop
 ** self default

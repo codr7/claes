@@ -19,7 +19,7 @@ namespace claes {
 		      PUSH, PUSH_REGS, PUSH_VALUES, PUSH_VECTOR_ITEM,
 		      RETURN,
 		      SET_PATH, SET_REF, SET_REF_DIRECT, SET_REG, STOP, 
-		      TODO, TRACE};
+		      TAIL_CALL, TODO, TRACE};
 
     struct Imp {
       Code code;

@@ -20,6 +20,7 @@
 #include "claes/ops/set_ref_direct.hpp"
 #include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
+#include "claes/ops/tail_call.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
 #include "claes/timer.hpp"
@@ -49,7 +50,7 @@ namespace claes {
       &&PUSH, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
       &&RETURN,
       &&SET_PATH, &&SET_REF, &&SET_REF_DIRECT, &&SET_REG, &&STOP,
-      &&TODO, &&TRACE};
+      &&TAIL_CALL, &&TODO, &&TRACE};
 
     Op op;
     DISPATCH(start_pc);
@@ -302,6 +303,14 @@ namespace claes {
       pc++;
       return nullopt;
     }
+
+  TAIL_CALL: {
+      auto &tc = op.as<ops::TailCall>();
+      regs.erase(regs.begin() + regs.size() - tc.reg_count, regs.end());
+      pc = tc.start_pc;
+    }
+
+    DISPATCH(pc);
 
   TODO: {
       pc++;

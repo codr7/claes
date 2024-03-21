@@ -4,6 +4,7 @@
 #include "claes/ops/begin_frame.hpp"
 #include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
+#include "claes/ops/call_direct.hpp"
 #include "claes/ops/check.hpp"
 #include "claes/ops/decrement.hpp"
 #include "claes/ops/end_frame.hpp"
@@ -16,6 +17,7 @@
 #include "claes/ops/return.hpp"
 #include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
+#include "claes/ops/tail_call.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
 #include "claes/types/bit.hpp"
@@ -213,10 +215,10 @@ namespace claes::libs {
 
 		 Method method(name ? *name : "lambda", 		
 			       [start_pc](const Method &self, 
-				  VM &vm, 
-				  Stack &stack, 
-				  int arity,
-				  const Loc &loc) -> E { 
+					  VM &vm, 
+					  Stack &stack, 
+					  int arity,
+					  const Loc &loc) -> E { 
 				 const auto target = Cell(types::Method::get(), self);
 				 vm.begin_call(target, loc);
 				 vm.pc = start_pc;
@@ -229,21 +231,6 @@ namespace claes::libs {
 		 }
 
 		 Env body_env(env.imp);
-		 
-		 for (auto p = body_env.imp->parent; p; p = p->parent) {
-		   for (auto b: p->bindings) {
-		     if (b.second.type == types::Reg::get()) {
-		       auto v = b.second.as(types::Reg::get());
-		       v.frame_offset++;
-
-		       if (body_env.imp->bindings.find(b.first) == 
-			   body_env.imp->bindings.end()) {
-			 body_env.bind(b.first, Cell(types::Reg::get(), v));
-		       }
-		     }
-		   }
-		 }
-
 		 auto reg_count = 0;
 
 		 for (auto a = method_args.items.rbegin(); 
@@ -261,11 +248,48 @@ namespace claes::libs {
 
 		 vm.emit<ops::Return>();
 		 vm.ops[skip_pc].imp = make_shared<ops::Goto>(vm.emit_pc());
+
+		 auto mv = Cell(types::Method::get(), method);
 		 
 		 if (!name) {
-		   vm.emit<ops::Push>(Cell(types::Method::get(), method));
+		   vm.emit<ops::Push>(mv);
 		 }
 
+		 Op *last_call = nullptr;
+		 
+		 for (auto pc = start_pc; pc < vm.ops.size();) {
+		   auto &op = vm.ops[pc];
+
+		   switch (op.op_code()) {
+		   case Op::Code::CALL_DIRECT:
+		     if (op.as<ops::CallDirect>().target == mv) {
+		       last_call = &op;
+		     }
+		     
+		     pc++;
+		     break;
+		   case Op::Code::GOTO:
+		     pc = op.as<ops::Goto>().pc;
+		     break;
+		   case Op::Code::RETURN:
+		     if (last_call) {
+		       last_call->imp =
+			 make_shared<ops::TailCall>(start_pc,
+						    method_args.items.size());
+		       last_call = nullptr;
+		     }
+
+		     pc++;
+		     break;
+		   case Op::Code::TRACE:
+		     pc++;
+		     break;
+		   default:
+		     last_call = nullptr;
+		     pc++;
+		   }
+		 }
+		 
 		 return nullopt;
 	       });
 
