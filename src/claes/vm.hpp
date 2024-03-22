@@ -19,7 +19,7 @@ namespace claes {
   struct Reg;
   struct Stack;
 
-  static const int VERSION = 3;
+  static const int VERSION = 4;
 
   struct VM {
     Call *call = nullptr;
