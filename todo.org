@@ -27,9 +27,8 @@
 
 * aoc1
 
-* use vm specific alloc for Ref imps
-
-* use vm specific alloc for Env imps
+* use vm alloc for Ref imps
+* use vm alloc for Env imps
 
 * add incr macro
 ** add increment op
