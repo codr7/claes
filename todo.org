@@ -31,5 +31,5 @@
 
 * use vm specific alloc for Env imps
 
-* add increment op
-** like decrement
+* add incr macro
+** add increment op
