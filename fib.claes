@@ -1,5 +1,5 @@
 (^ fib-rec [n]
-  (if (< n 2) n (+ (fib-rec (-1 n)) (fib-rec (-1 n)))))
+  (if (< n 2) n (+ (fib-rec (decr n)) (fib-rec (decr n)))))
 
 (^ fib-tail [n a b]
-  (if (> n 1) (fib-tail (-1 n) b (+ a b)) (if (=0 n) a b)))
+  (if (> n 1) (fib-tail (decr n) b (+ a b)) (if (=0 n) a b)))

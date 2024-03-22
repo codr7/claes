@@ -22,6 +22,13 @@
 (check 1
   (let [x 1] (let [] x)))
 
+(check [42]:[]
+  (let [foo 1 bar 2]
+    (decr foo)
+    (set foo [] bar foo)
+    (push foo 42)
+    foo:bar))
+
 (check 6
   (+ 1 2 3))
 
@@ -33,11 +40,11 @@
 
 (check 2
   (let [x 3]
-    (-1 x)))
+    (decr x)))
 
 (check 2
   (let [x 3]
-    (-1 x)
+    (decr x)
     x))
 
 (check 3

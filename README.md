@@ -61,6 +61,28 @@ New runtime bindings may be introduced using `let`.
 3
 ```
 
+#### updates
+Some macros update bindings behind the curtain, `decr` and `push` are two examples.<br/>
+Runtime bindings may be updated using `set`.
+
+```
+  (let [foo 1]
+    (decr foo))
+
+0
+```
+The following exmaple deserves a bit of an explanation. First we bind `foo` and `bar` to their initial values; then we decrease `foo` to `0`, `bar` is still `2` at this point. Then we re-bind `foo` to an empty vector, `bar` to the same value; and finally push 42 to `foo`.
+
+```
+  (let [foo 1 bar 2]
+    (decr foo)
+    (set foo [] bar foo)
+    (push foo 42)
+    foo:bar)
+
+[42]:[]
+```
+
 ## methods
 New methods may be defined using `^`.
 
