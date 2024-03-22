@@ -1,6 +1,8 @@
 #ifndef CLAES_ITERS_I64_RANGE_HPP
 #define CLAES_ITERS_I64_RANGE_HPP
 
+#include <iostream>
+
 #include "claes/iter.hpp"
 #include "claes/types/i64.hpp"
 

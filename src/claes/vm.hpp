@@ -28,6 +28,7 @@ namespace claes {
     vector<Op> ops;
     fs::path path;
     PC pc = 0;
+    int recursion_depth = 0;
     vector<Cell> regs;  
     bool trace = false;
 
@@ -37,6 +38,11 @@ namespace claes {
     
     void begin_call(const Cell &target, const Loc &loc) {
       begin_frame();
+
+      if (call && call->target == target) {
+	recursion_depth++;
+      }
+
       call = call_alloc.get(call, target, loc, pc);
     }
 
@@ -67,6 +73,11 @@ namespace claes {
     Call *end_call() {
       auto result = call;
       call = call->parent;
+
+      if (call && call->target == result->target) {
+	recursion_depth--;
+      }
+
       end_frame();
       return result;
     }
@@ -83,13 +94,19 @@ namespace claes {
     E eval(const Form &form, Env &env, Stack &stack);
     pair<optional<Cell>, E> eval(const Form &form, Env &env);
 
+    int frame_offset(const Reg &reg) const {
+      auto o = reg.frame_offset;
+      if (o) { o += recursion_depth; }
+      return o;
+    }
+
     const Cell &get_reg(const Reg &reg) const {
-      const auto &f = *next(frames.rbegin(), reg.frame_offset);
+      const auto &f = *next(frames.rbegin(), frame_offset(reg));
       return regs[f + reg.index];
     }
 
     Cell &get_reg(const Reg &reg) {
-      auto &f = *next(frames.rbegin(), reg.frame_offset);
+      auto &f = *next(frames.rbegin(), frame_offset(reg));
       return regs[f + reg.index];
     }
   
@@ -104,7 +121,7 @@ namespace claes {
     }
 
     void set_reg(const Reg &reg, const Cell &value) {
-      auto &f = *next(frames.rbegin(), reg.frame_offset);
+      auto &f = *next(frames.rbegin(), frame_offset(reg));
       regs[f + reg.index] = value;
     }
   };

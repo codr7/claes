@@ -268,9 +268,11 @@ namespace claes::libs {
 		     
 		     pc++;
 		     break;
-		   case Op::Code::GOTO:
-		     pc = op.as<ops::Goto>().pc;
+		   case Op::Code::GOTO: {
+		     const auto gpc = op.as<ops::Goto>().pc;
+		     pc = (gpc < pc) ? pc+1 : gpc;
 		     break;
+		   }
 		   case Op::Code::RETURN:
 		     if (last_call) {
 		       last_call->imp =
@@ -454,7 +456,6 @@ namespace claes::libs {
 		 }
 
 
-		 vm.emit<ops::BeginFrame>();
 		 vm.emit<ops::Push>(NIL());
 
 		 if (auto e = my_args.pop().emit(vm, env, my_args); e) {
@@ -462,11 +463,11 @@ namespace claes::libs {
 		 }
 
 		 vm.emit<ops::Iter>();
-		 vm.emit<ops::PushRegs>(2);
-		 
-		 const auto for_pc = vm.emit<ops::Todo>(loc);
+		 vm.emit<ops::BeginFrame>();
 		 Env body_env(env.imp);
-		 env.bind(var_id->name, Cell(types::Reg::get(), Reg(1)));
+		 body_env.bind(var_id->name, Cell(types::Reg::get(), Reg(1)));
+		 vm.emit<ops::PushRegs>(2);		 
+		 const auto for_pc = vm.emit<ops::Todo>(loc);
 
 		 if (auto e = my_args.emit(vm, body_env); e) {
 		   return e;

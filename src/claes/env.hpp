@@ -23,11 +23,13 @@ namespace claes {
       int ref_count = 1;
 
       Imp(Imp *parent): parent(parent) {
-	for (auto p = parent; p; p = p->parent) {
+	auto depth = 1;
+
+	for (auto p = parent; p; p = p->parent, depth++) {
 	  for (auto b: p->bindings) {
 	    if (b.second.type == types::Reg::get()) {
 	      auto v = b.second.as(types::Reg::get());
-	      v.frame_offset++;
+	      v.frame_offset += depth;
 	      
 	      if (bindings.find(b.first) == bindings.end()) {
 		bind(b.first, Cell(types::Reg::get(), v));
