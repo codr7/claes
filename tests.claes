@@ -22,10 +22,10 @@
 (check 1
   (let [x 1] (let [] x)))
 
-(check [42]:[]
+(check [0 2 42]:[0 2]
   (let [foo 1 bar 2]
     (decr foo)
-    (set foo [] bar foo)
+    (set foo [foo bar] bar foo)
     (push foo 42)
     foo:bar))
 

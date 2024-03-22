@@ -65,16 +65,16 @@ New runtime bindings may be introduced using `let`.
 Some macros update bindings behind the curtain, `decr` and `push` are two examples.<br/>
 Runtime bindings may be updated using `set`.<br/>
 <br/>
-The following exmaple deserves a bit of an explanation. First we bind `foo` and `bar` to their initial values; then we decrease `foo` to `0`, `bar` is still `2` at this point. Then we re-bind `foo` to an empty vector, `bar` to the same value; and finally push 42 to `foo`.
+The following exmaple deserves a bit of an explanation. First we bind `foo` and `bar` to their initial values; then we decrease `foo` to `0`, `bar` is still `2` at this point. Then we re-bind `foo` to a vector containing both values, `bar` to an identical vector; and finally push 42 to `foo`.
 
 ```
   (let [foo 1 bar 2]
     (decr foo)
-    (set foo [] bar foo)
+    (set foo [foo bar] bar foo)
     (push foo 42)
     foo:bar)
 
-[42]:[]
+[0 2 42]:[0 2]
 ```
 
 ## methods
