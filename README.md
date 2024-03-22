@@ -27,6 +27,12 @@ To me, Lisp is all about ergonomics.<br/>
 <br/>
 I've tried to capture some of the pragmatism of Common Lisp and combine it with good ideas from Scheme, Clojure, Perl, Python and Ruby; while taking the opportunity to scratch a couple of personal itches along the way.
 
+## nil
+The `Nil` type has one value, `_`.
+
+## bits
+The `Bit` type has two values, `T` and `F`.
+
 ## bindings
 Bindings come in two flavors, unscoped compile time and scoped runtime.
 
