@@ -56,7 +56,8 @@ Unknown identifier: bar
 New runtime bindings may be introduced using `let`.
 
 ```
-  (let [x 1 y (+ x 2)]
+  (let [x 1 
+        y (+ x 2)]
     y)
 
 3
@@ -69,7 +70,8 @@ Runtime bindings may be updated using `set`.<br/>
 The following exmaple deserves a bit of an explanation. First we bind `foo` and `bar` to their initial values; then we decrease `foo` to `0`, `bar` is still `2` at this point. Then we re-bind `foo` to a vector containing both values, `bar` to an identical vector; and finally push 42 to `foo`.
 
 ```
-  (let [foo 1 bar 2]
+  (let [foo 1 
+        bar 2]
     (decr foo)
     (set foo [foo bar] 
          bar foo)
