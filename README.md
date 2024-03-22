@@ -91,7 +91,9 @@ Leaving out the name creates a lambda.
 
 ```
   (let [f (^ [x] x)]
-    (call f 42))
+    (f 42))
+
+42
 ```
 
 ## references

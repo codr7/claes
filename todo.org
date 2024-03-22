@@ -33,13 +33,3 @@
 
 * add increment op
 ** like decrement
-
-(check 6
-  (^ sum [n]
-    (^ helper [i result]
-      (if (= i n)
-        result
-	(helper (+ i 1) (+ result i))))
-    (helper 0 0))
-    
-  (sum 4))
