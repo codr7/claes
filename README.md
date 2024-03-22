@@ -37,6 +37,7 @@ New compile time bindings may be introduced using `define`.
   (^ foo []
     (define bar (do (say "compiling") 1)
             baz 2)
+
     (+ bar baz))
 
 compiling
@@ -70,7 +71,8 @@ The following exmaple deserves a bit of an explanation. First we bind `foo` and 
 ```
   (let [foo 1 bar 2]
     (decr foo)
-    (set foo [foo bar] bar foo)
+    (set foo [foo bar] 
+         bar foo)
     (push foo 42)
     foo:bar)
 
@@ -136,6 +138,7 @@ When called with an argument, the referenced value is updated.
     (let [result 0]
       (for i n
         (set result (+ result i)))
+
       result))
 
 6
@@ -149,6 +152,7 @@ Recursion is another option, tail call optimization is guaranteed to be performe
       (if (= i n)
         result
 	(helper (+ i 1) (+ result i))))
+
     (helper 0 0))
 
   (sum 4)
