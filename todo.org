@@ -1,9 +1,6 @@
 3268
 1208
 
-* add macro arity
-** check on emit
-
 * add (step) macro
 ** temporarily replace next op with stop and eval on step
 ** next again if trace
@@ -12,7 +9,8 @@
 * add run macro
 ** eval from current pc 
 
-* add debugging to readme
+* add macro arity
+** check on emit
 
 * add syms
 ** vm.syms vector
