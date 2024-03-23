@@ -2,9 +2,9 @@
 1208
 
 * add step method
-** temporarily replace next op with stop and eval on step
-** next again if trace
-*** eval/stop until loc changes
+** trace next op on stop
+** scan forward until next loc, stop or exit
+** temporarily replace next-next op with stop if needed and eval
 
 * add run method
 ** eval from current pc 

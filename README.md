@@ -169,6 +169,13 @@ Recursion is another option, tail call optimization is guaranteed to be performe
 ```
 
 ## debugging
+`debug` may be used to enable/disable debugging.
+
+```
+  (debug)
+
+T
+```
 
 `dump` may be used to dump any values to standaed output.
 
@@ -178,7 +185,21 @@ Recursion is another option, tail call optimization is guaranteed to be performe
 "foo" 42 (Method +)
 ```
 
-`loc` may be used to get the current source location.
+`trace` may be used to enable/disable tracing of evaluated VM operations.
+
+```
+  (trace)
+  (+ 1 2)
+
+1 Push value: T
+3 Push value: 1
+5 Push value: 2
+7 CallDirect target: (Method +) arity: 2 loc: repl@2:3
+9 Exit
+3
+```
+
+`loc` may be used to get the current source location. Note that debugging must be enabled when the code is emitted for `loc` to work properly.
 
 ```
   (debug)
@@ -189,7 +210,7 @@ Recursion is another option, tail call optimization is guaranteed to be performe
   repl@3:1
 ```
 
-`stop` may be used to stop evaluation; it prints the current source location, call stack and stack when called.
+`stop` may be used to stop evaluation; it prints the current source location, call chain and stack when called.
 
 ```
  (^ foo []
