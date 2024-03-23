@@ -1,12 +1,12 @@
 3268
 1208
 
-* add (step) macro
+* add step method
 ** temporarily replace next op with stop and eval on step
 ** next again if trace
 *** eval/stop until loc changes
 
-* add run macro
+* add run method
 ** eval from current pc 
 
 * add macro arity
