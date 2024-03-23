@@ -177,7 +177,7 @@ Recursion is another option, tail call optimization is guaranteed to be performe
 T
 ```
 
-`dump` may be used to dump any values to standaed output.
+`dump` may be used to dump any values to standard output.
 
 ```
   (dump "foo" 42 +)
@@ -210,7 +210,7 @@ T
   repl@3:1
 ```
 
-`stop` may be used to stop evaluation; it prints the current source location, call chain and stack when called.
+`stop` may be used to (temporarily) stop evaluation; it prints the current source location, call chain and stack when called.
 
 ```
  (^ foo []
