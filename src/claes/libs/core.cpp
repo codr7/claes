@@ -14,6 +14,7 @@
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_regs.hpp"
 #include "claes/ops/push_values.hpp"
+#include "claes/ops/recall.hpp"
 #include "claes/ops/return.hpp"
 #include "claes/ops/set_reg.hpp"
 #include "claes/ops/stop.hpp"
@@ -232,44 +233,7 @@ namespace claes::libs {
 		   vm.emit<ops::Push>(mv);
 		 }
 
-		 Op *last_call = nullptr;
-		 
-		 for (auto pc = start_pc; pc < vm.ops.size();) {
-		   auto &op = vm.ops[pc];
-
-		   switch (op.op_code()) {
-		   case Op::Code::CALL_DIRECT:
-		     if (op.as<ops::CallDirect>().target == mv) {
-		       last_call = &op;
-		     }
-		     
-		     pc++;
-		     break;
-		   case Op::Code::GOTO: {
-		     const auto gpc = op.as<ops::Goto>().pc;
-		     pc = (gpc < pc) ? pc+1 : gpc;
-		     break;
-		   }
-		   case Op::Code::RETURN:
-		     if (last_call) {
-		       last_call->imp =
-			 make_shared<ops::TailCall>(start_pc,
-						    method_args.items.size());
-		       last_call = nullptr;
-		     }
-
-		     pc++;
-		     break;
-		   case Op::Code::TRACE:
-		     pc++;
-		     break;
-		   default:
-		     last_call = nullptr;
-		     pc++;
-		   }
-		 }
-		 
-		 return nullopt;
+		 return vm.tco(mv, start_pc, start_pc);
 	       });
 
     bind_method("apply", 

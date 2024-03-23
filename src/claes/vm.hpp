@@ -124,6 +124,11 @@ namespace claes {
       auto &f = *next(frames.rbegin(), frame_offset(reg));
       regs[f + reg.index] = value;
     }
+
+    E tco(const Cell &target, 
+	  const PC target_pc, 
+	  const PC start_pc = 0, 
+	  Op *last_call = nullptr);
   };
 }
 

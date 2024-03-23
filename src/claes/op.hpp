@@ -17,7 +17,7 @@ namespace claes {
 		      ITER,
 		      MAKE_PAIR, MAKE_REF, MAKE_VECTOR,
 		      PUSH, PUSH_REGS, PUSH_VALUES, PUSH_VECTOR_ITEM,
-		      RETURN,
+		      RECALL, RETURN,
 		      SET_PATH, SET_REF, SET_REF_DIRECT, SET_REG, STOP, 
 		      TAIL_CALL, TODO, TRACE};
 

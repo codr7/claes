@@ -15,6 +15,7 @@
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_regs.hpp"
 #include "claes/ops/push_values.hpp"
+#include "claes/ops/recall.hpp"
 #include "claes/ops/set_path.hpp"
 #include "claes/ops/set_ref.hpp"
 #include "claes/ops/set_ref_direct.hpp"
@@ -48,7 +49,7 @@ namespace claes {
       &&ITER,
       &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
       &&PUSH, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
-      &&RETURN,
+      &&RECALL, &&RETURN,
       &&SET_PATH, &&SET_REF, &&SET_REF_DIRECT, &&SET_REG, &&STOP,
       &&TAIL_CALL, &&TODO, &&TRACE};
 
@@ -264,8 +265,22 @@ namespace claes {
     
     DISPATCH(pc+1);
 
+  RECALL: {
+      pc++;
+      const auto &rc = op.as<ops::Recall>();
+      
+      if (auto e = call->target.call(*this, 
+				     stack, 
+				     rc.arity, 
+				     rc.loc); e) {
+	return e;
+      }
+    }
+    
+    DISPATCH(pc);
+
   RETURN: {
-      auto c = end_call();
+      const auto c = end_call();
       pc = c->ret_pc;
       call_alloc.free(c);
     }
