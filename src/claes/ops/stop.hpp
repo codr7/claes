@@ -9,11 +9,13 @@ namespace claes::ops {
   using namespace claes;
   
   struct Stop: Op::Imp {
-    Stop():
-      Op::Imp(Op::Code::STOP) {}
+    claes::Loc loc;
+
+    Stop(const claes::Loc &loc):
+      Op::Imp(Op::Code::STOP), loc(loc) {}
 
     virtual void trace(ostream &out) const override {
-      out << "Stop";
+      out << "Stop loc: " << loc;
     }
   };
 }

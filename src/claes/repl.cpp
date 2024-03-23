@@ -23,7 +23,10 @@ namespace claes {
       out << "  ";
      
       string line;
-      if (!getline(in, line)) { break; }
+      
+      if (!getline(in, line)) { 
+	break; 
+      }
        
       if (line.empty()) {
 	Loc loc("repl", 1, 1);

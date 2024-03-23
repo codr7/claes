@@ -1,14 +1,6 @@
 3268
 1208
 
-* add step method
-** trace next op on stop
-** scan forward until next loc, stop or exit
-** temporarily replace next-next op with stop if needed and eval
-
-* add run method
-** eval from current pc 
-
 * add macro arity
 ** check on emit
 

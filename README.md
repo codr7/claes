@@ -210,11 +210,12 @@ T
   repl@3:1
 ```
 
-`stop` may be used to (temporarily) stop evaluation; it prints the current source location, call chain and stack when called.
+`stop` may be used to (temporarily) stop evaluation; it prints the current source location, call chain and stack when called, and finally the next pc and operation. The `d>` prompt indicates that we are in the debugger, `q` exits back to the REPL.
 
 ```
  (^ foo []
-    (stop))
+   (stop)
+   42)
 
 _
   (foo)
@@ -223,4 +224,34 @@ Stopped in repl@2:3
 (Method foo) in repl@1:1
 
 []
+
+3 Push value: 42
+d> q
+_
+```
+
+`s` may be used to keep evaluating until the next macro/method call. Note that debugging must be enabled when the code is emitted for stepping to work properly.
+
+```
+  (^ foo []
+    (stop)
+    42
+    (stop))
+  (foo)
+
+Stopped in repl@2:3
+(Method foo) in repl@5:1
+
+[]
+
+3 Push value: 42
+d> s
+Stopped in repl@4:3
+(Method foo) in repl@5:1
+
+[42]
+
+5 Return
+d> s
+42
 ```
