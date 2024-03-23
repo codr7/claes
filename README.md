@@ -239,14 +239,14 @@ _
     (stop))
   (foo)
 
-Stopped in repl@2:3
+Stopped in repl@2:5
 (Method foo) in repl@5:1
 
 []
 
 3 Push value: 42
 d> s
-Stopped in repl@4:3
+Stopped in repl@4:5
 (Method foo) in repl@5:1
 
 [42]
