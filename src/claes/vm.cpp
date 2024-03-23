@@ -87,11 +87,9 @@ namespace claes {
 	auto &next_op = ops[pc+1];
 	auto prev_imp = next_op.imp;
 	next_op.imp = make_shared<ops::Exit>();
-	cout << "before " << this->pc << endl;
 	auto e = eval(this->pc, stack);
 	next_op.imp = prev_imp;
 	if (e) { return e; }
-	cout << "after " << this->pc << endl;
 	this->pc--;
 	return stop(stack);
       }
@@ -142,6 +140,15 @@ namespace claes {
     cout << endl << stack << endl;
 
     if (pc < ops.size()) {
+      switch (ops[pc].op_code()) {
+      case Op::Code::LOC:
+      case Op::Code::STOP:
+	pc++;
+	break;
+      default:
+	break;
+      }
+
       cout << endl << pc << ' ';
       ops[pc].trace(cout);
       cout << endl;

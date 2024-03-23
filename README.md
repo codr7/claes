@@ -243,18 +243,18 @@ _
   (foo)
 
 Stopped in repl@2:5
-(Method foo) in repl@5:3
+(Method foo) in repl@1:3
 
 []
 
-3 Push value: 42
+7 Push value: 42
 d> s
 Stopped in repl@4:5
-(Method foo) in repl@5:3
+(Method foo) in repl@1:3
 
 [42]
 
-5 Return
+10 Return
 d> s
 42
 ```
@@ -262,31 +262,29 @@ d> s
 `ss` may be used to single step VM operations.
 
 ```
-    (debug)
-    (^ foo []
-      (stop)
-      42)
-    (foo)
+ (debug)
 
-Stopped in repl@3:5
-(Method foo) in repl@5:3
+ (^ foo []
+   (stop)
+   42)
+
+ (foo)
+
+Stopped in repl@3:7
+(Method foo) in repl@5:5
 
 [T]
 
 6 Push value: 42
 d> ss
-before 6
-after 8
-Stopped in repl@3:5
-(Method foo) in repl@5:3
+Stopped in repl@3:7
+(Method foo) in repl@5:5
 
 [T 42]
 
 7 Return
 d> ss
-before 7
-after 11
-Stopped in repl@3:5
+Stopped in repl@3:7
 
 [T 42]
 

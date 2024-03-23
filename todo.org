@@ -1,6 +1,15 @@
 3268
 1208
 
+  (debug)
+
+  (^ foo []
+    (stop)
+    42
+    (stop))
+
+  (foo)
+
 * add syms
 ** vm.syms vector
 ** vm.sym_lookup map
