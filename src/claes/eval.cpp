@@ -335,7 +335,6 @@ namespace claes {
 
   STOP: {
       pc++;
-      loc = op.as<ops::Stop>().loc;
       stop(stack);
       return nullopt;
     }

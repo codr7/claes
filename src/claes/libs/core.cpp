@@ -697,7 +697,7 @@ namespace claes::libs {
 		  Env &env, 
 		  const Forms &args, 
 		  const Loc &loc) -> E {
-		 vm.emit<ops::Stop>(loc);
+		 vm.emit<ops::Stop>();
 		 return nullopt;
 	       });
     

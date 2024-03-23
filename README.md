@@ -233,25 +233,64 @@ _
 `s` may be used to keep evaluating until the next macro/method call. Note that debugging must be enabled when the code is emitted for stepping to work properly.
 
 ```
+  (debug)
+
   (^ foo []
     (stop)
     42
     (stop))
+
   (foo)
 
 Stopped in repl@2:5
-(Method foo) in repl@5:1
+(Method foo) in repl@5:3
 
 []
 
 3 Push value: 42
 d> s
 Stopped in repl@4:5
-(Method foo) in repl@5:1
+(Method foo) in repl@5:3
 
 [42]
 
 5 Return
 d> s
+42
+```
+
+`ss` may be used to single step VM operations.
+
+```
+    (debug)
+    (^ foo []
+      (stop)
+      42)
+    (foo)
+
+Stopped in repl@3:5
+(Method foo) in repl@5:3
+
+[T]
+
+6 Push value: 42
+d> ss
+before 6
+after 8
+Stopped in repl@3:5
+(Method foo) in repl@5:3
+
+[T 42]
+
+7 Return
+d> ss
+before 7
+after 11
+Stopped in repl@3:5
+
+[T 42]
+
+10 Exit
+d> ss
 42
 ```

@@ -71,6 +71,35 @@ namespace claes {
     return nullopt;
   }
 
+  E VM::single_step(Stack &stack) {
+    for (auto pc = this->pc; pc < ops.size(); pc++) {
+      auto const &op = ops[pc];
+
+      switch (op.op_code()) {
+      case Op::Code::LOC:
+      case Op::Code::TRACE: 
+	break;
+      default:
+	if (pc+1 >= ops.size()) {
+	  return nullopt;
+	}
+
+	auto &next_op = ops[pc+1];
+	auto prev_imp = next_op.imp;
+	next_op.imp = make_shared<ops::Exit>();
+	cout << "before " << this->pc << endl;
+	auto e = eval(this->pc, stack);
+	next_op.imp = prev_imp;
+	if (e) { return e; }
+	cout << "after " << this->pc << endl;
+	this->pc--;
+	return stop(stack);
+      }
+    }
+
+    return nullopt;
+  }
+
   E VM::step(Stack &stack) {
     for (auto pc = this->pc; pc < ops.size(); pc++) {
       auto const &op = ops[pc];
@@ -79,10 +108,12 @@ namespace claes {
       case Op::Code::LOC: {
 	auto &next_op = ops[pc+1];
 	auto prev_imp = next_op.imp;
-	next_op.imp = make_shared<ops::Stop>(op.as<ops::Loc>().loc);
+	next_op.imp = make_shared<ops::Exit>();
 	auto e = eval(this->pc, stack);
 	next_op.imp = prev_imp;
-	return e;
+	if (e) { return e; }
+	this->pc--;
+	return stop(stack);
       }
       case Op::Code::EXIT:
       case Op::Code::STOP:
@@ -95,7 +126,7 @@ namespace claes {
     return nullopt;
   }
 
-  void VM::stop(Stack &stack) {
+  E VM::stop(Stack &stack) {
     cout << "Stopped";
 
     if (loc) {
@@ -115,21 +146,32 @@ namespace claes {
       ops[pc].trace(cout);
       cout << endl;
     }
-
+  NEXT:
     cout << "d> ";
     string line;
     
     if (!getline(cin, line)) { 
-      return; 
+      return nullopt; 
     }
     
     if (line == "") {
       stop(stack);
     } else if (line == "s") {
-      step(stack);
+      if (auto e = step(stack); e) {
+	return e;
+      }
+    } else if (line == "ss") {
+      if (auto e = single_step(stack); e) {
+	return e;
+      }
     } else if (line == "q") {
-      return;
+      // Fall through
+    } else {
+      cout << "Error: Unknown command: " << line << endl;
+      goto NEXT;
     }
+    
+    return nullopt;
   }
 }
 
