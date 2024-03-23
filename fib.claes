@@ -2,4 +2,4 @@
   (if (< n 2) n (+ (fib-rec (decr n)) (fib-rec (decr n)))))
 
 (^ fib-tail [n a b]
-  (if (> n 1) (fib-tail (decr n) b (+ a b)) (if (=0 n) a b)))
+  (if (> n 1) (fib-tail (decr n) b (+ a b)) (if (z? n) a b)))

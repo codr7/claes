@@ -117,18 +117,6 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("=0", 1,
-		[](const Method &self, 
-		   VM &vm, 
-		   Stack &stack, 
-		   int arity,
-		   bool recursive,
-		   const Loc &loc) -> E {
-		  auto &v = stack.peek();
-		  v = Cell(types::Bit::get(), !v.as(types::I64::get()));
-		  return nullopt;
-		});
-
     bind_method("<", 2,
 		[](const Method &self, 
 		   VM &vm, 
@@ -683,5 +671,17 @@ namespace claes::libs {
 		 vm.emit<ops::Push>(Cell(types::Bit::get(), vm.trace));
 		 return nullopt;
 	       });
+
+    bind_method("z?", 1,
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  auto &v = stack.peek();
+		  v = Cell(types::Bit::get(), !v.as(types::I64::get()));
+		  return nullopt;
+		});
   }
 }
