@@ -24,6 +24,7 @@
 #include "claes/types/bit.hpp"
 #include "claes/types/i64.hpp"
 #include "claes/types/iter.hpp"
+#include "claes/types/loc.hpp"
 #include "claes/types/meta.hpp"
 #include "claes/types/macro.hpp"
 #include "claes/types/method.hpp"
@@ -41,6 +42,7 @@ namespace claes::libs {
     bind_type(types::Bit::get());
     bind_type(types::I64::get());
     bind_type(types::Iter::get());
+    bind_type(types::Loc::get());
     bind_type(types::Meta::get());
     bind_type(types::Macro::get());
     bind_type(types::Method::get());
@@ -320,6 +322,17 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_macro("debug", 
+	       [](const Macro &self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) {
+		 vm.debug = !vm.debug;
+		 vm.emit<ops::Push>(vm.debug ? T() : F());
+		 return nullopt;
+	       });
+
     bind_macro("decr", 
 	       [](const Macro &self, 
 		  VM &vm, 
@@ -542,6 +555,22 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_method("loc", 0,
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  if (vm.loc) {
+		    stack.push(types::Loc::get(), *vm.loc);
+		  } else {
+		    stack.push(NIL());
+		  }
+
+		  return nullopt;
+		});
+
     bind_macro("load", 
 	       [](const Macro &self, 
 		  VM &vm, 
@@ -668,7 +697,7 @@ namespace claes::libs {
 		  const Forms &args, 
 		  const Loc &loc) {
 		 vm.trace = !vm.trace;
-		 vm.emit<ops::Push>(Cell(types::Bit::get(), vm.trace));
+		 vm.emit<ops::Push>(vm.trace ? T() : F());
 		 return nullopt;
 	       });
 

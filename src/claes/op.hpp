@@ -15,6 +15,7 @@ namespace claes {
 		      FOR,
 		      GET_REG, GOTO,
 		      ITER,
+		      LOC,
 		      MAKE_PAIR, MAKE_REF, MAKE_VECTOR,
 		      PUSH, PUSH_REGS, PUSH_VALUES, PUSH_VECTOR_ITEM,
 		      RECALL, RETURN,

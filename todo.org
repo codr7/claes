@@ -1,32 +1,39 @@
 3268
 1208
 
-* rename =0 to z?
-
 * add debugger
-** add bool vm.debug
-** add debug macro
-** add vm.loc optional<Loc>
-** add loc method
-*** add LocType
-** add stop macro
-*** add loc to stop op
-*** pass from macro
-** add loc op
-*** skip in tco check
-*** add vm debug flag
-**** update in op
-** generate loc ops if vm.debug
-*** macro emit
-*** function call
-*** etc
-** handle early stop in repl
-*** temporarily replace next op with stop and eval on step
-*** add (step) macro
-**** eval/stop until loc changes
-*** next again if trace/loc
-*** add run macro
-** update readme
+** rename stop to exit
+** add stop op
+** add vm.stop macro
+*** print loc, call stack & stack
+
+* add macro arity
+** check on emit
+
+* add (step) macro
+** temporarily replace next op with stop and eval on step
+** next again if trace
+*** eval/stop until loc changes
+
+* add run macro
+** eval from current pc 
+
+* add debugging to readme
+
+* add syms
+** vm.syms vector
+** vm.sym_lookup map
+** add vm.sym(string) method
+** add types::Sym
+
+* add quoting
+** add quote reader
+** add quote form
+** add Cell Form.quote(depth) method
+*** inc depth in quote form
+** return form default
+*** add types::Form
+** return sym for id
 
 * implement Pair::iter
 

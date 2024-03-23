@@ -20,7 +20,7 @@ namespace claes::types {
     virtual E call(VM &vm, 
 		   Stack &stack, 
 		   int arity,
-		   const Loc &loc) const override {
+		   const claes::Loc &loc) const override {
       stringstream buffer;
 
       struct Rec {

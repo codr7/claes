@@ -10,9 +10,9 @@ namespace claes::ops {
   
   struct Recall: Op::Imp {
     int arity;
-    Loc loc;
+    claes::Loc loc;
 
-    Recall(int arity, const Loc &loc):
+    Recall(int arity, const claes::Loc &loc):
       Op::Imp(Op::Code::RECALL), arity(arity), loc(loc) {}
 
     virtual void trace(ostream &out) const override {

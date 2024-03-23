@@ -9,7 +9,7 @@ namespace claes::types {
 	       Stack &stack, 
 	       int arity,
 	       bool recursive,
-	       const Loc &loc) const {
+	       const claes::Loc &loc) const {
     return target.as(get()).call(vm, stack, arity, loc);
   }
 
@@ -21,7 +21,7 @@ namespace claes::types {
 		   VM &vm, 
 		   Env &env, 
 		   Forms &args,
-		   const Loc &loc) const {
+		   const claes::Loc &loc) const {
     vm.emit<ops::Push>(value);
     return nullopt;
   }

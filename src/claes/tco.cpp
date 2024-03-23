@@ -15,7 +15,7 @@ namespace claes {
       switch (op.op_code()) {
       case Op::Code::CALL_DIRECT:
 	if (op.as<ops::CallDirect>().target == target) {
-	  cout << "RECALL " << target << endl;
+	  cout << "Replacing CALL_DIRECT with RECALL in " << target << endl;
 	  last_call = &op;
 	  const auto &cd = op.as<ops::CallDirect>();
 	  op.imp = make_shared<ops::Recall>(cd.arity, cd.loc);
@@ -39,7 +39,7 @@ namespace claes {
       }
       case Op::Code::RETURN:
 	if (last_call) {
-	  cout << "TCO " << target << endl;
+	  cout << "Replacing RECALL with TAIL_CALL in " << target << endl;
 	  last_call->imp =
 	    make_shared<ops::TailCall>(target_pc,
 				       last_call->as<ops::Recall>().arity);
@@ -48,6 +48,7 @@ namespace claes {
 
 	pc++;
 	break;
+      case Op::Code::LOC: 
       case Op::Code::TRACE:
 	pc++;
 	break;

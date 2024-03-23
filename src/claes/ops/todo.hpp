@@ -9,9 +9,9 @@ namespace claes::ops {
   using namespace claes;
   
   struct Todo: Op::Imp {
-    Loc loc;
+    claes::Loc loc;
 
-    Todo(const Loc &loc):
+    Todo(const claes::Loc &loc):
       Op::Imp(Op::Code::TODO), loc(loc) {}
 
     virtual void trace(ostream &out) const override {

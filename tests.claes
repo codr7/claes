@@ -1,3 +1,5 @@
+(debug)
+
 (check 42
   42)
 

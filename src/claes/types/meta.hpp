@@ -27,7 +27,7 @@ namespace claes::types {
 		   Stack &stack, 
 		   int arity,
 		   bool recursive,
-		   const Loc &loc) const override;
+		   const claes::Loc &loc) const override;
 
     virtual void dump(const Cell &value, ostream &out) const override;
     
@@ -35,7 +35,7 @@ namespace claes::types {
 		       VM &vm, 
 		       Env &env, 
 		       Forms &args,
-		       const Loc &loc) const override;
+		       const claes::Loc &loc) const override;
 
     virtual bool eq(const Cell &left, const Cell &right) const override;
   };

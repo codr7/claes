@@ -2,6 +2,7 @@
 #include "claes/form.hpp"
 #include "claes/iters/repeat.hpp"
 #include "claes/ops/call_direct.hpp"
+#include "claes/ops/loc.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/type.hpp"
 #include "claes/types/iter.hpp"
@@ -32,6 +33,10 @@ namespace claes {
 			 Env &env, 
 			 const Forms &args,
 			 const Loc &loc) const {
+    if (vm.debug) {
+      vm.emit<ops::Loc>(loc);
+    }
+
     Forms my_args(args);
     auto arity = 0;
 

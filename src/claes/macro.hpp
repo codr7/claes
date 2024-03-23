@@ -32,9 +32,7 @@ namespace claes {
     E call(VM &vm, 
 	   Env &env, 
 	   const Forms &args,
-	   const Loc &loc) {
-      return imp->body(*this, vm, env, args, loc);
-    }
+	   const Loc &loc);
   };
 
   inline bool operator==(const Macro &left, const Macro &right) {

@@ -10,7 +10,7 @@ namespace claes::types {
 	      Stack &stack, 
 	      int arity,
 	      bool recursive,
-	      const Loc &loc) const {
+	      const claes::Loc &loc) const {
     if (arity == 0) {
       stack.push(target.as(get()).imp->value);
     } else {
@@ -26,7 +26,7 @@ namespace claes::types {
 		   VM &vm, 
 		   Env &env, 
 		   const Forms &args,
-		   const Loc &loc) const {
+		   const claes::Loc &loc) const {
     Forms my_args(args);
 
     if (auto e = my_args.pop().emit(vm, env, my_args); e) {

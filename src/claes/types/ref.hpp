@@ -22,7 +22,7 @@ namespace claes::types {
 		   Stack &stack, 
 		   int arity,
 		   bool recursive,
-		   const Loc &loc) const override;
+		   const claes::Loc &loc) const override;
 
     virtual strong_ordering compare(const Cell &left, 
 				    const Cell &right) const override {
@@ -37,7 +37,7 @@ namespace claes::types {
 			VM &vm, 
 			Env &env, 
 			const Forms &args,
-			const Loc &loc) const override;
+			const claes::Loc &loc) const override;
 
     virtual bool eq(const Cell &left, const Cell &right) const override {      
       const auto &lv = left.as(get()), &rv = right.as(get());

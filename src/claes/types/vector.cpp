@@ -8,7 +8,7 @@ namespace claes::types {
   E Vector::call(VM &vm, 
 		 Stack &stack, 
 		 int arity,
-		 const Loc &loc) const {
+		 const claes::Loc &loc) const {
     vector<Cell> result;
 
     const auto
@@ -26,7 +26,7 @@ namespace claes::types {
 		 Stack &stack, 
 		 int arity,
 		 bool recursive,
-		 const Loc &loc) const {
+		 const claes::Loc &loc) const {
     switch (arity) {
     case 1: {
       const auto i = stack.pop().as(types::I64::get());

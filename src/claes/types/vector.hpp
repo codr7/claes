@@ -20,14 +20,14 @@ namespace claes::types {
     virtual E call(VM &vm, 
 		   Stack &stack, 
 		   int arity,
-		   const Loc &loc) const override;
+		   const claes::Loc &loc) const override;
 
     virtual E call(Cell &target, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
 		   bool recursive,
-		   const Loc &loc) const override;
+		   const claes::Loc &loc) const override;
 
     virtual strong_ordering compare(const Cell &left, 
 				    const Cell &right) const override {

@@ -11,7 +11,7 @@ namespace claes::types {
 		 Stack &stack, 
 		 int arity,
 		 bool recursive,
-		 const Loc &loc) const {
+		 const claes::Loc &loc) const {
     const auto &m = target.as(get());
 
     if (arity < m.imp->arity) {
@@ -26,10 +26,10 @@ namespace claes::types {
   }
   
   E Method::emit_ref(const Cell &value,
-		    VM &vm, 
-		    Env &env, 
-		    Forms &args,
-		    const Loc &loc) const {
+		     VM &vm, 
+		     Env &env, 
+		     Forms &args,
+		     const claes::Loc &loc) const {
     vm.emit<ops::Push>(value);
     return nullopt;
   }

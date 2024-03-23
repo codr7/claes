@@ -13,7 +13,7 @@ cmake ..
 make claes
 rlwrap ./claes
 
-claes v4
+claes v5
 may the source be with you
 
   (say "hello" "world")
@@ -166,4 +166,25 @@ Recursion is another option, tail call optimization is guaranteed to be performe
   (sum 4)
 
 6
+```
+
+## debugging
+
+`dump` may be used to dump any values to standaed output.
+
+```
+  (dump "foo" 42 +)
+
+"foo" 42 (Method +)
+```
+
+`loc` may be used to get the current source location.
+
+```
+  (debug)
+  (say "line 2")
+  (loc)
+
+  line 2
+  repl@3:1
 ```

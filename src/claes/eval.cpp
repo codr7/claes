@@ -12,6 +12,7 @@
 #include "claes/ops/for.hpp"
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/goto.hpp"
+#include "claes/ops/loc.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_regs.hpp"
 #include "claes/ops/push_values.hpp"
@@ -47,6 +48,7 @@ namespace claes {
       &&FOR,
       &&GET_REG, &&GOTO,
       &&ITER,
+      &&LOC,
       &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
       &&PUSH, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
       &&RECALL, &&RETURN,
@@ -204,6 +206,12 @@ namespace claes {
     
     DISPATCH(pc+1);
 
+  LOC: {
+      loc = op.as<ops::Loc>().loc;
+    }
+    
+    DISPATCH(pc+1);
+ 
   MAKE_PAIR: {
       auto right = stack.pop();
       auto &left = stack.peek();

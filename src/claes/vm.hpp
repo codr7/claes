@@ -19,18 +19,20 @@ namespace claes {
   struct Reg;
   struct Stack;
 
-  static const int VERSION = 4;
+  static const int VERSION = 5;
 
   struct VM {
+    bool debug = false, trace = false;
+
     Call *call = nullptr;
     Alloc<Call, 64> call_alloc;
     vector<size_t> frames;
+    optional<Loc> loc;
     vector<Op> ops;
     fs::path path;
     PC pc = 0;
     int recursion_depth = 0;
     vector<Cell> regs;  
-    bool trace = false;
 
     VM() {
       begin_frame();

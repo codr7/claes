@@ -12,7 +12,7 @@ namespace claes::types {
 		     VM &vm, 
 		     Env &env, 
 		     const Forms &args,
-		     const Loc &loc) const {
+		     const claes::Loc &loc) const {
     return const_cast<Value &>(value.as(get())).call(vm, env, args, loc);
   }
 
@@ -20,7 +20,7 @@ namespace claes::types {
 		    VM &vm, 
 		    Env &env, 
 		    Forms &args,
-		    const Loc &loc) const {
+		    const claes::Loc &loc) const {
     vm.emit<ops::Push>(value);
     return nullopt;
   }
