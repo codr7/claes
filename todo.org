@@ -6,14 +6,16 @@
 ** add vm.loc optional<Loc>
 ** add loc op
 *** skip in tco check
-** add vm debug flag
-*** generate loc ops if true
-*** add Op method loc optional<Loc>
-*** use to update vm.loc in loc op
+*** add vm debug flag
+**** update in op
+** generate loc ops if vm.debug
+*** macro emit
+*** function call
+*** etc
 ** handle early stop in repl
 *** temporarily replace next op with stop and eval on step
 *** add (step) macro
-*** next again if trace
+*** next again if trace/loc
 ** update readme
 
 * add method arity
