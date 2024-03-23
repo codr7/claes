@@ -7,14 +7,13 @@
 ** add vm.sym(string) method
 ** add types::Sym
 
-* add quoting
-** add quote reader
-** add quote form
-** add Cell Form.quote(depth) method
-*** inc depth in quote form
+* add Form.quote(depth)
 ** return form default
 *** add types::Form
+** add quote form
+*** inc depth in quote
 ** return sym for id
+** add quote reader
 
 * add Type.peek/pop
 ** self default
