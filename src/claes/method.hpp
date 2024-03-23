@@ -17,16 +17,18 @@ namespace claes {
 			     const Loc &loc)>;
 
     struct Imp {
+      int arity;
       Body body;
       string name;
 
-      Imp(const string &name, const Body &body): body(body), name(name) {}
+      Imp(const string &name, int arity, const Body &body): 
+	arity(arity), body(body), name(name) {}
     };
 
     shared_ptr<const Imp> imp;
-
-    Method(const string &name, const Body &body): 
-      imp(make_shared<const Imp>(name, body)) {}
+    
+    Method(const string &name, int arity, const Body &body): 
+      imp(make_shared<const Imp>(name, arity, body)) {}
 
     E call(VM &vm, Stack &stack, int arity, bool recursive, const Loc &loc) const {
       return imp->body(*this, vm, stack, arity, recursive, loc);

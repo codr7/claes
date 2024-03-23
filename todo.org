@@ -1,9 +1,7 @@
 3268
 1208
 
-* Add method arity
-** update core/env
-** check stack before body in Method::call
+* rename =0 to z?
 
 * add debugger
 ** add bool vm.debug

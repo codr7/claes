@@ -57,7 +57,7 @@ namespace claes::libs {
     bind("T", T());
     bind("F", F());
 
-    bind_method("+", 
+    bind_method("+", 2,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -75,7 +75,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("-", 
+    bind_method("-", 1,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -94,7 +94,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("=", 
+    bind_method("=", 2,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -117,7 +117,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("=0", 
+    bind_method("=0", 1,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -129,7 +129,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("<", 
+    bind_method("<", 2,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -153,7 +153,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method(">", 
+    bind_method(">", 2,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -198,6 +198,7 @@ namespace claes::libs {
 		 const auto start_pc = vm.emit_pc();
 
 		 Method method(name ? *name : "lambda", 		
+			       method_args.items.size(),
 			       [start_pc](const Method &self, 
 					  VM &vm, 
 					  Stack &stack, 
@@ -245,7 +246,7 @@ namespace claes::libs {
 		 return vm.tco(mv, start_pc, start_pc);
 	       });
 
-    bind_method("apply", 
+    bind_method("apply", 2,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -393,7 +394,7 @@ namespace claes::libs {
 		 return my_args.emit(vm, env);
 	       });
     
-    bind_method("dump", 
+    bind_method("dump", 1,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -569,7 +570,7 @@ namespace claes::libs {
 		 return vm.load(path, env, loc);
 	       });
 
-    bind_method("path", 
+    bind_method("path", 1,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -610,7 +611,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
     
-    bind_method("say", 
+    bind_method("say", 1,
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 

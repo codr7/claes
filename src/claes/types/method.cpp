@@ -10,9 +10,15 @@ namespace claes::types {
 		 VM &vm, 
 		 Stack &stack, 
 		 int arity,
-		   bool recursive,
+		 bool recursive,
 		 const Loc &loc) const {
-    return target.as(get()).call(vm, stack, arity, recursive, loc);
+    const auto &m = target.as(get());
+
+    if (arity < m.imp->arity) {
+      return Error(loc, "Not enough arguments: ", target, ' ', arity);
+    }
+
+    return m.call(vm, stack, arity, recursive, loc);
   }
 
   void Method::dump(const Cell &value, ostream &out) const {
