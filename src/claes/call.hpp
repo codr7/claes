@@ -6,13 +6,19 @@
 
 namespace claes {
   struct Call {
-    Call *parent;
-    Cell target;
     Loc loc;
+    Call *parent;
+    bool recursive;
     PC ret_pc;
+    Cell target;
 
-    Call(Call *parent, const Cell &target, const Loc &loc, const PC ret_pc):
-      parent(parent), target(target), loc(loc), ret_pc(ret_pc) {}
+    Call(Call *parent, 
+	 const Cell &target, 
+	 bool recursive, 
+	 const Loc &loc, 
+	 const PC ret_pc):
+      loc(loc), parent(parent), recursive(recursive), ret_pc(ret_pc), 
+      target(target) {}
   };
 }
 

@@ -62,6 +62,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  types::I64::Value v = 0;
 		    
@@ -79,6 +80,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  types::I64::Value v = 0;
 
@@ -97,6 +99,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  auto v = stack.pop();
 		  auto result = true;
@@ -119,6 +122,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  auto &v = stack.peek();
 		  v = Cell(types::Bit::get(), !v.as(types::I64::get()));
@@ -130,6 +134,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  auto v = stack.pop();
 		  auto result = true;
@@ -153,6 +158,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  auto v = stack.pop();
 		  auto result = true;
@@ -196,9 +202,10 @@ namespace claes::libs {
 					  VM &vm, 
 					  Stack &stack, 
 					  int arity,
+					  bool recursive,
 					  const Loc &loc) -> E { 
 				 const auto target = Cell(types::Method::get(), self);
-				 vm.begin_call(target, loc);
+				 vm.begin_call(target, recursive, loc);
 				 vm.pc = start_pc;
 				 return nullopt;
 			       });
@@ -243,6 +250,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  auto it = stack.pop().iter().as(types::Iter::get());
 		  arity -= 2;
@@ -268,7 +276,7 @@ namespace claes::libs {
 		    arity++;
 		  }
 
-		  return t.call(vm, stack, arity, loc);
+		  return t.call(vm, stack, arity, recursive, loc);
 		});
 
     bind_macro("benchmark", 
@@ -390,6 +398,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  struct Rec {
 		    static void call(Stack &stack, const int i, const int max) {
@@ -565,6 +574,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  auto &v = stack.peek();
 		  v = Cell(types::Path::get(), v.as(types::String::get()));
@@ -605,6 +615,7 @@ namespace claes::libs {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) -> E {
 		  struct Rec {
 		    static void call(Stack &stack, const int i, const int max) {

@@ -9,6 +9,7 @@ namespace claes::types {
 	      VM &vm, 
 	      Stack &stack, 
 	      int arity,
+	      bool recursive,
 	      const Loc &loc) const {
     if (arity == 0) {
       stack.push(target.as(get()).imp->value);

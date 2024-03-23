@@ -34,8 +34,8 @@ namespace claes {
       return any_cast<const typename T::Value &>(value); 
     }
     
-    E call(VM &vm, Stack &stack, int arity, const Loc &loc) {
-      return type.call(*this, vm, stack, arity, loc);
+    E call(VM &vm, Stack &stack, int arity, bool recursive, const Loc &loc) {
+      return type.call(*this, vm, stack, arity, recursive, loc);
     }
 
     void dump(ostream &out) const {

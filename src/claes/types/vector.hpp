@@ -37,6 +37,7 @@ namespace claes::types {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) const override {
       switch (arity) {
       case 1: {

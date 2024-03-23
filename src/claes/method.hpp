@@ -13,6 +13,7 @@ namespace claes {
 			     VM &vm,
 			     Stack &stack,
 			     int arity,
+			     bool recursive,
 			     const Loc &loc)>;
 
     struct Imp {
@@ -27,8 +28,8 @@ namespace claes {
     Method(const string &name, const Body &body): 
       imp(make_shared<const Imp>(name, body)) {}
 
-    E call(VM &vm, Stack &stack, int arity, const Loc &loc) const {
-      return imp->body(*this, vm, stack, arity, loc);
+    E call(VM &vm, Stack &stack, int arity, bool recursive, const Loc &loc) const {
+      return imp->body(*this, vm, stack, arity, recursive, loc);
     }
   };
 

@@ -23,6 +23,7 @@ namespace claes::types {
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
+		   bool recursive,
 		   const Loc &loc) const override;
 
     virtual strong_ordering compare(const Cell &left, 

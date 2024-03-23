@@ -22,6 +22,7 @@ namespace claes {
 		    VM &vm, 
 		    Stack &stack, 
 		    int arity,
+		    bool recursive,
 		    const Loc &loc) const {
     return Error(loc, "Invalid call target: ", target);
   }

@@ -10,8 +10,9 @@ namespace claes::types {
 		 VM &vm, 
 		 Stack &stack, 
 		 int arity,
+		   bool recursive,
 		 const Loc &loc) const {
-    return target.as(get()).call(vm, stack, arity, loc);
+    return target.as(get()).call(vm, stack, arity, recursive, loc);
   }
 
   void Method::dump(const Cell &value, ostream &out) const {

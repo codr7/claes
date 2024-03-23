@@ -36,14 +36,14 @@ namespace claes {
       begin_frame();
     }
     
-    void begin_call(const Cell &target, const Loc &loc) {
+    void begin_call(const Cell &target, bool recursive, const Loc &loc) {
       begin_frame();
 
-      if (call && call->target == target) {
+      if (recursive) {
 	recursion_depth++;
       }
 
-      call = call_alloc.get(call, target, loc, pc);
+      call = call_alloc.get(call, target, recursive, loc, pc);
     }
 
     void begin_frame() {
@@ -71,13 +71,12 @@ namespace claes {
     }
 
     Call *end_call() {
-      auto result = call;
-      call = call->parent;
-
-      if (call && call->target == result->target) {
+      if (call->recursive) {
 	recursion_depth--;
       }
 
+      auto result = call;
+      call = call->parent;
       end_frame();
       return result;
     }

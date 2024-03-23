@@ -8,6 +8,7 @@ namespace claes::types {
 	       VM &vm, 
 	       Stack &stack, 
 	       int arity,
+	       bool recursive,
 	       const Loc &loc) const {
     return target.as(get()).call(vm, stack, arity, loc);
   }

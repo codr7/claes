@@ -28,6 +28,7 @@ namespace claes {
 		     VM &vm, 
 		     Stack &stack, 
 		     int arity,
+		     bool recursive,
 		     const Loc &loc) const;
 
       virtual strong_ordering compare(const Cell &left, const Cell &right) const = 0;
@@ -90,8 +91,9 @@ namespace claes {
 	   VM &vm, 
 	   Stack &stack, 
 	   int arity,
+	   bool recursive,
 	   const Loc &loc) const {
-      return imp->call(target, vm, stack, arity, loc);
+      return imp->call(target, vm, stack, arity, recursive, loc);
     }
 
     strong_ordering compare(const Cell &left, const Cell &right) const {

@@ -8,6 +8,7 @@ namespace claes::types {
 	       VM &vm, 
 	       Stack &stack, 
 	       int arity,
+	       bool recursive,
 	       const Loc &loc) const {
     const auto [v, e] = target.as(get()).next();
     

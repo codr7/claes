@@ -92,7 +92,7 @@ namespace claes {
       pc++;
       auto t = cd.target;
       
-      if (auto e = t.call(*this, stack, cd.arity, cd.loc); e) {
+      if (auto e = t.call(*this, stack, cd.arity, false, cd.loc); e) {
 	return e;
       }
     }
@@ -101,9 +101,11 @@ namespace claes {
 
   CALL_INDIRECT: {
       const auto &ci = op.as<ops::CallIndirect>();
+      auto target = stack.pop();
+      const auto recursive =  (call && call->target == target);
       pc++;
 
-      if (auto e = stack.pop().call(*this, stack, ci.arity, ci.loc); e) {
+      if (auto e = target.call(*this, stack, ci.arity, recursive, ci.loc); e) {
 	return e;
       }
     }
@@ -112,10 +114,12 @@ namespace claes {
 
   CALL_REG: {
       const auto &cr = op.as<ops::CallReg>();
-      auto &t = get_reg(cr.target_reg);
+      auto &target = get_reg(cr.target_reg);
+      const auto recursive =  (call && call->target == target);
+
       pc++;
 
-      if (auto e = t.call(*this, stack, cr.arity, cr.loc); e) {
+      if (auto e = target.call(*this, stack, cr.arity, recursive, cr.loc); e) {
 	return e;
       }
     }
@@ -272,6 +276,7 @@ namespace claes {
       if (auto e = call->target.call(*this, 
 				     stack, 
 				     rc.arity, 
+				     true,
 				     rc.loc); e) {
 	return e;
       }
