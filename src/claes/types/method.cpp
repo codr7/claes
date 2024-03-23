@@ -24,7 +24,19 @@ namespace claes::types {
   void Method::dump(const Cell &value, ostream &out) const {
     out << value.as(get());
   }
-  
+
+  E Method::emit_call(const Cell &value,
+		      VM &vm, 
+		      Env &env, 
+		      const Forms &args,
+		      const claes::Loc &loc) const {
+    if (args.items.size() < value.as(get()).imp->arity) {
+      return Error(loc, "Not enough arguments for: ", value, ' ', args.items.size());
+    }
+
+    return Type::Imp::emit_call(value, vm, env, args, loc);
+  }
+
   E Method::emit_ref(const Cell &value,
 		     VM &vm, 
 		     Env &env, 
