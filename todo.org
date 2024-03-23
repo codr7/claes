@@ -1,15 +1,6 @@
 3268
 1208
 
-  (debug)
-
-  (^ foo []
-    (stop)
-    42
-    (stop))
-
-  (foo)
-
 * add syms
 ** vm.syms vector
 ** vm.sym_lookup map
@@ -38,6 +29,10 @@
 * implement Pair::iter
 
 * replace Rec with move/erase
+
+* add composition support
+** check jalang/dot
+** use |
 
 * add filter macro
 * add reduce macro
