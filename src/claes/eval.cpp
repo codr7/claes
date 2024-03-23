@@ -9,6 +9,7 @@
 #include "claes/ops/check.hpp"
 #include "claes/ops/decrement.hpp"
 #include "claes/ops/deref.hpp"
+#include "claes/ops/exit.hpp"
 #include "claes/ops/for.hpp"
 #include "claes/ops/get_reg.hpp"
 #include "claes/ops/goto.hpp"
@@ -44,7 +45,7 @@ namespace claes {
       &&BEGIN_FRAME, &&BENCHMARK, &&BRANCH,
       &&CALL_DIRECT, &&CALL_INDIRECT, &&CALL_REG, &&CHECK,
       &&DECREMENT, &&DEREF, 
-      &&END_FRAME, &&EQZ,
+      &&END_FRAME, &&EQZ, &&EXIT,
       &&FOR,
       &&GET_REG, &&GOTO,
       &&ITER,
@@ -174,6 +175,11 @@ namespace claes {
     }
     
     DISPATCH(pc+1);
+
+  EXIT: {
+      pc++;
+      return nullopt;
+    }
 
   FOR: {
       auto &source = get_reg(0);
@@ -328,6 +334,7 @@ namespace claes {
     DISPATCH(pc+1);
 
   STOP: {
+      stop(stack);
       pc++;
       return nullopt;
     }

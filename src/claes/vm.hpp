@@ -126,6 +126,8 @@ namespace claes {
       regs[f + reg.index] = value;
     }
 
+    void stop(Stack &stack) const;
+
     E tco(const Cell &target, 
 	  const PC target_pc, 
 	  const PC start_pc = 0, 

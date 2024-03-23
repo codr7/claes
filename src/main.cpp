@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "claes/libs/core.hpp"
-#include "claes/ops/stop.hpp"
+#include "claes/ops/exit.hpp"
 #include "claes/stack.hpp"
 #include "claes/vm.hpp"
 
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 	return -1;
       }
 
-      vm.emit<ops::Stop>();
+      vm.emit<ops::Exit>();
 
       if (auto e = vm.eval(start_pc, stack); e) {
 	cerr << *e << endl;

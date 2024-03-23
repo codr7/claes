@@ -1,12 +1,6 @@
 3268
 1208
 
-* add debugger
-** rename stop to exit
-** add stop op
-** add vm.stop macro
-*** print loc, call stack & stack
-
 * add macro arity
 ** check on emit
 

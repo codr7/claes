@@ -87,7 +87,7 @@ void vm_tests() {
 
   VM vm;
   vm.emit<ops::Push>(v);
-  vm.emit<ops::Stop>();
+  vm.emit<ops::Exit>();
 
   Stack s;
   vm.eval(0, s);

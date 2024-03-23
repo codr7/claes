@@ -5,7 +5,7 @@
 #include "claes/form.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/set_path.hpp"
-#include "claes/ops/stop.hpp"
+#include "claes/ops/exit.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/read.hpp"
 #include "claes/stack.hpp"
@@ -21,7 +21,7 @@ namespace claes {
       return e;
     }
     
-    emit<ops::Stop>();
+    emit<ops::Exit>();
     ops[skip_pc].imp = make_shared<ops::Goto>(emit_pc());
   
     if (auto e = eval(start_pc, stack); e) {
@@ -67,6 +67,22 @@ namespace claes {
     emit<ops::SetPath>(prev_path);
     this->path = prev_path;
     return nullopt;
+  }
+
+  void VM::stop(Stack &stack) const {
+    cout << "Stopped";
+
+    if (loc) {
+      cout << " in " << *loc;
+    }
+
+    cout << endl;
+
+    for (auto c = call; c; c = c->parent) {
+      cout << *c << endl;
+    }
+
+    cout << endl << stack << endl;
   }
 }
 

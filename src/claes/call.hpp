@@ -20,6 +20,12 @@ namespace claes {
       loc(loc), parent(parent), recursive(recursive), ret_pc(ret_pc), 
       target(target) {}
   };
+
+  inline ostream &operator<<(ostream &out, const Call &c) {
+    out << c.target << " in " << c.loc;
+    return out;
+  }
+
 }
 
 #endif

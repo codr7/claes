@@ -188,3 +188,18 @@ Recursion is another option, tail call optimization is guaranteed to be performe
   line 2
   repl@3:1
 ```
+
+`stop` may be used to stop evaluation; it prints the current source location, call stack and stack when called.
+
+```
+ (^ foo []
+    (stop))
+
+_
+  (foo)
+
+Stopped in repl@2:3
+(Method foo) in repl@1:1
+
+[]
+```

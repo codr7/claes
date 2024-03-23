@@ -4,7 +4,7 @@
 #include "claes/form.hpp"
 #include "claes/libs/core.hpp"
 #include "claes/read.hpp"
-#include "claes/ops/stop.hpp"
+#include "claes/ops/exit.hpp"
 #include "claes/stack.hpp"
 #include "claes/vm.hpp"
 
@@ -47,7 +47,7 @@ namespace claes {
 	  continue;
 	}
 
-	emit<ops::Stop>();
+	emit<ops::Exit>();
 
 	if (auto e = eval(start_pc, stack); e) {
 	  out << *e << endl;

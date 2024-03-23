@@ -8,6 +8,7 @@
 #include "claes/ops/check.hpp"
 #include "claes/ops/decrement.hpp"
 #include "claes/ops/end_frame.hpp"
+#include "claes/ops/exit.hpp"
 #include "claes/ops/for.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/iter.hpp"
@@ -293,11 +294,11 @@ namespace claes::libs {
 		   return e;
 		 }
 		 
-		 vm.emit<ops::Stop>();
+		 vm.emit<ops::Exit>();
 		 return nullopt;
 	       });
 
-    bind_macro("check", 
+     bind_macro("check", 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -318,7 +319,7 @@ namespace claes::libs {
 		   return e;
 		 }
 		   
-		 vm.emit<ops::Stop>();
+		 vm.emit<ops::Exit>();
 		 return nullopt;
 	       });
 
@@ -690,6 +691,16 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_macro("stop", 
+	       [](const Macro &self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) -> E {
+		 vm.emit<ops::Stop>();
+		 return nullopt;
+	       });
+    
     bind_macro("trace", 
 	       [](const Macro &self, 
 		  VM &vm, 
