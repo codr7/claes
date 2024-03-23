@@ -1,4 +1,4 @@
-3268
+x3268
 1208
 
 * add syms
@@ -13,6 +13,7 @@
 ** add quote form
 *** inc depth in quote
 ** return sym for id
+** return value for literal
 ** add quote reader
 
 * add Type.peek/pop
@@ -21,6 +22,7 @@
 ** first för pair
 ** peek/pop för vector/string
 ** pop for i64
+** add stacks to readme
 
 * add Map type
 ** add {} reader
