@@ -111,7 +111,7 @@ namespace claes {
       bind(name, Cell(type, value));
     }
 
-    void bind_macro(const string &name, const Macro::Body &body);
+    void bind_macro(const string &name, int arity, const Macro::Body &body);
     void bind_method(const string &name, int arity, const Method::Body &body);
     void bind_type(Type type);
 

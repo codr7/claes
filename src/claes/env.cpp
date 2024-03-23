@@ -4,8 +4,8 @@
 #include "claes/types/method.hpp"
 
 namespace claes {
-  void Env::bind_macro(const string &name, const Macro::Body &body) {
-    bind(name, Cell(types::Macro::get(), Macro(name, body)));
+  void Env::bind_macro(const string &name, int arity, const Macro::Body &body) {
+    bind(name, Cell(types::Macro::get(), Macro(name, arity, body)));
   }
 
   void Env::bind_method(const string &name, int arity, const Method::Body &body) {

@@ -1,9 +1,6 @@
 3268
 1208
 
-* add macro arity
-** check on emit
-
 * add syms
 ** vm.syms vector
 ** vm.sym_lookup map
@@ -19,8 +16,6 @@
 *** add types::Form
 ** return sym for id
 
-* implement Pair::iter
-
 * add Type.peek/pop
 ** self default
 *** set nil on pop
@@ -28,11 +23,13 @@
 ** peek/pop för vector/string
 ** pop for i64
 
-* replace Rec with move/erase
-
 * add Map type
 ** add {} reader
 ** Value = map<Cell, Cell>
+
+* implement Pair::iter
+
+* replace Rec with move/erase
 
 * add filter macro
 * add reduce macro

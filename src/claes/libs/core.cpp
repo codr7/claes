@@ -169,7 +169,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_macro("^", 
+    bind_macro("^", 1,
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -271,7 +271,7 @@ namespace claes::libs {
 		  return t.call(vm, stack, arity, recursive, loc);
 		});
 
-    bind_macro("benchmark", 
+    bind_macro("benchmark", 1, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -298,7 +298,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-     bind_macro("check", 
+    bind_macro("check", 2, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -323,7 +323,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_macro("debug", 
+    bind_macro("debug", 0, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -334,7 +334,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_macro("decr", 
+    bind_macro("decr", 1, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -357,7 +357,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_macro("define", 
+    bind_macro("define", 2, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -386,7 +386,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
     
-    bind_macro("do", 
+    bind_macro("do", 0, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -423,7 +423,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_macro("for", 
+    bind_macro("for", 2, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -463,7 +463,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_macro("if", 
+    bind_macro("if", 2, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -498,7 +498,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_macro("iter", 
+    bind_macro("iter", 1, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -515,7 +515,7 @@ namespace claes::libs {
 	       });
 
 
-    bind_macro("let", 
+    bind_macro("let", 1, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -572,7 +572,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_macro("load", 
+    bind_macro("load", 1, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -600,7 +600,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_macro("push", 
+    bind_macro("push", 2, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -656,7 +656,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_macro("set", 
+    bind_macro("set", 2, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -691,7 +691,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_macro("stop", 
+    bind_macro("stop", 0, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
@@ -701,7 +701,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
     
-    bind_macro("trace", 
+    bind_macro("trace", 0, 
 	       [](const Macro &self, 
 		  VM &vm, 
 		  Env &env, 
