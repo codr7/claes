@@ -14,6 +14,10 @@ namespace claes::forms {
     Ref(const Loc &loc, const Form &target): 
       Form::Imp(loc), target(target) {}
 
+    virtual void collect_ids(set<string> &out) const override {
+      target.collect_ids(out);
+    }
+
     virtual void dump(ostream &out) const override {
       out << '&' << target;
     }

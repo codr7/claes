@@ -2,6 +2,8 @@
 #define CLAES_FORM_HPP
 
 #include <deque>
+#include <set>
+
 #include "claes/error.hpp"
 #include "claes/loc.hpp"
 
@@ -21,6 +23,7 @@ namespace claes {
 
       Imp(const Loc &loc): loc(loc) {}
       virtual ~Imp() {}
+      virtual void collect_ids(set<string> &out) const = 0;
       virtual void dump(ostream &out) const = 0;
       virtual E emit(VM &vm, Env &env, Forms &args) const = 0;
       virtual E emit_call(VM &vm, Env &env, const Forms &args, const Loc &loc) const;
@@ -33,6 +36,10 @@ namespace claes {
     template <typename T>
     const T *as() const { 
       return dynamic_cast<const T *>(imp.get()); 
+    }
+
+    void collect_ids(set<string> &out) const {
+      imp->collect_ids(out);
     }
 
     E emit(VM &vm, Env &env, Forms &args) const {
@@ -61,7 +68,13 @@ namespace claes {
 
   struct Forms {
     deque<Form> items;
-    
+
+    void collect_ids(set<string> &out) const {
+      for (const auto &f: items) {
+	f.collect_ids(out);
+      }
+    }
+
     E emit(VM &vm, Env &env) {
       while (!empty()) {
 	if (auto e = pop().emit(vm, env, *this); e) {

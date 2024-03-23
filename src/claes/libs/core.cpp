@@ -208,7 +208,9 @@ namespace claes::libs {
 			    Cell(types::Method::get(), method));
 		 }
 
-		 Env body_env(env.imp);
+		 set<string> body_ids;
+		 my_args.collect_ids(body_ids);
+		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 
 		 for (auto a = method_args.items.rbegin(); 
@@ -284,7 +286,9 @@ namespace claes::libs {
 		 
 		 const auto n = stack.pop().as(types::I64::get());
 		 vm.emit<ops::Benchmark>(n);  
-		 Env body_env(env.imp);
+		 set<string> body_ids;
+		 my_args.collect_ids(body_ids);
+		 Env body_env(env.imp, body_ids);
 		 
 		 if (auto e = my_args.emit(vm, body_env); e) {
 		   return e;
@@ -307,7 +311,9 @@ namespace claes::libs {
 		 }
 
 		 vm.emit<ops::Check>(loc);
-		 Env body_env(env.imp);
+		 set<string> body_ids;
+		 my_args.collect_ids(body_ids);
+		 Env body_env(env.imp, body_ids);
 
 		 if (auto e = my_args.emit(vm, body_env); e) {
 		   return e;
@@ -428,7 +434,9 @@ namespace claes::libs {
 
 		 vm.emit<ops::Iter>();
 		 vm.emit<ops::BeginFrame>();
-		 Env body_env(env.imp);
+		 set<string> body_ids;
+		 my_args.collect_ids(body_ids);
+		 Env body_env(env.imp, body_ids);
 		 body_env.bind(var_id->name, Cell(types::Reg::get(), Reg(1)));
 		 vm.emit<ops::PushRegs>(2);		 
 		 const auto for_pc = vm.emit<ops::Todo>(loc);
@@ -505,7 +513,9 @@ namespace claes::libs {
 		 const auto &binding_forms = 
 		   my_args.pop().as<forms::Vector>()->items;
 		 vm.emit<ops::BeginFrame>();
-		 Env body_env(env.imp);
+		 set<string> body_ids;
+		 my_args.collect_ids(body_ids);
+		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 
 		 for (auto bf = binding_forms.items.begin(); 

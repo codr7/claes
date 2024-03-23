@@ -10,6 +10,8 @@ namespace claes::forms {
     Literal(const Loc &loc, const Cell &value): 
       Form::Imp(loc), value(value) {}
 
+    virtual void collect_ids(set<string> &out) const override {}
+
     virtual void dump(ostream &out) const override {
       out << value;
     }

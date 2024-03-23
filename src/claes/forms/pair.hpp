@@ -16,6 +16,11 @@ namespace claes::forms {
     Pair(const Loc &loc, const Form &left, const Form &right): 
       Form::Imp(loc), left(left), right(right) {}
 
+    virtual void collect_ids(set<string> &out) const override {
+      left.collect_ids(out);
+      right.collect_ids(out);
+    }
+
     virtual void dump(ostream &out) const override {
       out << left << ':' << right;
     }

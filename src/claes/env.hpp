@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include <set>
 #include <map>
 #include <string>
 
@@ -22,17 +23,18 @@ namespace claes {
       map<string, Cell> bindings;
       int ref_count = 1;
 
-      Imp(Imp *parent): parent(parent) {
-	auto depth = 1;
-
-	for (auto p = parent; p; p = p->parent, depth++) {
-	  for (auto b: p->bindings) {
-	    if (b.second.type == types::Reg::get()) {
-	      auto v = b.second.as(types::Reg::get());
-	      v.frame_offset += depth;
+      Imp(Imp *parent, const set<string> &used_ids): parent(parent) {
+	if (parent) {
+	  for (const auto &id: used_ids) {
+	    auto found = parent->find_env(id);
+	    
+	    if (found) {
+	      auto [v, d] = *found;
 	      
-	      if (bindings.find(b.first) == bindings.end()) {
-		bind(b.first, Cell(types::Reg::get(), v));
+	      if (v.type == types::Reg::get()) {
+		auto r = v.as(types::Reg::get());
+		r.frame_offset += d;
+		bind(id, Cell(types::Reg::get(), r));
 	      }
 	    }
 	  }
@@ -51,6 +53,14 @@ namespace claes {
 	if (--ref_count == 0) {
 	  delete this;
 	}
+      }
+
+      optional<pair<Cell, int>> find_env(const string &name, int depth = 1) const {
+	if (auto found = bindings.find(name); found != bindings.end()) {
+	  return make_pair(found->second, depth);
+	}
+
+	return parent ? parent->find_env(name, depth+1) : nullopt;
       }
 
       optional<Cell> find(const string &name) const {
@@ -74,7 +84,8 @@ namespace claes {
 
     Imp *imp = nullptr;
 
-    Env(Imp *parent = nullptr): imp(new Imp(parent)) {}
+    Env(Imp *parent = nullptr, const set<string> &used_ids = {}): 
+      imp(new Imp(parent, used_ids)) {}
 
     Env(const Env &env): imp(env.imp) {
       imp->ref_count++;

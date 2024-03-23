@@ -13,6 +13,10 @@ namespace claes::forms {
 
     Id(const Loc &loc, const string &name): 
       Form::Imp(loc), name(name) {}
+
+    virtual void collect_ids(set<string> &out) const override {
+      out.insert(name);
+    }
     
     virtual void dump(ostream &out) const override {
       out << name;

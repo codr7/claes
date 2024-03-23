@@ -10,7 +10,12 @@ namespace claes::forms {
     };
 
     Forms items;
+
     Vector(const Loc &loc, const Forms items): Form::Imp(loc), items(items) {}
+
+    virtual void collect_ids(set<string> &out) const override {
+      items.collect_ids(out);
+    }
 
     virtual void dump(ostream &out) const override {
       out << '[' << items << ']';
