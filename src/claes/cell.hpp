@@ -38,10 +38,6 @@ namespace claes {
       return type.call(*this, vm, stack, arity, loc);
     }
 
-    Cell clone() const {
-      return type.clone(*this);
-    }
-
     void dump(ostream &out) const {
       type.dump(*this, out);
     }

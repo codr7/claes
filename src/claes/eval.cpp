@@ -221,7 +221,7 @@ namespace claes {
     DISPATCH(pc+1);
 
   PUSH: {
-      stack.push(op.as<ops::Push>().value.clone());
+      stack.push(op.as<ops::Push>().value);
     }
 
     DISPATCH(pc+1);

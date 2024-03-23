@@ -30,7 +30,6 @@ namespace claes {
 		     int arity,
 		     const Loc &loc) const;
 
-      virtual Cell clone(const Cell &value) const;
       virtual strong_ordering compare(const Cell &left, const Cell &right) const = 0;
       virtual void dump(const Cell &value, ostream &out) const = 0;      
 
@@ -94,8 +93,6 @@ namespace claes {
 	   const Loc &loc) const {
       return imp->call(target, vm, stack, arity, loc);
     }
-
-    Cell clone(const Cell &value) const;
 
     strong_ordering compare(const Cell &left, const Cell &right) const {
       return imp->compare(left, right);
