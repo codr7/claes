@@ -1,11 +1,16 @@
 3268
 1208
 
-* add Form.quote(depth)
+* add sym method
+** convert args to string like say
+** call vm.sym
+
+* add Cell Form.quote(int depth) const
 ** return form default
 *** add types::Form
-** add quote form
-*** inc depth in quote
+**** copy Sym
+** add Quote form
+*** inc depth in quote()
 ** return sym for id
 ** return value for literal
 ** add quote reader
