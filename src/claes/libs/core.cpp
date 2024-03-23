@@ -35,6 +35,7 @@
 #include "claes/types/ref.hpp"
 #include "claes/types/reg.hpp"
 #include "claes/types/string.hpp"
+#include "claes/types/sym.hpp"
 #include "claes/types/vector.hpp"
 #include "claes/vm.hpp"
 
@@ -54,6 +55,7 @@ namespace claes::libs {
     bind_type(types::Reg::get());
     bind_type(types::Rune::get());
     bind_type(types::String::get());
+    bind_type(types::Sym::get());
     bind_type(types::Vector::get());
 
     bind("_", NIL());

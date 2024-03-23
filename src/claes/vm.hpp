@@ -3,6 +3,7 @@
 
 #include <filesystem>
 #include <iostream>
+#include <map>
 
 #include "claes/alloc.hpp"
 #include "claes/call.hpp"
@@ -10,6 +11,7 @@
 #include "claes/op.hpp"
 #include "claes/reg.hpp"
 #include "claes/ops/trace.hpp"
+#include "claes/sym.hpp"
 
 namespace claes {
   namespace fs = filesystem;
@@ -33,7 +35,9 @@ namespace claes {
     PC pc = 0;
     int recursion_depth = 0;
     vector<Cell> regs;  
-
+    Alloc<Sym, 64> sym_alloc;
+    map<string, Sym *> syms;
+    
     VM() {
       begin_frame();
     }
@@ -132,6 +136,17 @@ namespace claes {
 
     E stop(Stack &stack);
 
+    const Sym *sym(const string &name) {
+      if (const auto found = syms.find(name); found != syms.end()) {
+	return found->second;
+      }
+
+      const auto s = sym_alloc.get(name);
+      syms.insert(make_pair(name, s));
+      return s; 
+    }
+    
+    
     E tco(const Cell &target, 
 	  const PC target_pc, 
 	  const PC start_pc = 0, 

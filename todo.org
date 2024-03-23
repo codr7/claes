@@ -1,11 +1,5 @@
-x3268
+3268
 1208
-
-* add syms
-** vm.syms vector
-** vm.sym_lookup map
-** add types::Sym::Value vm.sym(string) method
-*** add types::Sym
 
 * add Form.quote(depth)
 ** return form default
