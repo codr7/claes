@@ -1,7 +1,7 @@
 3268
 1208
 
-* add sym method
+* add Sym meta call
 ** convert args to string like say
 ** call vm.sym
 

@@ -3,6 +3,8 @@
 #include "claes/libs/core.hpp"
 #include "claes/ops/exit.hpp"
 #include "claes/stack.hpp"
+#include "claes/types/string.hpp"
+#include "claes/types/vector.hpp"
 #include "claes/vm.hpp"
 
 using namespace claes;
@@ -16,11 +18,18 @@ int main(int argc, char *argv[]) {
     env.import_from(core);
     Loc loc("main");
     Stack stack;
+    types::Vector::Value av;
+
+    for (auto i = 2; i < argc; i++) {
+      av.push_back(Cell(types::String::get(), argv[i]));
+    }
+
+    env.bind("ARGV", Cell(types::Vector::get(), av));
     
-    for (auto i = 1; i < argc; i++) {
+    if (argc > 1) {
       PC start_pc = vm.emit_pc();
 
-      if (auto e = vm.load(argv[i], env, loc); e) {
+      if (auto e = vm.load(argv[1], env, loc); e) {
 	cerr << *e << endl;
 	return -1;
       }
