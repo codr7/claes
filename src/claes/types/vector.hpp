@@ -20,44 +20,14 @@ namespace claes::types {
     virtual E call(VM &vm, 
 		   Stack &stack, 
 		   int arity,
-		   const Loc &loc) const override {
-      vector<Cell> result;
-
-      const auto
-	i = stack.items.end() - arity,
-	j = stack.items.end();
-
-      move(i, j, back_inserter(result));
-      stack.items.erase(i, j);
-      stack.push(get(), result);
-      return nullopt;
-    }
+		   const Loc &loc) const override;
 
     virtual E call(Cell &target, 
 		   VM &vm, 
 		   Stack &stack, 
 		   int arity,
 		   bool recursive,
-		   const Loc &loc) const override {
-      switch (arity) {
-      case 1: {
-	const auto i = stack.pop().as(types::I64::get());
-	stack.push(target.as(get())[i]);
-	break;
-      }
-      case 2: {
-	const auto v = stack.pop();
-	const auto i = stack.pop().as(types::I64::get());
-	target.as(get())[i] = v;
-	stack.push(target);
-	break;
-      }
-      default:
-	return Error(loc, "Invalid vector call");
-      }
-
-      return nullopt;
-    }
+		   const Loc &loc) const override;
 
     virtual strong_ordering compare(const Cell &left, 
 				    const Cell &right) const override {
@@ -105,6 +75,8 @@ namespace claes::types {
     virtual bool is_true(const Cell &value) const override {
       return !value.as(get()).empty();
     }
+
+    virtual Cell iter(const Cell &target) const override;
 
     virtual void push(Cell &target, const Cell &item) const override {
       target.as(get()).push_back(item);

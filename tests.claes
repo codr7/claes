@@ -57,6 +57,11 @@
 (check 2
   (if F 1 2))
 
+(check 1:1
+  (let [v [1 2 3] 
+        i (iter v) j i]
+    (i):(j)))
+
 (check [\a \b \c]
   (let [result []]
     (for c "abc"

@@ -1,9 +1,19 @@
 3268
 1208
 
+* Add method arity
+** update core/env
+** check stack before body in Method::call
+
 * add debugger
-** add stop macro
+** add bool vm.debug
+** add debug macro
 ** add vm.loc optional<Loc>
+** add loc method
+*** add LocType
+** add stop macro
+*** add loc to stop op
+*** pass from macro
 ** add loc op
 *** skip in tco check
 *** add vm debug flag
@@ -15,15 +25,12 @@
 ** handle early stop in repl
 *** temporarily replace next op with stop and eval on step
 *** add (step) macro
+**** eval/stop until loc changes
 *** next again if trace/loc
+*** add run macro
 ** update readme
 
-* add method arity
-** update core/env
-** check stack before body in Method::call
-
 * implement Pair::iter
-* implement Vector::iter
 
 * add Type.peek/pop
 ** self default
