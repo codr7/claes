@@ -27,10 +27,10 @@ namespace claes {
   }
 
   E Type::Imp::emit_call(const Cell &value,
-		     VM &vm, 
-		     Env &env, 
-		     const Forms &args,
-		     const Loc &loc) const {
+			 VM &vm, 
+			 Env &env, 
+			 const Forms &args,
+			 const Loc &loc) const {
     Forms my_args(args);
     auto arity = 0;
 
