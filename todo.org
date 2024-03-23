@@ -2,14 +2,18 @@
 1181
 
 * add debugger
-** add breakpoint macro
-** breakpoint op with loc
-*** like stop but don't inc pc
-** handle in repl
-*** temporarily replace next op with breakpoint % eval on step
+** add stop macro
+** add vm.loc optional<Loc>
+** add loc op
+*** skip in tco check
+** add vm debug flag
+*** generate loc ops if true
+*** add Op method loc optional<Loc>
+*** use to update vm.loc in loc op
+** handle early stop in repl
+*** temporarily replace next op with stop and eval on step
 *** add (step) macro
 *** next again if trace
-** add stack, frames/regs & call-stack macros
 ** update readme
 
 * add method arity
