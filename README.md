@@ -3,7 +3,7 @@ This project aims to implement a custom Lisp in C++.<br/>
 <br/>
 All the code in this document is included in the [test suite](https://github.com/codr7/claes/blob/main/tests.claes).<br/>
 <br/>
-The codebase has no dependencies besides CMake and a C++20 compiler, doesn't use exceptions, and currently weighs in at around 5 kloc.
+The codebase has no dependencies besides CMake and a C++20-compiler; doesn't use exceptions, and currently weighs in at around 5 kloc.
 
 ## setup
 Launching the binary without arguments starts a REPL, `rlwrap` may be used to add support for line editing.
@@ -29,7 +29,9 @@ _
 ## language
 To me, Lisp is all about ergonomics.<br/>
 <br/>
-I've tried to capture some of the pragmatism of Common Lisp and combine it with good ideas from Scheme, Clojure, Perl, Python and Ruby; while taking the opportunity to scratch a couple of personal itches along the way.
+I've tried to capture some of the pragmatism of Common Lisp and combine it with good ideas from Scheme, Clojure, Perl, Python and Ruby; while taking the opportunity to scratch a couple of personal itches along the way.<br/>
+<br/>
+It's still very much a work in progress, but already perfectly usable as an embedded scripting/configuration/template language; which is its primary intended use case.
 
 ## nil
 The `Nil` type has one value, `_`.
