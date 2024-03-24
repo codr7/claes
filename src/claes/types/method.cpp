@@ -36,48 +36,50 @@ namespace claes::types {
 		      const Forms &args,
 		      const claes::Loc &loc) const {
     auto &m = value.as(get());
-
+    
     if (args.len() < m.arity()) {
       return Error(loc, "Not enough arguments for: ", value, ' ', args.len());
     }
-
+    
     if (vm.debug) {
       vm.emit<ops::Loc>(loc);
     }
-
+    
     Forms my_args(args);
     auto ma = m.imp->args.rbegin();
     auto arity = 0;
     auto vararg = false;
+    auto expr = false;
     
     for (auto a: args.items) {
-      if (ma != m.imp->args.rend()) {	
-	if (ma->front() == '\'') {
-	  vm.emit<ops::Push>(Cell(Expr::get(), claes::Expr(a, env)));
-	  ma++;
-	  arity++;
-	  continue;
-	}
-
+      if (!vararg && ma != m.imp->args.rend()) {	
 	if (ma->back() == '*') {
 	  vararg = true;
 	  vm.emit<ops::MakeVector>();
 	}
 	
+	if (ma->front() == '\'') {
+	  expr = true;
+	}
+	
 	ma++;
       }
       
-      if (auto e = a.emit(vm, env, my_args); e) {
+      if (expr) {
+	vm.emit<ops::Push>(Cell(Expr::get(), claes::Expr(a, env)));
+      } else if (auto e = a.emit(vm, env, my_args); e) {
 	return e;
       }
-
+    
       if (vararg) {
 	vm.emit<ops::PushVectorItem>();
+      } else {
+	expr = false;
       }
       
       arity++;
     }
-
+    
     vm.emit<ops::CallDirect>(value, arity, loc);
     return nullopt;
   }

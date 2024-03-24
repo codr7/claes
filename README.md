@@ -120,6 +120,19 @@ Leaving out the name creates a lambda.
 
 42
 ```
+
+### varargs
+Methods may be defined to accept a variable number of arguments by suffixing the last argument with `*`.
+
+```
+  (^ foo [x*]
+    x)
+    
+  (foo 1 2 3)
+
+[1 2 3]
+```
+
 ### fexprs
 Quoting argument names creates fexprs, arguments may be evaluated by calling them.
 
