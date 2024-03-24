@@ -2,12 +2,14 @@
 1208
 
 * add splat support
-** (+ args1* args2*)
-** get iterators and push on call
-*** adjust arity
+** add splat op
+*** get iter and push all values
+** emit splat op after arg in Method::emit_call
+(+ [1 2 3]*)
 
 * define <= and >= in core eval block
 ** use vararg/splat
+** add tests
 
 * add len method
 ** add Cell.len()
