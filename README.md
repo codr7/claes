@@ -1,4 +1,4 @@
-# introduction
+# intro
 This project aims to implement a custom Lisp in C++.<br/>
 <br/>
 All the code in this document is included in the [test suite](https://github.com/codr7/claes/blob/main/tests.claes).<br/>
