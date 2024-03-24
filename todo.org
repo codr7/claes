@@ -1,6 +1,13 @@
 3268
 1208
 
+* add splat support
+** (+ args1* args2*)
+** get iterators and push on call
+
+* define <= and >= in core eval block
+** use vararg/splat
+
 * add len method
 ** add Cell.len()
 ** return 1 default
@@ -13,15 +20,6 @@
 ** peek/pop för vector/string
 ** pop for i64
 ** add stacks to readme
-
-* add vararg support
-** suffix vararg with *
-** add method.vararg bool if found
-** collect remaining args in vector on call
-
-* add splat support
-** (+ args1* args2*)
-** get iterators and push on call
 
 * add Map type
 ** add {} reader

@@ -237,9 +237,16 @@ namespace claes::libs {
 		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 		 
-		 for (const auto &n: arg_names) {
-		   body_env.bind(n.front() == '\'' ? n.substr(1) : n,
-				 types::Reg::get(), reg_count++);
+		 for (auto n: arg_names) {
+		   if (n.front() == '\'') {
+		     n = n.substr(1);
+		   }
+
+		   if (n.back() == '*') {
+		     n.pop_back();
+		   }
+		   
+		   body_env.bind(n, types::Reg::get(), reg_count++);
 		 }
 
 		 vm.emit<ops::PushRegs>(reg_count);

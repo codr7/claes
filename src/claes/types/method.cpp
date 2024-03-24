@@ -3,7 +3,9 @@
 #include "claes/forms.hpp"
 #include "claes/ops/call_direct.hpp"
 #include "claes/ops/loc.hpp"
+#include "claes/ops/make_vector.hpp"
 #include "claes/ops/push.hpp"
+#include "claes/ops/push_vector_item.hpp"
 #include "claes/types/expr.hpp"
 #include "claes/types/method.hpp"
 #include "claes/vm.hpp"
@@ -46,7 +48,8 @@ namespace claes::types {
     Forms my_args(args);
     auto ma = m.imp->args.rbegin();
     auto arity = 0;
-
+    auto vararg = false;
+    
     for (auto a: args.items) {
       if (ma != m.imp->args.rend()) {	
 	if (ma->front() == '\'') {
@@ -54,6 +57,11 @@ namespace claes::types {
 	  ma++;
 	  arity++;
 	  continue;
+	}
+
+	if (ma->back() == '*') {
+	  vararg = true;
+	  vm.emit<ops::MakeVector>();
 	}
 	
 	ma++;
@@ -63,6 +71,10 @@ namespace claes::types {
 	return e;
       }
 
+      if (vararg) {
+	vm.emit<ops::PushVectorItem>();
+      }
+      
       arity++;
     }
 

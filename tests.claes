@@ -90,6 +90,12 @@
     
   (sum 4))
 
+(check [1 2 3]
+  (^ foo [x*]
+    x)
+    
+  (foo 1 2 3))
+
 (check 42
   (^ foo ['x]
     x)
