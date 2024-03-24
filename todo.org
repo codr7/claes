@@ -1,10 +1,10 @@
 3268
 1208
 
-* add quote form
-** inc depth in quote()
-
-* add quote reader
+* add len method
+** add Cell.len()
+** return 1 default
+** override for i64, string, vector, pair (2)
 
 * add Type.peek/pop
 ** self default
@@ -14,9 +14,24 @@
 ** pop for i64
 ** add stacks to readme
 
+* add vararg support
+** suffix vararg with *
+** add method.vararg bool if found
+** collect remaining args in vector on call
+
+* add splat support
+** (+ args1* args2*)
+** get iterators and push on call
+
 * add Map type
 ** add {} reader
 ** Value = map<Cell, Cell>
+
+* add expr type
+** form & env
+** prefix expr args with @
+*** emit exprs instead of values in call
+** call expr to evaluate
 
 * implement Pair::iter
 

@@ -21,7 +21,7 @@ namespace claes {
   struct Reg;
   struct Stack;
 
-  static const int VERSION = 5;
+  static const int VERSION = 6;
 
   struct VM {
     bool debug = false, trace = false;

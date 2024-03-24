@@ -13,7 +13,7 @@ cmake ..
 make claes
 rlwrap ./claes
 
-claes v5
+claes v6
 may the source be with you
 
   (say "hello" "world")
@@ -104,6 +104,50 @@ Leaving out the name creates a lambda.
     (f 42))
 
 42
+```
+
+## quoting
+Prefixing any expression with `'` wraps it up as a value and pushes it on the stack instead of evaluating it.
+
+```
+  'foo
+
+'foo
+
+  'foo:'bar
+
+'foo:'bar
+
+  '[foo bar baz]
+
+['foo 'bar 'baz]
+
+  '(foo 1 2 3)
+
+'foo:[1 2 3]
+```
+
+### symbols
+Symbols are quoted identifiers, the same symbol always refers to the same adress in memory; which makes them cheaper to compare for equality than strings.
+
+```
+  (= 'foo 'foo)
+```
+
+Any values may be turned into a symbol using `Sym`.
+
+```
+  (Sym "foo" 'bar 42 T)
+
+'foobar42T
+```
+
+`String` may be used to get a symbols name.
+
+```
+  (String 'foo)
+
+"foo"
 ```
 
 ## references

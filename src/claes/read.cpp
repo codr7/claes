@@ -3,9 +3,10 @@
 
 #include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
-#include "claes/forms/ref.hpp"
-#include "claes/forms/pair.hpp"
 #include "claes/forms/literal.hpp"
+#include "claes/forms/pair.hpp"
+#include "claes/forms/quote.hpp"
+#include "claes/forms/ref.hpp"
 #include "claes/forms/vector.hpp"
 #include "claes/read.hpp"
 #include "claes/types/i64.hpp"
@@ -65,6 +66,7 @@ namespace claes {
       read_call,
       read_i64, 
       read_pair,
+      read_quote,
       read_ref,
       read_rune,
       read_string,
@@ -126,7 +128,7 @@ namespace claes {
     while (in.get(c)) {
       if (!isgraph(c) ||  
 	  c == '(' || c == ')' || c == '[' || c == ']' || c == '\\' || c == '"' || 
-	  c == ':') {
+	  c == ':' || c == '&' || c == '\'') {
 	in.unget();
 	break;
       }
@@ -166,7 +168,14 @@ namespace claes {
       return ReadT(false, Error(loc, "Missing right part of pair"));
     }
 
-    out.push<forms::Pair>(form_loc, left, out.pop_back());
+    const auto right = out.pop_back();
+
+    out.push<forms::Pair>(form_loc,
+			  left,
+			  left.as<forms::Quote>()
+			  ? forms::Quote::make(right.imp->loc, right)
+			  : right);
+    
     read_ws(in, out, loc);
 
     if (in.get(c)) { 
@@ -179,6 +188,31 @@ namespace claes {
       }
     }
 
+    return ReadT(true, nullopt);
+  }
+
+  ReadT read_quote(istream &in, Forms &out, Loc &loc) {
+    char c = 0;
+
+    if (!in.get(c)) { 
+      return ReadT(false, nullopt); 
+    }
+
+    if (c != '\'') {
+      in.unget();
+      return ReadT(false, nullopt);
+    }
+
+    const auto form_loc = loc;
+    loc.column++;
+
+    if (auto ok = read_form(in, out, loc); ok.second) {
+      return ok;
+    } else if (!ok.first) {
+      return ReadT(false, Error(loc, "Invalid quote"));
+    }
+
+    out.push<forms::Quote>(form_loc, out.pop_back());
     return ReadT(true, nullopt);
   }
 

@@ -120,8 +120,11 @@
 (check "foo42T"
  (String "foo" 42 T))
 
-(check "foo42T"
-  (String (Sym "foo" 42 T)))
+(check 'foobar42T
+  (Sym "foo" 'bar 42 T))
+
+(check "foo"
+  (String 'foo))
 
 (check [1 2 3]
   (Vector 1 2 3))
