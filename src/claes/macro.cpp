@@ -1,4 +1,5 @@
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/macro.hpp"
 #include "claes/ops/loc.hpp"
 #include "claes/vm.hpp"
@@ -8,10 +9,10 @@ namespace claes {
 		Env &env, 
 		const Forms &args,
 		const Loc &loc) {
-    if (args.items.size() < imp->arity) {
+    if (args.len() < imp->arity) {
       return Error(loc, 
 		   "Not enough arguments for: ", *this, ' ', 
-		   imp->arity, ':', args.items.size());
+		   imp->arity, ':', args.len());
     }
 
     if (vm.debug) {

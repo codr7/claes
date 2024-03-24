@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/ops/goto.hpp"
 #include "claes/ops/set_path.hpp"
 #include "claes/ops/exit.hpp"

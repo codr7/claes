@@ -1,4 +1,5 @@
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/ops/set_ref_direct.hpp"
 #include "claes/stack.hpp"
 #include "claes/types/ref.hpp"

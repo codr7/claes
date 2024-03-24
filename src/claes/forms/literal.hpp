@@ -1,6 +1,7 @@
 #ifndef CLAES_FORMS_LITERAL_HPP
 #define CLAES_FORMS_LITERAL_HPP
 
+#include "claes/form.hpp"
 #include "claes/cell.hpp"
 
 namespace claes::forms {
@@ -26,6 +27,8 @@ namespace claes::forms {
 			const Loc &loc) const override {
       return value.emit_call(vm, env, arguments, loc);
     }
+
+    virtual Cell quote(VM &vm, int depth) const override;
   };
 }
 

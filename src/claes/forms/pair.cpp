@@ -1,4 +1,5 @@
 #include "claes/forms/pair.hpp"
+#include "claes/types/pair.hpp"
 #include "claes/ops/make_pair.hpp"
 #include "claes/vm.hpp"
 
@@ -14,5 +15,10 @@ namespace claes::forms {
 
     vm.emit<ops::MakePair>();
     return nullopt;
+  }
+
+  Cell Pair::quote(VM &vm, int depth) const {
+    return Cell(types::Pair::get(),
+		make_pair(left.quote(vm, depth), right.quote(vm, depth)));
   }
 }

@@ -191,7 +191,7 @@ namespace claes::libs {
 		 const auto start_pc = vm.emit_pc();
 
 		 Method method(name ? *name : "lambda", 		
-			       method_args.items.size(),
+			       method_args.len(),
 			       [start_pc](const Method &self, 
 					  VM &vm, 
 					  Stack &stack, 
@@ -249,9 +249,9 @@ namespace claes::libs {
 		  auto it = stack.pop().iter().as(types::Iter::get());
 		  arity -= 2;
 
-		  rotate(stack.items.begin(),
-			 stack.items.begin() + stack.items.size() - arity,
-			 stack.items.end());
+		  rotate(stack.begin(),
+			 stack.begin() + stack.len() - arity,
+			 stack.end());
 
 		  auto t = stack.pop();
 
@@ -367,8 +367,8 @@ namespace claes::libs {
 		  const Loc &loc) -> E {
 		 Forms my_args(args);
 
-		 for (auto bf = my_args.items.begin(); 
-		      bf != my_args.items.end(); 
+		 for (auto bf = my_args.begin(); 
+		      bf != my_args.end(); 
 		      bf++) {
 		   const auto &name_form = *bf;
 		   const auto &value_form = *(++bf);
@@ -532,8 +532,8 @@ namespace claes::libs {
 		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 
-		 for (auto bf = binding_forms.items.begin(); 
-		      bf != binding_forms.items.end(); 
+		 for (auto bf = binding_forms.begin(); 
+		      bf != binding_forms.end(); 
 		      bf++) {
 		   const auto &name_form = *bf;
 		   const auto &value_form = *(++bf);
@@ -621,7 +621,7 @@ namespace claes::libs {
 		   return Error(loc, "Invalid push destination: ", *target);
 		 }
 
-		 const auto arity = my_args.items.size();
+		 const auto arity = my_args.len();
 
 		 if (auto e = my_args.emit(vm, env); e) {
 		   return e;
@@ -666,8 +666,8 @@ namespace claes::libs {
 		  const Loc &loc) -> E {
 		 Forms my_args(args);
 
-		 for (auto a = my_args.items.begin(); 
-		      a != my_args.items.end();) {
+		 for (auto a = my_args.begin(); 
+		      a != my_args.end();) {
 		   const auto &name_form = *a++;
 		   const auto &name = name_form.as<forms::Id>()->name;
 		   auto v = env.find(name);

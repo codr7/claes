@@ -1,5 +1,6 @@
 #include "claes/cell.hpp"
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/iters/repeat.hpp"
 #include "claes/ops/call_direct.hpp"
 #include "claes/ops/loc.hpp"

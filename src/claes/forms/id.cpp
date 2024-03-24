@@ -1,5 +1,7 @@
 #include "claes/env.hpp"
 #include "claes/forms/id.hpp"
+#include "claes/types/sym.hpp"
+#include "claes/vm.hpp"
 
 namespace claes::forms {
   E Id::emit(VM &vm, Env &env, Forms &arguments) const {
@@ -29,5 +31,9 @@ namespace claes::forms {
     }
     
     return Error(loc, "Unknown identifier: ", name);
+  }
+
+  Cell Id::quote(VM &vm, int depth) const {
+    return Cell(types::Sym::get(), vm.sym(name)); 
   }
 }

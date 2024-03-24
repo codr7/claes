@@ -1,7 +1,9 @@
 #include "claes/env.hpp"
+#include "claes/forms.hpp"
 #include "claes/forms/ref.hpp"
 #include "claes/ops/deref.hpp"
 #include "claes/ops/set_ref.hpp"
+#include "claes/types/ref.hpp"
 #include "claes/vm.hpp"
 
 namespace claes::forms {
@@ -31,5 +33,9 @@ namespace claes::forms {
     } 
     
     return nullopt;
+  }
+
+  Cell Ref::quote(VM &vm, int depth) const {
+    return Cell(types::Ref::get(), claes::Ref(target.quote(vm, depth)));
   }
 }

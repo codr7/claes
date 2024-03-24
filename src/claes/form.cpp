@@ -1,4 +1,5 @@
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/ops/call_indirect.hpp"
 #include "claes/ops/make_ref.hpp"
 #include "claes/vm.hpp"
@@ -9,7 +10,7 @@ namespace claes {
 			 const Forms &args, 
 			 const Loc &loc) const {
     Forms as(args);
-    const auto arity = as.items.size();
+    const auto arity = as.len();
 
     if (auto e = as.emit(vm, env); e) {
       return e;
@@ -31,5 +32,9 @@ namespace claes {
 
     vm.emit<ops::MakeRef>();
     return nullopt;
+  }
+
+  Cell Form::quote(VM &vm, int depth) const {
+    return imp->quote(vm, depth);
   }
 }

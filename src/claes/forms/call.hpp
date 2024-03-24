@@ -2,6 +2,7 @@
 #define CLAES_FORMS_CALL_HPP
 
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 
 namespace claes::forms {
   struct Call: Form::Imp {
@@ -35,6 +36,8 @@ namespace claes::forms {
     virtual E emit(VM &vm, Env &env, Forms &args) const override {
       return target.emit_call(vm, env, this->args, loc);
     }
+
+    virtual Cell quote(VM &vm, int depth) const override;
   };
 }
 

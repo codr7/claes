@@ -19,16 +19,16 @@ namespace claes {
       return items.begin();
     }
 
+    bool empty() const {
+      return items.empty();
+    }
+
     Items::iterator end() {
       return items.end();
     }
 
     Items::const_iterator end() const {
       return items.end();
-    }
-
-    bool empty() const {
-      return items.empty();
     }
 
     Cell &peek() {

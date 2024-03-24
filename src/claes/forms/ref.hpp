@@ -28,6 +28,8 @@ namespace claes::forms {
 			Env &env, 
 			const Forms &args, 
 			const Loc &loc) const override;
+
+    virtual Cell quote(VM &vm, int depth) const override;
   };
 }
 

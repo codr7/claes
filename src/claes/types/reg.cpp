@@ -1,5 +1,6 @@
 #include "claes/cell.hpp"
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/ops/call_reg.hpp"
 #include "claes/ops/get_reg.hpp"
 #include "claes/types/reg.hpp"
@@ -16,7 +17,7 @@ namespace claes::types {
 		   const Forms &args,
 		   const Loc &loc) const {
     Forms my_args(args);
-    const auto arity = my_args.items.size();
+    const auto arity = my_args.len();
 
     if (auto e = my_args.emit(vm, env); e) {
       return e;

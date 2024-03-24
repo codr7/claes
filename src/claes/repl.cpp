@@ -2,6 +2,7 @@
 
 #include "claes/env.hpp"
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/libs/core.hpp"
 #include "claes/read.hpp"
 #include "claes/ops/exit.hpp"

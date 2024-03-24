@@ -1,15 +1,10 @@
 3268
 1208
 
-* add Cell Form.quote(int depth) const
-** return form default
-*** add types::Form
-**** copy Sym
-** add Quote form
-*** inc depth in quote()
-** return sym for id
-** return value for literal
-** add quote reader
+* add quote form
+** inc depth in quote()
+
+* add quote reader
 
 * add Type.peek/pop
 ** self default

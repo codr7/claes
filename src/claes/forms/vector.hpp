@@ -2,6 +2,7 @@
 #define CLAES_FORMS_VECTOR_HPP
 
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 
 namespace claes::forms {
   struct Vector: Form::Imp {
@@ -22,6 +23,7 @@ namespace claes::forms {
     }
 
     virtual E emit(VM &vm, Env &env, Forms &arguments) const override;
+    virtual Cell quote(VM &vm, int depth) const override;
   };
 }
 

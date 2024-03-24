@@ -1,5 +1,6 @@
 #include "claes/cell.hpp"
 #include "claes/form.hpp"
+#include "claes/forms.hpp"
 #include "claes/ops/call_direct.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/types/method.hpp"
@@ -30,8 +31,8 @@ namespace claes::types {
 		      Env &env, 
 		      const Forms &args,
 		      const claes::Loc &loc) const {
-    if (args.items.size() < value.as(get()).imp->arity) {
-      return Error(loc, "Not enough arguments for: ", value, ' ', args.items.size());
+    if (args.len() < value.as(get()).imp->arity) {
+      return Error(loc, "Not enough arguments for: ", value, ' ', args.len());
     }
 
     return Type::Imp::emit_call(value, vm, env, args, loc);

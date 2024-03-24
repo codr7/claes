@@ -12,8 +12,8 @@ namespace claes::types {
     vector<Cell> result;
 
     const auto
-      i = stack.items.end() - arity,
-      j = stack.items.end();
+      i = stack.end() - arity,
+      j = stack.end();
 
     move(i, j, back_inserter(result));
     stack.items.erase(i, j);
@@ -47,7 +47,58 @@ namespace claes::types {
     return nullopt;
   }
 
+  strong_ordering Vector::compare(const Cell &left, 
+				  const Cell &right) const {
+    auto lvs = left.as(get()), rvs = right.as(get());
+
+    for (const auto &li = lvs.begin(), 
+	   &ri = rvs.begin();;) {
+      if (li == lvs.end()) {
+	return strong_ordering::less;
+      }
+
+      if (ri == rvs.end()) {
+	return strong_ordering::greater;
+      }
+
+      auto lv = *li, rv = *ri;
+
+      if (const auto r = lv <=> rv; r != strong_ordering::equal) {
+	return r;
+      }
+    }
+
+    return strong_ordering::equal;
+  }
+
+  void Vector::dump(const Cell &value, ostream &out) const {
+    out << '[';
+      
+    auto i = 0;
+    for (const auto &it: value.as(get())) {
+      if (i++ > 0) {
+	out << ' ';
+      }
+
+      out << it;
+    }
+
+    out << ']';
+  }
+
+  bool Vector::eq(const Cell &left, const Cell &right) const {
+    return left.as(get()) == right.as(get());
+  }
+    
   Cell Vector::iter(const Cell &target) const {
     return Cell(Iter::get(), iters::VectorItems::make(target.as(get())));
+  }
+
+  bool Vector::is_true(const Cell &value) const {
+    return !value.as(get()).empty();
+  }
+
+  void Vector::push(Cell &target, const Cell &item) const {
+    target.as(get()).push_back(item);
   }
 }
