@@ -7,8 +7,26 @@
 
 namespace claes {
   struct Stack {
-    vector<Cell> items;
+    using Items = vector<Cell>;
     
+    Items items;
+
+    Items::iterator begin() {
+      return items.begin();
+    }
+
+    Items::const_iterator begin() const {
+      return items.begin();
+    }
+
+    Items::iterator end() {
+      return items.end();
+    }
+
+    Items::const_iterator end() const {
+      return items.end();
+    }
+
     bool empty() const {
       return items.empty();
     }
@@ -34,6 +52,10 @@ namespace claes {
     template <typename T, typename V>
     void push(TType<T> type, const V &value) {
       items.emplace_back(type, value);
+    }
+
+    size_t len() const {
+      return items.size();
     }
   };
 

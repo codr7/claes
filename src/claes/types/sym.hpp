@@ -17,6 +17,11 @@ namespace claes::types {
 
     Sym(const string &name): Type::Imp(name) {}
 
+    virtual E call(VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   const claes::Loc &loc) const override;
+
     virtual strong_ordering compare(const Cell &left, 
 				    const Cell &right) const override {
       return *left.as(get()) <=> *right.as(get());

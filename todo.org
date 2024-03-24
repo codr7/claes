@@ -1,10 +1,6 @@
 3268
 1208
 
-* add Sym meta call
-** convert args to string like say
-** call vm.sym
-
 * add Cell Form.quote(int depth) const
 ** return form default
 *** add types::Form

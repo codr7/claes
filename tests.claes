@@ -120,6 +120,9 @@
 (check "foo42T"
  (String "foo" 42 T))
 
+(check "foo42T"
+  (String (Sym "foo" 42 T)))
+
 (check [1 2 3]
   (Vector 1 2 3))
 
