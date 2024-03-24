@@ -33,6 +33,15 @@ The `Nil` type has one value, `_`.
 ## bits
 The `Bit` type has two values, `T` and `F`.
 
+## pairs
+Pairs may be formed by putting `:` between any two values.
+
+```
+  'foo:42
+
+'foo:42
+```
+
 ## bindings
 Bindings come in two flavors, unscoped compile time and scoped runtime.
 
