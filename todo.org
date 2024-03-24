@@ -1,8 +1,6 @@
 3268
 1208
 
-* update parent Expr envs in Env constructor
-
 * add len method
 ** add Cell.len()
 ** return 1 default
@@ -48,3 +46,6 @@
 
 * add incr macro
 ** add increment op
+
+* rebind updated parent Expr envs in Env constructor
+** replaces default create of new env in Expr
