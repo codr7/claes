@@ -9,6 +9,7 @@ namespace claes {
   struct VM;
 
   struct Method {
+    using Args = vector<string>;
     using Body = function<E (const Method &method,
 			     VM &vm,
 			     Stack &stack,
@@ -17,19 +18,23 @@ namespace claes {
 			     const Loc &loc)>;
 
     struct Imp {
-      int arity;
+      Args args;
       Body body;
       string name;
 
-      Imp(const string &name, int arity, const Body &body): 
-	arity(arity), body(body), name(name) {}
+      Imp(const string &name, const Args &args, const Body &body): 
+	args(args), body(body), name(name) {}
     };
 
     shared_ptr<const Imp> imp;
     
-    Method(const string &name, int arity, const Body &body): 
-      imp(make_shared<const Imp>(name, arity, body)) {}
+    Method(const string &name, const Args &args, const Body &body): 
+      imp(make_shared<const Imp>(name, args, body)) {}
 
+    size_t arity() const {
+      return imp->args.size();
+    }
+    
     E call(VM &vm, Stack &stack, int arity, bool recursive, const Loc &loc) const {
       return imp->body(*this, vm, stack, arity, recursive, loc);
     }

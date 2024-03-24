@@ -26,7 +26,7 @@ namespace claes {
     
     emit<ops::Exit>();
     ops[skip_pc].imp = make_shared<ops::Goto>(emit_pc());
-  
+
     if (auto e = eval(start_pc, stack); e) {
       return e;
     }

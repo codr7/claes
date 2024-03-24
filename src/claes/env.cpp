@@ -8,8 +8,10 @@ namespace claes {
     bind(name, Cell(types::Macro::get(), Macro(name, arity, body)));
   }
 
-  void Env::bind_method(const string &name, int arity, const Method::Body &body) {
-    bind(name, Cell(types::Method::get(), Method(name, arity, body)));
+  void Env::bind_method(const string &name,
+			const Method::Args &args,
+			const Method::Body &body) {
+    bind(name, Cell(types::Method::get(), Method(name, args, body)));
   }
 
   void Env::bind_type(Type type) {

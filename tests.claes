@@ -90,6 +90,25 @@
     
   (sum 4))
 
+(check 42
+  (^ foo ['x]
+    x)
+
+  ((foo 42)))
+
+(check 42
+  (let [foo 42]
+    (^ bar ['x]
+      (x))
+
+    (bar foo)))
+
+(check 1
+  (let [foo 1]
+    (^ bar ['x])
+    (bar (set foo 2))
+    foo))
+
 (check T:F
   (z? 0):(z? 1))
 

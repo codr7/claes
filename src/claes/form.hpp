@@ -43,6 +43,12 @@ namespace claes {
       imp->collect_ids(out);
     }
 
+    set<string> collect_ids() const {
+      set<string> ids;
+      collect_ids(ids);
+      return ids;
+    }
+    
     E emit(VM &vm, Env &env, Forms &args) const {
       return imp->emit(vm, env, args);
     }

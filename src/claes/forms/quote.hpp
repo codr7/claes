@@ -7,7 +7,7 @@ namespace claes::forms {
   struct Quote: Form::Imp {
     static Form make(const Loc &loc, const Form &target) {
       return Form::make<Quote>(loc, target);
-    };
+    }
 
     Form target;
 

@@ -112,7 +112,11 @@ namespace claes {
     }
 
     void bind_macro(const string &name, int arity, const Macro::Body &body);
-    void bind_method(const string &name, int arity, const Method::Body &body);
+
+    void bind_method(const string &name,
+		     const Method::Args &args,
+		     const Method::Body &body);
+    
     void bind_type(Type type);
 
     optional<Cell> find(const string &name) const {

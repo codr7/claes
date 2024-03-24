@@ -6,6 +6,10 @@
 
 namespace claes::forms {
   struct Literal: Form::Imp {
+    static Form make(const Loc &loc, const Cell &value) {
+      return Form::make<Literal>(loc, value);
+    };
+
     Cell value;
     
     Literal(const Loc &loc, const Cell &value): 

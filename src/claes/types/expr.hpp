@@ -1,21 +1,21 @@
-#ifndef CLAES_TYPES_REF_HPP
-#define CLAES_TYPES_REF_HPP
+#ifndef CLAES_TYPES_EXPR_HPP
+#define CLAES_TYPES_EXPR_HPP
 
 #include "claes/cell.hpp"
-#include "claes/ref.hpp"
+#include "claes/expr.hpp"
 
 namespace claes::types {
   using namespace claes;
 
-  struct Ref: Type::Imp {
-    using Value = claes::Ref;
+  struct Expr: Type::Imp {
+    using Value = claes::Expr;
     
-    static TType<Ref> get() {
-      static TType<Ref> t("Ref");
+    static TType<Expr> get() {
+      static TType<Expr> t("Expr");
       return t;
     }    
 
-    Ref(const string &name): Type::Imp(name) {}
+    Expr(const string &name): Type::Imp(name) {}
 
     virtual E call(Cell &target, 
 		   VM &vm, 
@@ -32,12 +32,6 @@ namespace claes::types {
     virtual void dump(const Cell &value, ostream &out) const override {
       out << value.as(get());
     }
-
-    virtual E emit_call(const Cell &value,
-			VM &vm, 
-			Env &env, 
-			const Forms &args,
-			const claes::Loc &loc) const override;
 
     virtual bool eq(const Cell &left, const Cell &right) const override {      
       return left.as(get()) == right.as(get());

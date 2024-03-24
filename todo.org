@@ -1,6 +1,8 @@
 3268
 1208
 
+* update parent Expr envs in Env constructor
+
 * add len method
 ** add Cell.len()
 ** return 1 default
@@ -26,12 +28,6 @@
 * add Map type
 ** add {} reader
 ** Value = map<Cell, Cell>
-
-* add expr type
-** form & env
-** prefix expr args with @
-*** emit exprs instead of values in call
-** call expr to evaluate
 
 * implement Pair::iter
 

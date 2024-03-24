@@ -1,4 +1,6 @@
 #include "claes/forms/id.hpp"
+#include "claes/forms/literal.hpp"
+#include "claes/forms/quote.hpp"
 #include "claes/forms/vector.hpp"
 #include "claes/libs/core.hpp"
 #include "claes/ops/begin_frame.hpp"
@@ -23,6 +25,7 @@
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
 #include "claes/types/bit.hpp"
+#include "claes/types/expr.hpp"
 #include "claes/types/i64.hpp"
 #include "claes/types/iter.hpp"
 #include "claes/types/loc.hpp"
@@ -42,6 +45,7 @@
 namespace claes::libs {
   Core::Core(): Env() {
     bind_type(types::Bit::get());
+    bind_type(types::Expr::get());
     bind_type(types::I64::get());
     bind_type(types::Iter::get());
     bind_type(types::Loc::get());
@@ -62,7 +66,7 @@ namespace claes::libs {
     bind("T", T());
     bind("F", F());
 
-    bind_method("+", 2,
+    bind_method("+", {"x", "y"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -80,7 +84,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("-", 1,
+    bind_method("-", {"x"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -99,7 +103,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("=", 2,
+    bind_method("=", {"x", "y"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -122,7 +126,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method("<", 2,
+    bind_method("<", {"x", "y"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -146,7 +150,7 @@ namespace claes::libs {
 		  return nullopt;
 		});
 
-    bind_method(">", 2,
+    bind_method(">", {"x", "y"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -189,9 +193,28 @@ namespace claes::libs {
 		 Forms method_args = my_args.pop().as<forms::Vector>()->items;
 		 const auto skip_pc = vm.emit<ops::Todo>(loc);
 		 const auto start_pc = vm.emit_pc();
+		 vector<string> arg_names;
+
+		 for (auto a = method_args.items.rbegin(); 
+		      a != method_args.items.rend(); 
+		      a++) {
+		   if (auto id = a->as<forms::Id>(); id) {
+		     const auto &name = a->as<forms::Id>()->name;
+		     arg_names.push_back(name);
+		   } else if (auto q = a->as<forms::Quote>(); q) {
+		     if (auto id = q->target.as<forms::Id>(); id) {
+		       const auto name = to_string('\'', id->name);
+		       arg_names.push_back(name);
+		     } else {
+			 return Error(loc, "Invalid argument2: ", q->target);
+		     }
+		   } else {
+		     return Error(loc, "Invalid argument3: ", *a);
+		   }
+		 }
 
 		 Method method(name ? *name : "lambda", 		
-			       method_args.len(),
+			       arg_names,
 			       [start_pc](const Method &self, 
 					  VM &vm, 
 					  Stack &stack, 
@@ -213,12 +236,10 @@ namespace claes::libs {
 		 my_args.collect_ids(body_ids);
 		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
-
-		 for (auto a = method_args.items.rbegin(); 
-		      a != method_args.items.rend(); 
-		      a++) {
-		   const auto name = a->as<forms::Id>()->name;
-		   body_env.bind(name, types::Reg::get(), reg_count++);
+		 
+		 for (const auto &n: arg_names) {
+		   body_env.bind(n.front() == '\'' ? n.substr(1) : n,
+				 types::Reg::get(), reg_count++);
 		 }
 
 		 vm.emit<ops::PushRegs>(reg_count);
@@ -239,7 +260,7 @@ namespace claes::libs {
 		 return vm.tco(mv, start_pc, start_pc);
 	       });
 
-    bind_method("apply", 2,
+    bind_method("apply", {"target", "args"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -398,7 +419,7 @@ namespace claes::libs {
 		 return my_args.emit(vm, env);
 	       });
     
-    bind_method("dump", 1,
+    bind_method("dump", {"value"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -558,7 +579,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_method("loc", 0,
+    bind_method("loc", {},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -590,7 +611,7 @@ namespace claes::libs {
 		 return vm.load(path, env, loc);
 	       });
 
-    bind_method("path", 1,
+    bind_method("path", {"value"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -631,7 +652,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
     
-    bind_method("say", 1,
+    bind_method("say", {"value"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -714,7 +735,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_method("z?", 1,
+    bind_method("z?", {"value"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 

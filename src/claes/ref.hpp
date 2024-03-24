@@ -38,8 +38,16 @@ namespace claes {
     }
   };
 
+  inline bool operator==(const Ref &left, const Ref &right) {
+    return left.imp->value == right.imp->value;    
+  }
+  
+  inline strong_ordering operator<=>(const Ref &left, const Ref &right) {
+    return left.imp->value <=> right.imp->value;
+  }
+  
   inline ostream &operator<<(ostream &out, const Ref &r) {
-    out << r.imp->value;
+    out << '&' << r.imp->value;
     return out;
   }
 }

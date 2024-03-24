@@ -2,7 +2,9 @@
 #include "claes/form.hpp"
 #include "claes/forms.hpp"
 #include "claes/ops/call_direct.hpp"
+#include "claes/ops/loc.hpp"
 #include "claes/ops/push.hpp"
+#include "claes/types/expr.hpp"
 #include "claes/types/method.hpp"
 #include "claes/vm.hpp"
 
@@ -15,7 +17,7 @@ namespace claes::types {
 		 const claes::Loc &loc) const {
     const auto &m = target.as(get());
 
-    if (arity < m.imp->arity) {
+    if (arity < m.arity()) {
       return Error(loc, "Not enough arguments: ", target, ' ', arity);
     }
 
@@ -31,11 +33,41 @@ namespace claes::types {
 		      Env &env, 
 		      const Forms &args,
 		      const claes::Loc &loc) const {
-    if (args.len() < value.as(get()).imp->arity) {
+    auto &m = value.as(get());
+
+    if (args.len() < m.arity()) {
       return Error(loc, "Not enough arguments for: ", value, ' ', args.len());
     }
 
-    return Type::Imp::emit_call(value, vm, env, args, loc);
+    if (vm.debug) {
+      vm.emit<ops::Loc>(loc);
+    }
+
+    Forms my_args(args);
+    auto ma = m.imp->args.rbegin();
+    auto arity = 0;
+
+    for (auto a: args.items) {
+      if (ma != m.imp->args.rend()) {	
+	if (ma->front() == '\'') {
+	  vm.emit<ops::Push>(Cell(Expr::get(), claes::Expr(a, env)));
+	  ma++;
+	  arity++;
+	  continue;
+	}
+	
+	ma++;
+      }
+      
+      if (auto e = a.emit(vm, env, my_args); e) {
+	return e;
+      }
+
+      arity++;
+    }
+
+    vm.emit<ops::CallDirect>(value, arity, loc);
+    return nullopt;
   }
 
   E Method::emit_ref(const Cell &value,

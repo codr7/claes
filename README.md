@@ -120,6 +120,21 @@ Leaving out the name creates a lambda.
 
 42
 ```
+### fexprs
+Quoting argument names creates fexprs, arguments may be evaluated by calling them.
+
+```
+  (^ foo ['x]
+    x)
+  
+  (foo (say "evaluating"))
+
+(Expr (say "evaluating"))
+
+  ((foo (say "evaluating")))
+
+evaluating
+```
 
 ## quoting
 Prefixing any expression with `'` wraps it up as a value and pushes it on the stack instead of evaluating it.
