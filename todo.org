@@ -1,10 +1,11 @@
 3268
 1208
 
-* add splat support
-** add splat op
-*** get iter and push all values
-** emit splat op after arg in Method::emit_call
+* finish splat support
+** add splat form
+*** handle in ^-macro
+*** emit target followed by ops::Splat
+** add splat reader
 (+ [1 2 3]*)
 
 * define <= and >= in core eval block

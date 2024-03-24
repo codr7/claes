@@ -53,7 +53,7 @@ namespace claes {
       &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
       &&PUSH, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
       &&RECALL, &&RETURN,
-      &&SET_PATH, &&SET_REF, &&SET_REF_DIRECT, &&SET_REG, &&STOP,
+      &&SET_PATH, &&SET_REF, &&SET_REF_DIRECT, &&SET_REG, &&SPLAT, &&STOP,
       &&TAIL_CALL, &&TODO, &&TRACE};
 
     Op op;
@@ -331,6 +331,26 @@ namespace claes {
       set_reg(op.as<ops::SetReg>().reg, stack.pop());
     }    
 
+    DISPATCH(pc+1);
+
+  SPLAT: {
+      auto it = stack.pop().iter().as(types::Iter::get());
+
+      for (;;) {
+	auto [v, e] = it.next();
+
+	if (e) {
+	  return e;
+	}
+	
+	if (!v) {
+	  break;
+	}
+
+	stack.push(*v);
+      }
+    }
+    
     DISPATCH(pc+1);
 
   STOP: {
