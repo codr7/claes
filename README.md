@@ -1,9 +1,9 @@
 # introduction
 This project aims to implement a custom Lisp in C++.<br/>
 <br/>
-All the code in this document is part of the [test suite](https://github.com/codr7/claes/blob/main/tests.claes).<br/>
+All the code in this document is included in the [test suite](https://github.com/codr7/claes/blob/main/tests.claes).<br/>
 <br/>
-The codebase has no dependencies besides CMake and a C++20 compiler, and currently weighs in at around 5 kloc.
+The codebase has no dependencies besides CMake and a C++20 compiler, doesn't use exceptions, and currently weighs in at around 5 kloc.
 
 ## setup
 Launching the binary without arguments starts a REPL, `rlwrap` may be used to add support for line editing.
