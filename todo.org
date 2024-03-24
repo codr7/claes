@@ -4,6 +4,7 @@
 * add splat support
 ** (+ args1* args2*)
 ** get iterators and push on call
+*** adjust arity
 
 * define <= and >= in core eval block
 ** use vararg/splat

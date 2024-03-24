@@ -112,6 +112,7 @@ New methods may be defined using `^`.
   (foo 42)
 ```
 
+### lambdas
 Leaving out the name creates a lambda.
 
 ```
