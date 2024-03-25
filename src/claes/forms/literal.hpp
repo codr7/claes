@@ -32,7 +32,7 @@ namespace claes::forms {
       return value.emit_call(vm, env, arguments, loc);
     }
 
-    virtual Cell quote(VM &vm, int depth) const override;
+    virtual pair<optional<Cell>, E> quote(VM &vm, int depth) const override;
   };
 }
 

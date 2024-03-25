@@ -4,15 +4,28 @@
 #include "claes/types/vector.hpp"
 
 namespace claes::forms {
-  Cell Call::quote(VM &vm, int depth) const {
+  pair<optional<Cell>, E> Call::quote(VM &vm, int depth) const {
     types::Vector::Value qas;
 
     for (const auto &a: args) {
-      qas.push_back(a.quote(vm, depth));
+      const auto [v, e] = a.quote(vm, depth);
+
+      if (e) {
+	return make_pair(nullopt, e);
+      }
+      
+      qas.push_back(*v);
+    }
+
+    const auto [v, e] = target.quote(vm, depth);
+
+    if (e) {
+      return make_pair(nullopt, e);
     }
     
-    return Cell(types::Pair::get(),
-		make_pair(target.quote(vm, depth),
-			  Cell(types::Vector::get(), qas)));
+    auto result = Cell(types::Pair::get(),
+		       make_pair(*v, Cell(types::Vector::get(), qas)));
+
+    return make_pair(result, nullopt);
   }
 }

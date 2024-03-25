@@ -23,7 +23,7 @@ namespace claes::forms {
     }
 
     virtual E emit(VM &vm, Env &env, Forms &arguments) const override;
-    virtual Cell quote(VM &vm, int depth) const override;
+    virtual pair<optional<Cell>, E> quote(VM &vm, int depth) const override;
   };
 }
 

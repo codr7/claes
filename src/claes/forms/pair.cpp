@@ -17,8 +17,20 @@ namespace claes::forms {
     return nullopt;
   }
 
-  Cell Pair::quote(VM &vm, int depth) const {
-    return Cell(types::Pair::get(),
-		make_pair(left.quote(vm, depth), right.quote(vm, depth)));
+  pair<optional<Cell>, E> Pair::quote(VM &vm, int depth) const {
+    auto [lv, le] = left.quote(vm, depth);
+
+    if (le) {
+      return make_pair(nullopt, le);
+    }
+
+    auto [rv, re] = right.quote(vm, depth);
+
+    if (re) {
+      return make_pair(nullopt, re);
+    }
+
+    auto result = Cell(types::Pair::get(), make_pair(*lv, *rv));
+    return make_pair(result, nullopt);
   }
 }

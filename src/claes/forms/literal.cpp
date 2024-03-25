@@ -3,7 +3,7 @@
 #include "claes/vm.hpp"
 
 namespace claes::forms {
-  Cell Literal::quote(VM &vm, int depth) const {
-    return value; 
+  pair<optional<Cell>, E> Literal::quote(VM &vm, int depth) const {
+    return make_pair(value, nullopt); 
   }
 }

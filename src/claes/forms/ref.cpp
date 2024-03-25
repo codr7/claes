@@ -35,7 +35,14 @@ namespace claes::forms {
     return nullopt;
   }
 
-  Cell Ref::quote(VM &vm, int depth) const {
-    return Cell(types::Ref::get(), claes::Ref(target.quote(vm, depth)));
+  pair<optional<Cell>, E> Ref::quote(VM &vm, int depth) const {
+    const auto [v, e] = target.quote(vm, depth);
+
+    if (e) {
+      return make_pair(nullopt, e);
+    }
+    
+    const auto result = Cell(types::Ref::get(), claes::Ref(*v));
+    return make_pair(result, nullopt);
   }
 }

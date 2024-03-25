@@ -1,17 +1,17 @@
-#ifndef CLAES_FORMS_QUOTE_HPP
-#define CLAES_FORMS_QUOTE_HPP
+#ifndef CLAES_FORMS_SPLAT_HPP
+#define CLAES_FORMS_SPLAT_HPP
 
 #include "claes/form.hpp"
 
 namespace claes::forms {
-  struct Quote: Form::Imp {
+  struct Splat: Form::Imp {
     static Form make(const Loc &loc, const Form &target) {
-      return Form::make<Quote>(loc, target);
-    }
+      return Form::make<Splat>(loc, target);
+    };
 
     Form target;
 
-    Quote(const Loc &loc, const Form &target): 
+    Splat(const Loc &loc, const Form &target): 
       Form::Imp(loc), target(target) {}
 
     virtual void collect_ids(set<string> &out) const override {
@@ -19,11 +19,10 @@ namespace claes::forms {
     }
 
     virtual void dump(ostream &out) const override {
-      out << '\'' << target;
+      out << target << '*';
     }
 
     virtual E emit(VM &vm, Env &env, Forms &args) const override;
-
     virtual pair<optional<Cell>, E> quote(VM &vm, int depth) const override;
   };
 }

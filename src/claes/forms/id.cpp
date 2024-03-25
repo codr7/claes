@@ -33,7 +33,7 @@ namespace claes::forms {
     return Error(loc, "Unknown identifier: ", name);
   }
 
-  Cell Id::quote(VM &vm, int depth) const {
-    return Cell(types::Sym::get(), vm.sym(name)); 
+  pair<optional<Cell>, E> Id::quote(VM &vm, int depth) const {
+    return make_pair(Cell(types::Sym::get(), vm.sym(name)), nullopt); 
   }
 }

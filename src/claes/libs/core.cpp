@@ -1,6 +1,7 @@
 #include "claes/forms/id.hpp"
 #include "claes/forms/literal.hpp"
 #include "claes/forms/quote.hpp"
+#include "claes/forms/splat.hpp"
 #include "claes/forms/vector.hpp"
 #include "claes/libs/core.hpp"
 #include "claes/ops/begin_frame.hpp"
@@ -66,7 +67,7 @@ namespace claes::libs {
     bind("T", T());
     bind("F", F());
 
-    bind_method("+", {"x", "y"},
+    bind_method("+", {"x"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -74,7 +75,7 @@ namespace claes::libs {
 		   bool recursive,
 		   const Loc &loc) -> E {
 		  types::I64::Value v = 0;
-		    
+		  
 		  while (--arity) {
 		    v += stack.pop().as(types::I64::get());
 		  }
@@ -206,10 +207,17 @@ namespace claes::libs {
 		       const auto name = to_string('\'', id->name);
 		       arg_names.push_back(name);
 		     } else {
-			 return Error(loc, "Invalid argument2: ", q->target);
+		       return Error(loc, "Invalid argument: ", q->target);
+		     }
+		   } else if (auto s = a->as<forms::Splat>(); s) {
+		     if (auto id = s->target.as<forms::Id>(); id) {
+		       const auto name = to_string(id->name, '*');
+		       arg_names.push_back(name);
+		     } else {
+		       return Error(loc, "Invalid argument: ", q->target);
 		     }
 		   } else {
-		     return Error(loc, "Invalid argument3: ", *a);
+		     return Error(loc, "Invalid argument: ", *a);
 		   }
 		 }
 
@@ -300,7 +308,7 @@ namespace claes::libs {
 
 		  return t.call(vm, stack, arity, recursive, loc);
 		});
-
+    
     bind_macro("benchmark", 1, 
 	       [](const Macro &self, 
 		  VM &vm, 

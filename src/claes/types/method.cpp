@@ -6,6 +6,7 @@
 #include "claes/ops/make_vector.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/push_vector_item.hpp"
+#include "claes/stack.hpp"
 #include "claes/types/expr.hpp"
 #include "claes/types/method.hpp"
 #include "claes/vm.hpp"
@@ -18,7 +19,7 @@ namespace claes::types {
 		 bool recursive,
 		 const claes::Loc &loc) const {
     const auto &m = target.as(get());
-
+    
     if (arity < m.arity()) {
       return Error(loc, "Not enough arguments: ", target, ' ', arity);
     }
@@ -37,10 +38,6 @@ namespace claes::types {
 		      const claes::Loc &loc) const {
     auto &m = value.as(get());
     
-    if (args.len() < m.arity()) {
-      return Error(loc, "Not enough arguments for: ", value, ' ', args.len());
-    }
-    
     if (vm.debug) {
       vm.emit<ops::Loc>(loc);
     }
@@ -49,15 +46,11 @@ namespace claes::types {
     auto ma = m.imp->args.rbegin();
     auto arity = 0;
     auto vararg = false;
-    auto expr = false;
     
     for (auto a: args.items) {
+      auto expr = false;
+      
       if (!vararg && ma != m.imp->args.rend()) {	
-	if (ma->back() == '*') {
-	  vararg = true;
-	  vm.emit<ops::MakeVector>();
-	}
-	
 	if (ma->front() == '\'') {
 	  expr = true;
 	}
@@ -71,12 +64,6 @@ namespace claes::types {
 	return e;
       }
     
-      if (vararg) {
-	vm.emit<ops::PushVectorItem>();
-      } else {
-	expr = false;
-      }
-      
       arity++;
     }
     

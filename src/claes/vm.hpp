@@ -26,6 +26,7 @@ namespace claes {
   struct VM {
     bool debug = false, trace = false;
 
+    int arity = 0;
     Call *call = nullptr;
     Alloc<Call, 64> call_alloc;
     vector<size_t> frames;

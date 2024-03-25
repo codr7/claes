@@ -29,7 +29,7 @@ namespace claes::forms {
 			const Forms &args, 
 			const Loc &loc) const override;
 
-    virtual Cell quote(VM &vm, int depth) const override;
+    virtual pair<optional<Cell>, E> quote(VM &vm, int depth) const override;
   };
 }
 

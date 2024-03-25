@@ -6,6 +6,7 @@
 namespace claes {
   using namespace std;
 
+  struct Stack;
   struct VM;
 
   struct Method {
@@ -35,8 +36,10 @@ namespace claes {
       return imp->args.size();
     }
     
-    E call(VM &vm, Stack &stack, int arity, bool recursive, const Loc &loc) const {
-      return imp->body(*this, vm, stack, arity, recursive, loc);
+    E call(VM &vm, Stack &stack, int arity, bool recursive, const Loc &loc) const;
+
+    bool vararg() const {
+      return !imp->args.empty() && imp->args.back().back() == '*';
     }
   };
 

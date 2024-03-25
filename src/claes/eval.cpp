@@ -95,9 +95,11 @@ namespace claes {
       pc++;
       auto t = cd.target;
       
-      if (auto e = t.call(*this, stack, cd.arity, false, cd.loc); e) {
+      if (auto e = t.call(*this, stack, cd.arity + arity, false, cd.loc); e) {
 	return e;
       }
+
+      arity = 0;
     }
     
     DISPATCH(pc);
@@ -122,9 +124,11 @@ namespace claes {
 
       pc++;
 
-      if (auto e = target.call(*this, stack, cr.arity, recursive, cr.loc); e) {
+      if (auto e = target.call(*this, stack, cr.arity + arity, recursive, cr.loc); e) {
 	return e;
       }
+
+      arity = 0;
     }
     
     DISPATCH(pc);
@@ -289,11 +293,13 @@ namespace claes {
       
       if (auto e = call->target.call(*this, 
 				     stack, 
-				     rc.arity, 
+				     rc.arity + arity, 
 				     true,
 				     rc.loc); e) {
 	return e;
       }
+
+      arity = 0;
     }
     
     DISPATCH(pc);
@@ -335,7 +341,8 @@ namespace claes {
 
   SPLAT: {
       auto it = stack.pop().iter().as(types::Iter::get());
-
+      arity--;
+      
       for (;;) {
 	auto [v, e] = it.next();
 
@@ -348,6 +355,7 @@ namespace claes {
 	}
 
 	stack.push(*v);
+	arity++;
       }
     }
     

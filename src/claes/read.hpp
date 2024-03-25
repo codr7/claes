@@ -21,6 +21,7 @@ namespace claes {
   ReadT read_quote(istream &in, Forms &out, Loc &loc);
   ReadT read_ref(istream &in, Forms &out, Loc &loc);
   ReadT read_rune(istream &in, Forms &out, Loc &loc);
+  ReadT read_splat(istream &in, Forms &out, Loc &loc);
   ReadT read_string(istream &in, Forms &out, Loc &loc);
   ReadT read_vector(istream &in, Forms &out, Loc &loc);
   ReadT read_ws(istream &in, Forms &out, Loc &loc);

@@ -28,7 +28,7 @@ namespace claes::iters {
 
     virtual Iter::Result next() override {
       if (i != end) {
-	return make_pair(*i, nullopt);
+	return make_pair(*i++, nullopt);
       }
 
       return make_pair(nullopt, nullopt);
