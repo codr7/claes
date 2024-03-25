@@ -189,6 +189,9 @@
 (check [\a \b \c]
   (apply Vector \a "bc"))
 
+(check [\a \b \c]
+  (Vector \a "bc"*))
+
 (check 42
   (^ foo [] 42)
   (foo))
