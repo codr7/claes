@@ -1,6 +1,20 @@
 3268
 1208
 
+// fix bset test
+// convert to iterators
+//// return iterator from find_index
+//// add begin/end from stack
+//// benchmark
+//// use iterators in bsearch?
+
+* add vm.arity vector
+** write failing test with nested splats
+** add PUSH_ARITY op
+*** push initial arity
+** pop in call ops
+** skip zeroing in call ops
+
 * define <= and >= in core eval block
 ** use vararg/splat
 ** add tests

@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "timer.hpp"
+
 #include "claes/error.hpp"
 #include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
@@ -26,7 +28,6 @@
 #include "claes/ops/tail_call.hpp"
 #include "claes/ops/todo.hpp"
 #include "claes/stack.hpp"
-#include "claes/timer.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/iter.hpp"
 #include "claes/types/pair.hpp"
