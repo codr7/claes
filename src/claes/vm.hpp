@@ -23,7 +23,7 @@ namespace claes {
   struct Reg;
   struct Stack;
 
-  static const int VERSION = 6;
+  static const int VERSION = 7;
 
   struct VM {
     libs::Core core;

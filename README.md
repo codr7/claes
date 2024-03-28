@@ -17,7 +17,7 @@ cmake ..
 make claes
 rlwrap ./claes
 
-claes v6
+claes v7
 may the source be with you
 
   (say "hello" "world")

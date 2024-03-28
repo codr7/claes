@@ -1,20 +1,29 @@
 3268
 1208
 
-B9D4N5B6
-
-/usr/local/lib/libcurl.dylib
-/usr/local/include/curl
-
-mistral 7b
-
-* add target call method
-** perform request and return response
+mistral 8x7b
 
 * add import macro
 ** register core/curl in root env
 *** add VM.root_env
 ** remove default curl import
+** use in llama.claes
+* add json support
+
+* add Map type
+** add {} reader
+** Value = map<Cell, Cell>
+
+* add json support
+** add Cell.json like say
+*** default dump
+** implement for Map
+*** write object
+** update llama.claes to use json with map literal
+
+* define <= and >= in core eval block
+** use vararg/splat
+** add tests
 
 * add vm.arity vector
 ** write failing test with nested splats
@@ -26,10 +35,6 @@ mistral 7b
 * ifdef curl lib
 ** CMake
 ** libs/Curl
-
-* define <= and >= in core eval block
-** use vararg/splat
-** add tests
 
 * add len method
 ** add Cell.len()
@@ -43,10 +48,6 @@ mistral 7b
 ** peek/pop för vector/string
 ** pop for i64
 ** add stacks to readme
-
-* add Map type
-** add {} reader
-** Value = map<Cell, Cell>
 
 * implement Pair::iter
 
