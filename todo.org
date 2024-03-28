@@ -13,6 +13,7 @@ mistral 8x7b
 * add Map type
 ** add {} reader
 ** Value = map<Cell, Cell>
+** copy benchmark from jalang
 
 * add json support
 ** add Cell.json like say
