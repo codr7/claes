@@ -1,12 +1,31 @@
 3268
 1208
 
+B9D4N5B6
+
+/usr/local/lib/libcurl.dylib
+/usr/local/include/curl
+
+mistral 7b
+
+* add target call method
+** perform request and return response
+
+* add import macro
+** register core/curl in root env
+*** add VM.root_env
+** remove default curl import
+
 * add vm.arity vector
 ** write failing test with nested splats
 ** add PUSH_ARITY op
 *** push initial arity
 ** pop in call ops
 ** skip zeroing in call ops
+
+* ifdef curl lib
+** CMake
+** libs/Curl
 
 * define <= and >= in core eval block
 ** use vararg/splat

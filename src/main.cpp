@@ -11,11 +11,12 @@ using namespace claes;
 
 int main(int argc, char *argv[]) {
   VM vm;
+  
+  Env env;
+  env.import_from(vm.core);
+  env.import_from(vm.curl);
 
   if (argc > 1) {
-    libs::Core core;
-    Env env;
-    env.import_from(core);
     Loc loc("main");
     Stack stack;
     types::Vector::Value av;
@@ -26,23 +27,21 @@ int main(int argc, char *argv[]) {
 
     env.bind("ARGV", Cell(types::Vector::get(), av));
     
-    if (argc > 1) {
-      PC start_pc = vm.emit_pc();
+    PC start_pc = vm.emit_pc();
+    
+    if (auto e = vm.load(argv[1], env, loc); e) {
+      cerr << *e << endl;
+      return -1;
+    }
+    
+    vm.emit<ops::Exit>();
 
-      if (auto e = vm.load(argv[1], env, loc); e) {
-	cerr << *e << endl;
-	return -1;
-      }
-
-      vm.emit<ops::Exit>();
-
-      if (auto e = vm.eval(start_pc, stack); e) {
-	cerr << *e << endl;
-	return -1;
-      }
+    if (auto e = vm.eval(start_pc, stack); e) {
+      cerr << *e << endl;
+      return -1;
     }
   } else {
-    vm.repl(cin, cout);
+    vm.repl(cin, cout, env);
   }
 
   return 0;

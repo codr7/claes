@@ -130,7 +130,7 @@ namespace claes {
     while (in.get(c)) {
       if (!isgraph(c) ||  
 	  c == '(' || c == ')' || c == '[' || c == ']' || c == '\\' || c == '"' || 
-	  c == ':' || c == '&' || c == '\'') {
+	  c == ':' || c == '&' || c == '\'' || c == '`') {
 	in.unget();
 	break;
       }
@@ -298,18 +298,19 @@ namespace claes {
       return ReadT(false, nullopt); 
     }
 
-    if (c != '"') {
+    if (c != '"' && c != '`') {
       in.unget();
       return ReadT(false, nullopt);
     }
 
+    const auto dl = c;
     const auto form_loc = loc;
     loc.column++;
     stringstream buffer;
     
     for (;;) {
       if (in.get(c)) {
-	if (c == '"') { 
+	if (c == dl) { 
 	  break; 
 	}
       } else {
@@ -319,7 +320,7 @@ namespace claes {
       buffer << c;
     }
 
-    if (c != '"') { 
+    if (c != dl) { 
       return ReadT(false, Error(loc, "Invalid string")); 
     }
 

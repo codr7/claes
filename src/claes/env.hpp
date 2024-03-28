@@ -23,23 +23,7 @@ namespace claes {
       map<string, Cell> bindings;
       int ref_count = 1;
 
-      Imp(Imp *parent, const set<string> &used_ids): parent(parent) {
-	if (parent) {
-	  for (const auto &id: used_ids) {
-	    auto found = parent->find_env(id);
-	    
-	    if (found) {
-	      auto [v, d] = *found;
-	      
-	      if (v.type == types::Reg::get()) {
-		auto r = v.as(types::Reg::get());
-		r.frame_offset += d;
-		bind(id, Cell(types::Reg::get(), r));
-	      }
-	    }
-	  }
-	}
-      }
+      Imp(Imp *parent, const set<string> &used_ids);
 
       void bind(const string &name, const Cell &value) {
 	if (auto found = bindings.find(name); found != bindings.end()) {
@@ -80,6 +64,16 @@ namespace claes {
 	  bind(b.first, b.second);
 	}
       }
+
+      size_t len() const {
+	auto result = bindings.size();
+
+	if (parent) {
+	  result += parent->len();
+	}
+
+	return result;
+      }
     };
 
     Imp *imp = nullptr;
@@ -102,22 +96,23 @@ namespace claes {
       return *this;
     }
 
-    void bind(const string &name, const Cell &value) {
+    Cell bind(const string &name, const Cell &value) {
       imp->bind(name, value);
+      return value;
     }
 
     template <typename T, typename V>
-    void bind(const string &name, const TType<T> &type, const V &value) {
-      bind(name, Cell(type, value));
+    Cell bind(const string &name, const TType<T> &type, const V &value) {
+      return bind(name, Cell(type, value));
     }
 
-    void bind_macro(const string &name, int arity, const Macro::Body &body);
+    Cell bind_macro(const string &name, int arity, const Macro::Body &body);
 
-    void bind_method(const string &name,
-		     const Method::Args &args,
-		     const Method::Body &body);
+    Cell bind_method(const string &name,
+		       const Method::Args &args,
+		       const Method::Body &body);
     
-    void bind_type(Type type);
+    Cell bind_type(Type type);
 
     optional<Cell> find(const string &name) const {
       return imp->find(name);
@@ -125,6 +120,10 @@ namespace claes {
 
     void import_from(const Env &source) {
       imp->import_from(*source.imp);
+    }
+    
+    size_t len() const {
+      return imp->len();
     }
   };
 }

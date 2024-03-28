@@ -8,6 +8,8 @@
 #include "claes/alloc.hpp"
 #include "claes/call.hpp"
 #include "claes/common.hpp"
+#include "claes/libs/core.hpp"
+#include "claes/libs/curl.hpp"
 #include "claes/op.hpp"
 #include "claes/reg.hpp"
 #include "claes/ops/trace.hpp"
@@ -24,6 +26,9 @@ namespace claes {
   static const int VERSION = 6;
 
   struct VM {
+    libs::Core core;
+    libs::Curl curl;
+
     bool debug = false, trace = false;
 
     int arity = 0;
@@ -118,7 +123,7 @@ namespace claes {
   
     E load(fs::path path, Env &env, const Loc &loc);
 
-    void repl(istream &in, ostream &out);
+    void repl(istream &in, ostream &out, Env &env);
 
     Reg push_reg(const Cell &value) {
       Reg result(regs.size());

@@ -4,9 +4,11 @@ project(claes)
 
 set(CMAKE_CXX_COMPILER clang++)
 
+find_library(CURL_LIBRARY NAMES curl curllib libcurl_imp curllib_static)
+
 add_compile_options(-std=c++20 -fno-exceptions -Wall -Werror -g -O2 -fno-omit-frame-pointer -Wno-unused-variable -fsanitize=address,undefined)
 
-add_link_options(-fsanitize=address,undefined)
+add_link_options(-fsanitize=address,undefined -lcurl)
 
 file(GLOB_RECURSE src src/claes/*.cpp)
 

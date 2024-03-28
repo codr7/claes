@@ -256,7 +256,7 @@ namespace claes::libs {
 		   
 		   body_env.bind(n, types::Reg::get(), reg_count++);
 		 }
-
+		 
 		 vm.emit<ops::PushRegs>(reg_count);
 
 		 if (auto e = my_args.emit(vm, body_env); e) {
@@ -562,9 +562,16 @@ namespace claes::libs {
 		 Forms my_args(args);
 		 const auto &binding_forms = 
 		   my_args.pop().as<forms::Vector>()->items;
-		 vm.emit<ops::BeginFrame>();
 		 set<string> body_ids;
+
+		 for (auto bf = binding_forms.begin(); 
+		      bf != binding_forms.end(); 
+		      bf ++) {
+		   bf->collect_ids(body_ids);
+		 }
+
 		 my_args.collect_ids(body_ids);
+		 vm.emit<ops::BeginFrame>();
 		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 
