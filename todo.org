@@ -3,16 +3,11 @@
 
 mistral 8x7b
 
-** add 64 type
+* add 64 type
 
-** add f64 reader
-*** trigger on '.' inside read_i64
-
-* add import macro
-** register core/curl in root env
-*** add VM.root_env
-** remove default curl import
-** use in llama.claes
+* add f64 reader
+** trigger on '.' inside read_i64
+** allow starting with .
 
 * add js method
 ** default E
@@ -29,6 +24,12 @@ mistral 8x7b
 ** copy benchmark from jalang
 
 * update llama.claes to use js with map literal
+
+* add import macro
+** register core/curl in root env
+*** add VM.root_env
+** remove default curl import
+** use in llama.claes
 
 * define <= and >= in core eval block
 ** use vararg/splat
