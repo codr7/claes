@@ -10,10 +10,12 @@ using namespace std;
 static const auto REPS = 10;
 static const auto BIN_SET_MAX = 10000;
 
+// 23ms
+
 static void bset() {
   BSet<int> s;
 
-  for (auto i = 0; i < BIN_SET_MAX; i++) {
+  for (auto i = BIN_SET_MAX; i >= 0; i--) {
     assert(s.insert(i));
     assert(s.contains(i));
   }
@@ -22,7 +24,7 @@ static void bset() {
 static void bin_set() {
   BinSet<int> s;
 
-  for (auto i = 0; i < BIN_SET_MAX; i++) {
+  for (auto i = BIN_SET_MAX; i >= 0; i--) {
     assert(s.insert(i));
     assert(s.contains(i));
   }
@@ -31,7 +33,7 @@ static void bin_set() {
 static void std_set() {
   set<int> s;
 
-  for (auto i = 0; i < BIN_SET_MAX; i++) {
+  for (auto i = BIN_SET_MAX; i >= 0; i--) {
     auto [_, ok] = s.insert(i);
     assert(ok);
     assert(s.contains(i));

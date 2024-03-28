@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <vector>
 
 using namespace std;
@@ -7,40 +8,41 @@ using namespace std;
 template <typename T>
 struct BSet {
   using Items = vector<T>;
+  using iterator = Items::iterator;
   Items items;
-
+  
   bool contains(const T &item) const {
-    const auto [_, ok] = find_index(item);
+    const auto [_, ok] = find(item);
     return ok;
   }
 
   bool insert(T item) {
-    const auto [i, ok] = find_index(item);
+    auto [i, ok] = find(item);
 
     if (ok) {
       return false;
     }
 
-    if (items.empty()) {
-      items.push_back(item);
+    if (items.empty() || i == items.size()) {
+      items.push_back(std::move(item));
     } else {
-      items.push_back(std::move(items.back()));
-      auto pos = items.begin() + i;
-      move(pos, items.end()-1, pos+1);
-      *pos = item;
+      items.push_back(T{});
+      auto j = items.begin() + i, k = items.end()-1;
+      move(j, k, j+1);
+      *j = std::move(item);
     }
 
     return true;
   }
 
-  pair<int, bool> find_index(const T &item) const {
+  pair<size_t, bool> find(const T &item) const {
     auto i = 0;
     auto j = items.size();
 
     while (i < j) {
-      const auto k = i + (j - i) / 2;
+      auto k = i + (j - i) / 2;
       const auto &ik = items[k];
-	
+
       if (item < ik) {
 	j = k;
       } else if (item > ik) {
