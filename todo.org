@@ -3,24 +3,32 @@
 
 mistral 8x7b
 
+* finish F64
+** add type
+** add fix reader
+
+
 * add import macro
 ** register core/curl in root env
 *** add VM.root_env
 ** remove default curl import
 ** use in llama.claes
-* add json support
+
+* add js method
+** default E
+** add Cell.js like say
+** implement for Map
+*** write object
+** implement for Bit
+** implement for I64
+** implement for String
 
 * add Map type
 ** add {} reader
 ** Value = map<Cell, Cell>
 ** copy benchmark from jalang
 
-* add json support
-** add Cell.json like say
-*** default dump
-** implement for Map
-*** write object
-** update llama.claes to use json with map literal
+* update llama.claes to use js with map literal
 
 * define <= and >= in core eval block
 ** use vararg/splat

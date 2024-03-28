@@ -1,6 +1,8 @@
 #include <cassert>
 #include <vector>
 
+#include "f64.hpp"
+
 #include "claes/alloc.hpp"
 #include "claes/cell.hpp"
 #include "claes/error.hpp"
@@ -8,6 +10,7 @@
 #include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
 #include "claes/forms/literal.hpp"
+#include "claes/ops/exit.hpp"
 #include "claes/ops/push.hpp"
 #include "claes/ops/stop.hpp"
 #include "claes/read.hpp"
@@ -37,6 +40,31 @@ void alloc_tests() {
   for (int i = 0; i < MAX; i++) {
     ps.push_back(a.get(i));
   }
+}
+
+static void f64_init_tests() {
+  const auto x = f64::make(2, 25);
+  assert(f64::exp(x) == 2);
+  assert(f64::val(x) == 25);
+}
+
+static void f64_arithmetic_tests() {
+  assert(f64::add(f64::make(2, 75), f64::make(2, 25)) == f64::make(2, 100));
+  assert(f64::sub(f64::make(2, 75), f64::make(2, 25)) == f64::make(2, 50));
+  assert(f64::mul(f64::make(2, 25), f64::make(2, 200)) == f64::make(2, 50));
+  assert(f64::div(f64::make(2, 50), f64::make(2, 200)) == f64::make(2, 25));
+}
+
+static void f64_trunc_frac_tests() {
+  const auto x = f64::make(2, 725);
+  assert(f64::trunc(x) == 7);
+  assert(f64::frac(x) == 25);
+}
+
+void f64_tests() {
+ f64_init_tests();
+ f64_arithmetic_tests();
+ f64_trunc_frac_tests();
 }
 
 void form_tests() {
@@ -97,6 +125,7 @@ void vm_tests() {
   
 int main() {  
   alloc_tests();
+  f64_tests();
   form_tests();
   read_tests();
   stack_tests();
