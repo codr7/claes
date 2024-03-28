@@ -3,10 +3,10 @@
 
 mistral 8x7b
 
-* finish F64
-** add type
-** add fix reader
+** add 64 type
 
+** add f64 reader
+*** trigger on '.' inside read_i64
 
 * add import macro
 ** register core/curl in root env
