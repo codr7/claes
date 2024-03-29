@@ -3,6 +3,7 @@
 #include "claes/forms/quote.hpp"
 #include "claes/forms/splat.hpp"
 #include "claes/forms/vector.hpp"
+#include "claes/js.hpp"
 #include "claes/libs/core.hpp"
 #include "claes/ops/begin_frame.hpp"
 #include "claes/ops/benchmark.hpp"
@@ -45,6 +46,7 @@
 #include "claes/vm.hpp"
 
 namespace claes::libs {
+
   Core::Core(): Env() {
     bind_type(types::Bit::get());
     bind_type(types::Expr::get());
@@ -663,6 +665,27 @@ namespace claes::libs {
 		  v = Cell(types::Path::get(), v.as(types::String::get()));
 		  return nullopt;
 		});
+
+    bind_method("parse-js", {"in"},
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  std::stringstream buffer;
+		  buffer << stack.pop().as(types::String::get());
+		  Loc ploc("parse-js");
+		  const auto [v, e] = js::parse(buffer, ploc);
+		  
+		  if (e) {
+		    return e;
+		  }
+		  
+		  stack.push(v ? * v : NIL());
+		  return nullopt;
+		});
+
 
     bind_macro("push", 2, 
 	       [](const Macro &self, 
