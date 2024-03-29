@@ -5,7 +5,6 @@
   content-type "application/json")
 
 (^ prompt [value]
-  (dump value)
   (let [data (String `{
          "stream": false,
          "n_predict": 400,

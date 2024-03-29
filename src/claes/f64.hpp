@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <iostream>
 #include <ostream>
 
 namespace f64 {
@@ -56,6 +57,12 @@ namespace f64 {
   }
 
   inline void print(T x, ostream &out) {
-    out << val(trunc(x)) << '.' << val(frac(x));
+    const auto t = trunc(x), f = frac(x);
+    
+    if (t) {
+      out << t;
+    }
+
+    out << '.' << f;
   }
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 
+#include "claes/f64.hpp"
 #include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
 #include "claes/forms/literal.hpp"
@@ -10,6 +11,7 @@
 #include "claes/forms/splat.hpp"
 #include "claes/forms/vector.hpp"
 #include "claes/read.hpp"
+#include "claes/types/f64.hpp"
 #include "claes/types/i64.hpp"
 #include "claes/types/string.hpp"
 
@@ -60,12 +62,45 @@ namespace claes {
     return ReadT(true, nullopt);
   }
 
+  ReadT read_f64(istream &in, Forms &out, Loc &loc) {
+    char c = 0;
+
+    if (!in.get(c)) { 
+      return ReadT(false, nullopt); 
+    }
+
+    if (c != '.') {
+      in.unget();
+      return ReadT(false, nullopt);
+    }
+
+    const auto form_loc = loc;
+    loc.column++;
+    auto val = 0;
+    uint8_t exp = 0;
+    
+    while (in.get(c)) {
+      if (!isdigit(c)) {
+	in.unget();
+	break;
+      }
+      
+      loc.column++;
+      val = val * 10 + (c - '0');
+      exp++;
+    }
+    
+    out.push<forms::Literal>(form_loc, Cell(types::F64::get(), f64::make(exp, val)));
+    return ReadT(true, nullopt);
+  }
+
   ReadT read_form(istream &in, Forms &out, Loc &loc) {
     const vector<Reader> readers {
       read_ws, 
 
       read_call,
-      read_i64, 
+      read_i64,
+      read_f64,
       read_pair,
       read_quote,
       read_ref,
@@ -130,7 +165,7 @@ namespace claes {
     while (in.get(c)) {
       if (!isgraph(c) ||  
 	  c == '(' || c == ')' || c == '[' || c == ']' || c == '\\' || c == '"' || 
-	  c == ':' || c == '&' || c == '\'' || c == '`') {
+	  c == ':' || c == '&' || c == '\'' || c == '`' || c == '.') {
 	in.unget();
 	break;
       }

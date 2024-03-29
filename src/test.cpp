@@ -1,11 +1,10 @@
 #include <cassert>
 #include <vector>
 
-#include "f64.hpp"
-
 #include "claes/alloc.hpp"
 #include "claes/cell.hpp"
 #include "claes/error.hpp"
+#include "claes/f64.hpp"
 #include "claes/form.hpp"
 #include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
@@ -59,6 +58,10 @@ static void f64_trunc_frac_tests() {
   const auto x = f64::make(2, 725);
   assert(f64::trunc(x) == 7);
   assert(f64::frac(x) == 25);
+
+  const auto y = f64::make(3, 123);
+  assert(f64::trunc(y) == 0);
+  assert(f64::frac(y) == 123);
 }
 
 void f64_tests() {

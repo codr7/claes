@@ -14,6 +14,7 @@ namespace claes {
 				 Loc &loc)>;
   
   ReadT read_call(istream &in, Forms &out, Loc &loc);
+  ReadT read_f64(istream &in, Forms &out, Loc &loc);
   ReadT read_form(istream &in, Forms &out, Loc &loc);
   ReadT read_i64(istream &in, Forms &out, Loc &loc);
   ReadT read_id(istream &in, Forms &out, Loc &loc);

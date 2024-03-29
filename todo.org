@@ -2,12 +2,7 @@
 1208
 
 mistral 8x7b
-
-* add F64 type
-
-* add f64 reader
-** trigger on '.' inside read_i64
-** allow starting with .
+https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 
 * add js method
 ** default E
@@ -17,6 +12,7 @@ mistral 8x7b
 ** implement for Bit
 ** implement for I64
 ** implement for String
+** implement for Vector
 
 * add Map type
 ** add {} reader
@@ -24,12 +20,15 @@ mistral 8x7b
 ** copy benchmark from jalang
 
 * update llama.claes to use js with map literal
+** quote entire map and remove quotes from names
 
 * add ask method
 ** optional prompt arg
 ** read line (repl)
 *** return optional string
 ** use to implement repl loop in llama.claes
+
+* add support for f64 > 1 in reader
 
 * add import macro
 ** register core/curl in root env
