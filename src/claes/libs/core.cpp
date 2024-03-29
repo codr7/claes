@@ -554,6 +554,23 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_method("js", {"value"},
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  stringstream result;
+		  auto &v = stack.peek();
+
+		  if (auto e = v.js(result, loc); e) {
+		    return e;
+		  }
+
+		  stack.push(types::String::get(), result.str());
+		  return nullopt;
+		});
 
     bind_macro("let", 1, 
 	       [](const Macro &self, 

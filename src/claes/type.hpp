@@ -68,6 +68,8 @@ namespace claes {
 
       virtual Cell iter(const Cell &target) const;
       
+      virtual E js(const Cell &value, ostream &out, const Loc &loc) const;
+
       virtual void push(Cell &target, const Cell &item) const;
       
       virtual void say(const Cell &value, ostream &out) const {
@@ -145,6 +147,11 @@ namespace claes {
     }
 
     Cell iter(const Cell &target) const;
+
+    E js(const Cell &value, ostream &out, const Loc &loc) const {
+      return imp->js(value, out, loc); 
+    }
+    
     void push(Cell &target, const Cell &item) const;
 
     void say(const Cell &value, ostream &out) const {

@@ -78,6 +78,10 @@ namespace claes {
       return type.iter(*this);
     }
 
+    E js(ostream &out, const Loc &loc) const {
+      return type.js(*this, out, loc);
+    }
+
     void push(const Cell &item) {
       type.push(*this, item);
     }

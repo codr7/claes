@@ -76,6 +76,10 @@ namespace claes {
     return Cell(types::Iter::get(), iters::Repeat::make(target, 1)); 
   }
 
+  E Type::Imp::js(const Cell &value, ostream &out, const Loc &loc) const {
+    return Error(loc, "js not implemented: ", value.type);    
+  }
+
   void Type::Imp::push(Cell &target, const Cell &item) const {
     target = Cell(types::Pair::get(), make_pair(item, target));
   }
