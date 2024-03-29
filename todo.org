@@ -3,7 +3,7 @@
 
 mistral 8x7b
 
-* add 64 type
+* add F64 type
 
 * add f64 reader
 ** trigger on '.' inside read_i64
@@ -24,6 +24,12 @@ mistral 8x7b
 ** copy benchmark from jalang
 
 * update llama.claes to use js with map literal
+
+* add ask method
+** optional prompt arg
+** read line (repl)
+*** return optional string
+** use to implement repl loop in llama.claes
 
 * add import macro
 ** register core/curl in root env

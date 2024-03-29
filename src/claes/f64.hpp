@@ -1,8 +1,11 @@
 #pragma once
 
 #include <cstdint>
+#include <ostream>
 
 namespace f64 {
+  using namespace std;
+
   using T = uint64_t;
   const auto EXP_BITS = 4;
 
@@ -25,11 +28,6 @@ namespace f64 {
   }
 
 
-  inline T frac(T x) {
-    auto xv = val(x), xs = scale(exp(x));
-    return xv - (xv / xs) * xs;
-  }
-
   inline T add(const T x, const T y) {
     const auto xe = exp(x);
     return make(xe, val(x) + val(y) * scale(xe) / scale(exp(y)));
@@ -37,6 +35,11 @@ namespace f64 {
 
   inline T div(const T x, const T y) {
     return make(exp(x), val(x) / (val(y) / scale(exp(y))));
+  }
+
+  inline T frac(T x) {
+    auto xv = val(x), xs = scale(exp(x));
+    return xv - (xv / xs) * xs;
   }
 
   inline T mul(const T x, const T y) {
@@ -50,5 +53,9 @@ namespace f64 {
 
   inline T trunc(T x) { 
     return val(x) / scale(exp(x)); 
+  }
+
+  inline void print(T x, ostream &out) {
+    out << val(trunc(x)) << '.' << val(frac(x));
   }
 }

@@ -27,6 +27,7 @@
 #include "claes/stack.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/expr.hpp"
+#include "claes/types/f64.hpp"
 #include "claes/types/i64.hpp"
 #include "claes/types/iter.hpp"
 #include "claes/types/loc.hpp"
@@ -47,6 +48,7 @@ namespace claes::libs {
   Core::Core(): Env() {
     bind_type(types::Bit::get());
     bind_type(types::Expr::get());
+    bind_type(types::F64::get());
     bind_type(types::I64::get());
     bind_type(types::Iter::get());
     bind_type(types::Loc::get());
