@@ -1,9 +1,11 @@
 #include "claes/forms/literal.hpp"
+#include "claes/ops/push.hpp"
 #include "claes/types/sym.hpp"
 #include "claes/vm.hpp"
 
 namespace claes::forms {
-  pair<optional<Cell>, E> Literal::quote(VM &vm, int depth) const {
-    return make_pair(value, nullopt); 
+  E Literal::quote(VM &vm, Env &env, int depth) const {
+    vm.emit<ops::Push>(value);
+    return nullopt;
   }
 }

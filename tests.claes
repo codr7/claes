@@ -151,6 +151,10 @@
 (check 'foobar42T
   (Sym "foo" 'bar 42 T))
 
+(check ['foo 42 'bar]
+  (let [x 42]
+    '[foo ,x bar]))
+
 (check "foo"
   (String 'foo))
 

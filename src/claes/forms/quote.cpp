@@ -9,17 +9,10 @@
 
 namespace claes::forms {
   E Quote::emit(VM &vm, Env &env, Forms &args) const {
-    auto [v, e] = target.quote(vm, 1);
-
-    if (e) {
-      return e;
-    }
-
-    vm.emit<ops::Push>(*v);
-    return nullopt;
+    return target.quote(vm, env, 1);
   }
 
-  pair<optional<Cell>, E> Quote::quote(VM &vm, int depth) const {
-    return target.quote(vm, depth + 1);
+  E Quote::quote(VM &vm, Env &env, int depth) const {
+    return target.quote(vm, env, depth + 1);
   }
 }

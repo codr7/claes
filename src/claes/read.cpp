@@ -9,6 +9,7 @@
 #include "claes/forms/quote.hpp"
 #include "claes/forms/ref.hpp"
 #include "claes/forms/splat.hpp"
+#include "claes/forms/unquote.hpp"
 #include "claes/forms/vector.hpp"
 #include "claes/read.hpp"
 #include "claes/types/f64.hpp"
@@ -103,6 +104,7 @@ namespace claes {
       read_f64,
       read_pair,
       read_quote,
+      read_unquote,
       read_ref,
       read_rune,
       read_splat,
@@ -165,7 +167,7 @@ namespace claes {
     while (in.get(c)) {
       if (!isgraph(c) ||  
 	  c == '(' || c == ')' || c == '[' || c == ']' || c == '\\' || c == '"' || 
-	  c == ':' || c == '&' || c == '\'' || c == '`' || c == '.') {
+	  c == ':' || c == '&' || c == '\'' || c == '`' || c == '.' || c == ',') {
 	in.unget();
 	break;
       }
@@ -426,6 +428,31 @@ namespace claes {
 
     loc.column++;
     out.push<forms::Vector>(form_loc, items);
+    return ReadT(true, nullopt);
+  }
+
+  ReadT read_unquote(istream &in, Forms &out, Loc &loc) {
+    char c = 0;
+
+    if (!in.get(c)) { 
+      return ReadT(false, nullopt); 
+    }
+
+    if (c != ',') {
+      in.unget();
+      return ReadT(false, nullopt);
+    }
+
+    const auto form_loc = loc;
+    loc.column++;
+
+    if (auto ok = read_form(in, out, loc); ok.second) {
+      return ok;
+    } else if (!ok.first) {
+      return ReadT(false, Error(loc, "Invalid unquote"));
+    }
+
+    out.push<forms::Unquote>(form_loc, out.pop_back());
     return ReadT(true, nullopt);
   }
 

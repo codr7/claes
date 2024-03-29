@@ -28,7 +28,7 @@ namespace claes {
       virtual E emit(VM &vm, Env &env, Forms &args) const = 0;
       virtual E emit_call(VM &vm, Env &env, const Forms &args, const Loc &loc) const;
       virtual E emit_ref(VM &vm, Env &env, Forms &args, const Loc &loc) const;
-      virtual pair<optional<Cell>, E> quote(VM &vm, int depth) const = 0;
+      virtual E quote(VM &vm, Env &env, int depth) const = 0;
     };
 
     shared_ptr<const Imp> imp;
@@ -67,7 +67,7 @@ namespace claes {
       return imp->emit_ref(vm, env, args, loc);
     }
 
-    pair<optional<Cell>, E> quote(VM &vm, int depth) const;
+    E quote(VM &vm, Env &env, int depth) const;
   };
 
   inline ostream &operator<<(ostream &out, const Form &v) {

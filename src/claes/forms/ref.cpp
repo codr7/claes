@@ -2,6 +2,7 @@
 #include "claes/forms.hpp"
 #include "claes/forms/ref.hpp"
 #include "claes/ops/deref.hpp"
+#include "claes/ops/make_ref.hpp"
 #include "claes/ops/set_ref.hpp"
 #include "claes/types/ref.hpp"
 #include "claes/vm.hpp"
@@ -35,14 +36,12 @@ namespace claes::forms {
     return nullopt;
   }
 
-  pair<optional<Cell>, E> Ref::quote(VM &vm, int depth) const {
-    const auto [v, e] = target.quote(vm, depth);
-
-    if (e) {
-      return make_pair(nullopt, e);
+  E Ref::quote(VM &vm, Env &env, int depth) const {
+    if (const auto e = target.quote(vm, env, depth); e) {
+      return e;
     }
     
-    const auto result = Cell(types::Ref::get(), claes::Ref(*v));
-    return make_pair(result, nullopt);
+    vm.emit<ops::MakeRef>();
+    return nullopt;
   }
 }

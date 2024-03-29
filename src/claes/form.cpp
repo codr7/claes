@@ -34,7 +34,7 @@ namespace claes {
     return nullopt;
   }
 
-   pair<optional<Cell>, E> Form::quote(VM &vm, int depth) const {
-    return imp->quote(vm, depth);
+  E Form::quote(VM &vm, Env &env, int depth) const {
+    return imp->quote(vm, env, depth);
   }
 }

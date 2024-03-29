@@ -1,5 +1,6 @@
 #include "claes/env.hpp"
 #include "claes/forms/id.hpp"
+#include "claes/ops/push.hpp"
 #include "claes/types/sym.hpp"
 #include "claes/vm.hpp"
 
@@ -33,7 +34,8 @@ namespace claes::forms {
     return Error(loc, "Unknown identifier: ", name);
   }
 
-  pair<optional<Cell>, E> Id::quote(VM &vm, int depth) const {
-    return make_pair(Cell(types::Sym::get(), vm.sym(name)), nullopt); 
+  E Id::quote(VM &vm, Env &env, int depth) const {
+    vm.emit<ops::Push>(Cell(types::Sym::get(), vm.sym(name)));
+    return nullopt; 
   }
 }

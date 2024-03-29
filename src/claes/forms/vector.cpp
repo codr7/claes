@@ -19,19 +19,18 @@ namespace claes::forms {
     return nullopt;
   }
 
-  pair<optional<Cell>, E> Vector::quote(VM &vm, int depth) const {
+  E Vector::quote(VM &vm, Env &env, int depth) const {
+    vm.emit<ops::MakeVector>();
     types::Vector::Value result;
 
     for (const auto &it: items) {
-      const auto [v, e] = it.quote(vm, depth);
-
-      if (e) {
-	return make_pair(nullopt, e);
+      if (const auto e = it.quote(vm, env, depth); e) {
+	return e;
       }
       
-      result.push_back(*v);
+      vm.emit<ops::PushVectorItem>();
     }
 
-    return make_pair(Cell(types::Vector::get(), result), nullopt);
+    return nullopt;
   }
 }

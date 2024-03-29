@@ -171,6 +171,16 @@ Prefixing any expression with `'` wraps it up as a value and pushes it on the st
 'foo:[1 2 3]
 ```
 
+### unquoting
+Within any quoted context, `,` may be used to temporarily escape it.
+
+```
+  (let [x 42]
+    '[foo ,x bar])
+
+['foo 42 'bar]
+```
+
 ### symbols
 Symbols are quoted identifiers, the same symbol always refers to the same adress in memory; which makes them cheaper to compare for equality than strings.
 

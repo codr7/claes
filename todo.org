@@ -4,9 +4,6 @@
 mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 
-* add unquote support
-** ,
-
 * add Map type
 ** add {} reader
 ** Value = map<Cell, Cell>
@@ -28,15 +25,15 @@ https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-ll
 
 * --
 
+* add support for f64 > 1 in reader
+
 * add safe mode
 ** command line arg
 ** disallow anything that changes the machine
-** remove import/say/dump/etc
+** remove import/say/dump/stop/etc
 
 * add composition using pipe character
 ** check jalang
-
-* add support for f64 > 1 in reader
 
 * add import macro
 ** register core/curl in root env
