@@ -29,8 +29,9 @@ https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-ll
 
 * add safe mode
 ** command line arg
+** vm flag
 ** disallow anything that changes the machine
-** remove import/say/dump/stop/etc
+*** skip definition in library constructor
 
 * add composition using pipe character
 ** check jalang
