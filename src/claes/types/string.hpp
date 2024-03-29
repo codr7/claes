@@ -46,7 +46,11 @@ namespace claes::types {
     }
 
     virtual void dump(const Cell &value, ostream &out) const override {
-      out << '"' << value.as(get()) << '"';
+      auto s = value.as(get());
+      s = replace_all(s, "\"", "\\\"");
+      s = replace_all(s, "\n", "\\n");
+      s = replace_all(s, "\t", "\\t");
+      out << '"' << s << '"';
     }
     
     virtual bool eq(const Cell &left, const Cell &right) const override {
@@ -58,6 +62,13 @@ namespace claes::types {
     }
 
     virtual Cell iter(const Cell &target) const override;
+
+    virtual E js(const Cell &value, 
+		 ostream &out, 
+		 const claes::Loc &loc) const override {
+      dump(value, out);
+      return nullopt;
+    }
 
     virtual void push(Cell &target, const Cell &item) const override {
       target.as(get()).push_back(item.as(Rune::get()));

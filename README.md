@@ -256,6 +256,15 @@ Recursion is another option, tail call optimization is guaranteed to be performe
 6
 ```
 
+## json
+Applicable values may be converted to json using `js`.
+
+```
+  (js [42 .123 "foo" 'bar _ T 1:2])
+
+"[42, .123, \"foo\", \"bar\", null, true, [1, 2]]"
+```
+
 ## debugging
 `debug` may be used to enable/disable debugging.
 

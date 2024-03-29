@@ -31,6 +31,14 @@ namespace claes::types {
       const auto &lp = left.as(get()), &rp = right.as(get());
       return lp.first == rp.first && lp.second == rp.second;
     }
+
+    virtual E js(const Cell &value, 
+		 ostream &out, const 
+		 claes::Loc &loc) const override {
+      const auto &p = value.as(get());
+      out << '[' << p.first << ", " << p.second << ']';
+      return nullopt;
+    }
   };
 }
 

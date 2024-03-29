@@ -98,6 +98,22 @@ namespace claes::types {
     return !value.as(get()).empty();
   }
 
+  E Vector::js(const Cell &value, ostream &out, const claes::Loc &loc) const {
+    out << '[';
+    auto i = 0;
+      
+    for (const auto &it: value.as(get())) {
+      if (i++ > 0) {
+	out << ", ";
+      }
+	
+      it.js(out, loc);
+    }
+      
+    out << ']';
+    return nullopt;
+  }
+
   void Vector::push(Cell &target, const Cell &item) const {
     target.as(get()).push_back(item);
   }

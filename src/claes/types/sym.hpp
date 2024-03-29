@@ -3,6 +3,8 @@
 
 #include "claes/sym.hpp"
 #include "claes/type.hpp"
+#include "claes/types/string.hpp"
+#include "claes/types/sym.hpp"
 
 namespace claes::types {
   using namespace claes;
@@ -33,6 +35,13 @@ namespace claes::types {
     
     virtual bool eq(const Cell &left, const Cell &right) const override {
       return *left.as(get()) == *right.as(get());
+    }
+
+    virtual E js(const Cell &value, 
+		 ostream &out, 
+		 const claes::Loc &loc) const override {
+      out << Cell(types::String::get(), value.as(get())->name);
+      return nullopt;
     }
 
     virtual void say(const Cell &value, ostream &out) const override {

@@ -352,7 +352,27 @@ namespace claes {
 	break;
       }
       
+      if (c == '\\') {
+	loc.column++;
+
+	if (!in.get(c)) {
+	  return ReadT(false, Error(loc, "Invalid string escape"));
+	}
+
+	switch (c) {
+	case '"':
+	  break;
+	case 'n':
+	  c = '\n';
+	  break;
+	case 't':
+	  c = '\t';
+	  break;
+	}
+      }
+
       buffer << c;
+      loc.column++;
     }
 
     if (c != dl) { 

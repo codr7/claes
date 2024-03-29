@@ -4,20 +4,15 @@
 mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 
-* add js method
-** default E
-** add Cell.js like say
-** implement for Map
-*** write object
-** implement for Bit
-** implement for I64
-** implement for String
-** implement for Vector
+* add unquote support
+** ,
 
 * add Map type
 ** add {} reader
 ** Value = map<Cell, Cell>
 ** copy benchmark from jalang
+** implement js
+*** write object
 
 * update llama.claes to use js with map literal
 ** quote entire map and remove quotes from names
@@ -27,6 +22,19 @@ https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-ll
 ** read line (repl)
 *** return optional string
 ** use to implement repl loop in llama.claes
+
+* add json parser
+** extract answer in llama.claes
+
+* --
+
+* add safe mode
+** command line arg
+** disallow anything that changes the machine
+** remove import/say/dump/etc
+
+* add composition using pipe character
+** check jalang
 
 * add support for f64 > 1 in reader
 

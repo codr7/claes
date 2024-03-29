@@ -38,6 +38,13 @@ namespace claes::types {
     }
 
     virtual Cell iter(const Cell &target) const override;
+
+    virtual E js(const Cell &value, 
+		 ostream &out, 
+		 const claes::Loc &loc) const override {
+      out << value.as(get());
+      return nullopt;
+    }
   };
 }
 

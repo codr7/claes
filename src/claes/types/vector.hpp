@@ -36,6 +36,11 @@ namespace claes::types {
     virtual bool eq(const Cell &left, const Cell &right) const override;
     virtual bool is_true(const Cell &value) const override;
     virtual Cell iter(const Cell &target) const override;
+
+    virtual E js(const Cell &value, 
+		 ostream &out, const 
+		 claes::Loc &loc) const override;
+
     virtual void push(Cell &target, const Cell &item) const override;
   };
 }

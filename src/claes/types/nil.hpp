@@ -37,6 +37,13 @@ namespace claes::types {
       return false;
     }
 
+    virtual E js(const Cell &value, 
+		 ostream &out, 
+		 const claes::Loc &loc) const override {
+      out << "null";
+      return nullopt;
+    }
+
     virtual void push(Cell &target, const Cell &item) const override {
       target = item;
     }

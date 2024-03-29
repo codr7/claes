@@ -206,6 +206,9 @@
 (check 42
   (let [x 41] (set x (+ x 1)) x))
   
+(check "[42, .123, \"foo\", \"bar\", null, true, [1, 2]]"
+  (js [42 .123 "foo" 'bar _ T 1:2]))
+
 (load (path "fib.claes"))
 
 (check 55

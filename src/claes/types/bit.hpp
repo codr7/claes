@@ -45,6 +45,13 @@ namespace claes::types {
     virtual bool is_true(const Cell &value) const override {
       return value.as(get());
     }
+
+    virtual E js(const Cell &value, 
+		 ostream &out, 
+		 const claes::Loc &loc) const override {
+      out << (value.as(get()) ? "true" : "false");
+      return nullopt;
+    }
   };
 }
 
