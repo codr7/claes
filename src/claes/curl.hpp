@@ -2,25 +2,15 @@
 
 #include <iostream>
 #include "curl/curl.h"
+#include "claes/error.hpp"
 
-namespace claes {
-  struct Response {
-    array<char, 4096> body;
-    size_t len = 0;
-  };
-  
+namespace claes {  
+  using namespace std;
+
+  struct Stack;
+  struct VM;
+
   struct Curl {
-    static size_t write_callback(char *ptr, 
-				 size_t size, 
-				 size_t nmemb, 
-				 void *userdata) {
-      size_t total_size = size * nmemb;
-      auto response = (Response *)userdata;
-      memcpy(response->body.data(), ptr, total_size);
-      response->len += total_size;
-      return total_size;
-    }
-
     struct Imp {
       CURL *handle;
       int ref_count = 1;
@@ -37,6 +27,22 @@ namespace claes {
 	}
       }
     };
+
+    struct Response {
+      array<char, 4096> body;
+      size_t len = 0;
+    };
+
+    static size_t write_callback(char *ptr, 
+				 size_t size, 
+				 size_t nmemb, 
+				 void *userdata) {
+      size_t total_size = size * nmemb;
+      auto response = (Response *)userdata;
+      memcpy(response->body.data(), ptr, total_size);
+      response->len += total_size;
+      return total_size;
+    }
 
     Imp *imp;
 
@@ -56,6 +62,8 @@ namespace claes {
       imp->ref_count++;
       return *this;
     }
+
+    E call(VM &vm, Stack &stack, const int arity, const Loc &loc) const;
   };
 
   inline bool operator==(const Curl &left, const Curl &right) {

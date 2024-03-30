@@ -1,8 +1,6 @@
 (debug)
 
-(define 
-  url          "http://localhost:8080/completion"
-  content-type "application/json")
+(define server "http://localhost:8080/completion")
 
 (^ prompt [value]
   (let [data '{
@@ -25,6 +23,6 @@
          n_probs:           0
          prompt:            ,value
        }]
-    ((Curl) url content-type (js data))))
+    (curl server "application/json" (js data))))
 
-(say (prompt (ARGV 0)))
+(say (parse-js (prompt (ARGV 0))))
