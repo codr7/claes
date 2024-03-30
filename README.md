@@ -157,7 +157,7 @@ Calling a vector queries or updates depending on the number of arguments.
 ```
 
 ### maps
-A map is defined as a valua based, ordered mapping between values.<br/>
+A map is defined as a value based, ordered mapping.<br/>
 Maps and pairs are very tightly related.<br/>
 
 New maps may be created by calling the type.
@@ -334,12 +334,21 @@ Recursion is another option, tail call optimization is guaranteed to be performe
 ```
 
 ## json
-Applicable values may be converted to json using `js`.
+The [JSON](https://www.json.org/json-en.html) format is tightly integrated into the language.
 
+Applicable values may be converted to json using `js`.
 ```
   (js [42 .123 "foo" 'bar _ T 1:2])
 
 "[42, .123, \"foo\", \"bar\", null, true, [1, 2]]"
+```
+
+Values may be parsed from json strings using `parse-js`.
+
+```
+  (parse-js "[42, .123, \"foo\", \"bar\", null, true, [1, 2]]")
+
+[42 .123 "foo" 'bar _ T 1:2]
 ```
 
 ## debugging
