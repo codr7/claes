@@ -65,43 +65,42 @@
          y="100.55598" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:105.833px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e3dbdb;fill-opacity:0.46446702;stroke-width:0.264583"
-       x="60.917889"
-       y="-82.156242"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:88.0812px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e80000;fill-opacity:1;stroke-width:0.220204"
+       x="83.322029"
+       y="-67.859642"
        id="text3"
-       transform="rotate(89.093558)"><tspan
+       transform="matrix(0.01900805,0.83216113,-1.2013896,0.01316621,0,0)"
+       inkscape:export-filename="./logo.png"
+       inkscape:export-xdpi="19.028387"
+       inkscape:export-ydpi="19.028387"><tspan
          sodipodi:role="line"
          id="tspan3"
-         style="fill:#e3dbdb;fill-opacity:0.46446702;stroke-width:0.264583"
-         x="60.917889"
-         y="-82.156242">(</tspan></text>
-    <g
-       id="g1"
-       transform="matrix(0.95942376,-0.2403426,0.23938945,0.97061586,-19.179036,40.103773)">
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.2931px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#3e3eff;fill-opacity:1;stroke-width:0.185733"
-         x="-83.752167"
-         y="-170.32805"
-         id="text4"
-         transform="matrix(0.19453057,-1.0548411,-0.90625339,-0.22642547,0,0)"><tspan
-           sodipodi:role="line"
-           id="tspan4"
-           style="fill:#3e3eff;fill-opacity:1;stroke-width:0.185733"
-           x="-83.752167"
-           y="-170.32805">)</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.2931px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#6d6dff;fill-opacity:1;stroke-width:0.185733"
-         x="64.72039"
-         y="-99.344803"
-         id="text4-8"
-         transform="matrix(-0.19453058,1.0548411,-0.90625338,-0.22642547,0,0)"><tspan
-           sodipodi:role="line"
-           id="tspan4-7"
-           style="fill:#6d6dff;fill-opacity:1;stroke-width:0.185733"
-           x="64.72039"
-           y="-99.344803">)</tspan></text>
-    </g>
+         style="fill:#e80000;fill-opacity:1;stroke-width:0.220204"
+         x="83.322029"
+         y="-67.859642">(</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:73.8747px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#3838ff;fill-opacity:1;stroke-width:0.184687"
+       x="-120.57135"
+       y="-146.06235"
+       id="text4"
+       transform="matrix(-0.06625373,-1.0766634,-0.9289167,-0.00197197,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4"
+         style="fill:#3838ff;fill-opacity:1;stroke-width:0.184687"
+         x="-120.57135"
+         y="-146.06235">)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:73.8747px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#009d00;fill-opacity:1;stroke-width:0.184687"
+       x="101.64676"
+       y="-75.478889"
+       id="text4-8"
+       transform="matrix(0.06625372,1.0766634,-0.9289167,-0.00197197,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4-7"
+         style="fill:#009d00;fill-opacity:1;stroke-width:0.184687"
+         x="101.64676"
+         y="-75.478889">)</tspan></text>
   </g>
 </svg>
