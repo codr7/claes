@@ -27,8 +27,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="0.5"
-     inkscape:cx="498"
-     inkscape:cy="408"
+     inkscape:cx="442"
+     inkscape:cy="448"
      inkscape:window-width="1280"
      inkscape:window-height="747"
      inkscape:window-x="0"
@@ -65,39 +65,43 @@
          y="100.55598" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:105.833px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffe97c;fill-opacity:1;stroke-width:0.264583"
-       x="70.543175"
-       y="-74.053017"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:105.833px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e3dbdb;fill-opacity:0.46446702;stroke-width:0.264583"
+       x="60.917889"
+       y="-82.156242"
        id="text3"
-       transform="rotate(83.97463)"><tspan
+       transform="rotate(89.093558)"><tspan
          sodipodi:role="line"
          id="tspan3"
-         style="fill:#ffe97c;fill-opacity:1;stroke-width:0.264583"
-         x="70.543175"
-         y="-74.053017">(</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.2931px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#3e3eff;fill-opacity:1;stroke-width:0.185733"
-       x="-83.752167"
-       y="-170.32805"
-       id="text4"
-       transform="matrix(0.19453057,-1.0548411,-0.90625339,-0.22642547,0,0)"><tspan
-         sodipodi:role="line"
-         id="tspan4"
-         style="fill:#3e3eff;fill-opacity:1;stroke-width:0.185733"
+         style="fill:#e3dbdb;fill-opacity:0.46446702;stroke-width:0.264583"
+         x="60.917889"
+         y="-82.156242">(</tspan></text>
+    <g
+       id="g1"
+       transform="matrix(0.95942376,-0.2403426,0.23938945,0.97061586,-19.179036,40.103773)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.2931px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#3e3eff;fill-opacity:1;stroke-width:0.185733"
          x="-83.752167"
-         y="-170.32805">)</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.2931px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#6d6dff;fill-opacity:1;stroke-width:0.185733"
-       x="64.72039"
-       y="-99.344803"
-       id="text4-8"
-       transform="matrix(-0.19453058,1.0548411,-0.90625338,-0.22642547,0,0)"><tspan
-         sodipodi:role="line"
-         id="tspan4-7"
-         style="fill:#6d6dff;fill-opacity:1;stroke-width:0.185733"
+         y="-170.32805"
+         id="text4"
+         transform="matrix(0.19453057,-1.0548411,-0.90625339,-0.22642547,0,0)"><tspan
+           sodipodi:role="line"
+           id="tspan4"
+           style="fill:#3e3eff;fill-opacity:1;stroke-width:0.185733"
+           x="-83.752167"
+           y="-170.32805">)</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:74.2931px;font-family:Sans;-inkscape-font-specification:'Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#6d6dff;fill-opacity:1;stroke-width:0.185733"
          x="64.72039"
-         y="-99.344803">)</tspan></text>
+         y="-99.344803"
+         id="text4-8"
+         transform="matrix(-0.19453058,1.0548411,-0.90625338,-0.22642547,0,0)"><tspan
+           sodipodi:role="line"
+           id="tspan4-7"
+           style="fill:#6d6dff;fill-opacity:1;stroke-width:0.185733"
+           x="64.72039"
+           y="-99.344803">)</tspan></text>
+    </g>
   </g>
 </svg>
