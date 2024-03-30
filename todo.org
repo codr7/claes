@@ -5,12 +5,7 @@ mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 https://huggingface.co/mistralai/Mistral-7B-v0.1
 
-* add Map type
-** add {} reader
-** use pairs
-** Value = map<Cell, Cell>
-** copy benchmark from jalang
-** implement js
+* copy lookup fib from jalang
 
 * js
 ** add string parser

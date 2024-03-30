@@ -29,6 +29,7 @@
 #include "claes/timer.hpp"
 #include "claes/types/bit.hpp"
 #include "claes/types/iter.hpp"
+#include "claes/types/map.hpp"
 #include "claes/types/pair.hpp"
 #include "claes/types/ref.hpp"
 #include "claes/types/vector.hpp"
@@ -50,8 +51,8 @@ namespace claes {
       &&GET_REG, &&GOTO,
       &&ITER,
       &&LOC,
-      &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
-      &&PUSH, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
+      &&MAKE_MAP, &&MAKE_PAIR, &&MAKE_REF, &&MAKE_VECTOR,
+      &&PUSH, &&PUSH_MAP_ITEM, &&PUSH_REGS, &&PUSH_VALUES, &&PUSH_VECTOR_ITEM,
       &&RECALL, &&RETURN,
       &&SET_PATH, &&SET_REF, &&SET_REF_DIRECT, &&SET_REG, &&SPLAT, &&STOP,
       &&TAIL_CALL, &&TODO, &&TRACE};
@@ -222,6 +223,12 @@ namespace claes {
     
     DISPATCH(pc+1);
  
+  MAKE_MAP: {
+      stack.push(types::Map::get(), types::Map::Value());
+    }
+    
+    DISPATCH(pc+1);
+
   MAKE_PAIR: {
       auto right = stack.pop();
       auto &left = stack.peek();
@@ -247,6 +254,13 @@ namespace claes {
       stack.push(op.as<ops::Push>().value);
     }
 
+    DISPATCH(pc+1);
+
+  PUSH_MAP_ITEM: {
+      const auto item = stack.pop();
+      push(stack.peek().as(types::Map::get()), item);
+    }
+    
     DISPATCH(pc+1);
 
   PUSH_REGS: {

@@ -1,20 +1,20 @@
 #pragma once
 
-#include <vector>
+#include "claes/map.hpp"
 #include "claes/type.hpp"
 
 namespace claes::types {
   using namespace claes;
 
-  struct Vector: Type::Imp {
-    using Value = vector<Cell>;
+  struct Map: Type::Imp {
+    using Value = claes::Map;
     
-    static TType<Vector> get() {
-      static TType<Vector> t("Vector");
+    static TType<Map> get() {
+      static TType<Map> t("Map");
       return t;
     }    
 
-    Vector(const string &name): Type::Imp(name) {}
+    Map(const string &name): Type::Imp(name) {}
     
     virtual E call(VM &vm, 
 		   Stack &stack, 
@@ -43,3 +43,4 @@ namespace claes::types {
     virtual void push(Cell &target, const Cell &item) const override;
   };
 }
+

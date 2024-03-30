@@ -5,6 +5,7 @@
 #include "claes/forms/call.hpp"
 #include "claes/forms/id.hpp"
 #include "claes/forms/literal.hpp"
+#include "claes/forms/map.hpp"
 #include "claes/forms/pair.hpp"
 #include "claes/forms/quote.hpp"
 #include "claes/forms/ref.hpp"
@@ -100,8 +101,9 @@ namespace claes {
       read_ws, 
 
       read_call,
-      read_i64,
       read_f64,
+      read_i64,
+      read_map,
       read_pair,
       read_quote,
       read_unquote,
@@ -159,6 +161,51 @@ namespace claes {
     return ReadT(true, nullopt);
   }
 
+  ReadT read_map(istream &in, Forms &out, Loc &loc) {
+    char c = 0;
+
+    if (!in.get(c)) { 
+      return ReadT(false, nullopt); 
+    }
+
+    if (c != '{') {
+      in.unget();
+      return ReadT(false, nullopt);
+    }
+
+    const auto form_loc = loc;
+    loc.column++;
+    Forms items;
+    
+    for (;;) {
+      read_ws(in, out, loc);
+
+      if (in.get(c)) {
+	if (c == '}') { 
+	  break; 
+	}
+
+	in.unget();
+      } else {
+	break;
+      }
+      
+      if (auto [f, e] = read_form(in, items, loc); e) { 
+	return ReadT(false, e); 
+      } else if (!f) {
+	break;
+      }
+    }
+
+    if (c != '}') { 
+      return ReadT(false, Error(loc, "Unexpected end of map: ", c)); 
+    }
+
+    loc.column++;
+    out.push<forms::Map>(form_loc, items);
+    return ReadT(true, nullopt);
+  }
+
   ReadT read_id(istream &in, Forms &out, Loc &loc) {
     const auto form_loc = loc;
     stringstream buffer;
@@ -166,8 +213,9 @@ namespace claes {
     
     while (in.get(c)) {
       if (!isgraph(c) ||  
-	  c == '(' || c == ')' || c == '[' || c == ']' || c == '\\' || c == '"' || 
-	  c == ':' || c == '&' || c == '\'' || c == '`' || c == '.' || c == ',') {
+	  c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}' || 
+	  c == '\\' || c == '"' || c == ':' || c == '&' || c == '\'' || c == '`' || 
+	  c == '.' || c == ',') {
 	in.unget();
 	break;
       }

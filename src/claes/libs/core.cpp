@@ -32,6 +32,7 @@
 #include "claes/types/i64.hpp"
 #include "claes/types/iter.hpp"
 #include "claes/types/loc.hpp"
+#include "claes/types/map.hpp"
 #include "claes/types/meta.hpp"
 #include "claes/types/macro.hpp"
 #include "claes/types/method.hpp"
@@ -54,6 +55,7 @@ namespace claes::libs {
     bind_type(types::I64::get());
     bind_type(types::Iter::get());
     bind_type(types::Loc::get());
+    bind_type(types::Map::get());
     bind_type(types::Meta::get());
     bind_type(types::Macro::get());
     bind_type(types::Method::get());

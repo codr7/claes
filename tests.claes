@@ -161,6 +161,33 @@
 (check [1 2 3]
   (Vector 1 2 3))
 
+(check 'bar
+  ('[foo bar baz] 1))
+
+(check ['foo 'qux 'baz]
+  (let [x '[foo bar baz]]
+    (x 1 'qux)
+    x))
+
+(check {1 2:3 4}
+  (Map 1 2:3 4))
+
+(check 2
+  ({1 2 3} 2))
+
+(check 2
+  ('{foo:1 bar:2 baz:3} 'bar))
+
+(check '{foo:1 bar:4 baz:3}
+  (let [m '{foo:1 bar:2 baz:3}]
+    (m 'bar 4)
+    m))
+
+(check 42
+  (let [m '{foo:1 bar:2 baz:3}]
+    (m 'bar:42)
+    (m 'bar)))
+
 (check [1 2 3]
   (let [x [1]]
     (push x 2 3)

@@ -23,6 +23,6 @@
          n_probs:           0
          prompt:            ,value
        }]
-    (curl server "application/json" (js data))))
+    (parse-js (curl server "application/json" (js data)))))
 
-(say (parse-js (prompt (ARGV 0))))
+(say (prompt (ARGV 0)))

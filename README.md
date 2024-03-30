@@ -17,7 +17,7 @@ cmake ..
 make claes
 rlwrap ./claes
 
-claes v7
+claes v8
 may the source be with you
 
   (say "hello" "world")
@@ -120,6 +120,75 @@ Leaving out the name creates a lambda.
     (f 42))
 
 42
+```
+
+### vectors
+A vector is defined as a value-based single dimensional dynamic array.<br/>
+<br/>
+Vectors are used to represent most collections/sequences in the syntax.<br/>
+<br/>
+
+New vectors may be created by calling the type.
+```
+  (Vector 1 2 3)
+
+[1 2 3]
+```
+
+Or using the literal form.
+```
+  [1 2 3]
+
+[1 2 3]
+```
+
+Calling a vector queries or updates depending on the number of arguments.
+
+```
+  ('[foo bar baz] 1)
+
+'bar
+```
+```
+  (let [v '[foo bar baz]]
+    (v 1 'qux)
+    v)
+
+['foo 'qux 'baz]
+```
+
+### maps
+A map is defined as a valua based, ordered mapping between values.<br/>
+Maps and pairs are very tightly related.<br/>
+<br/>
+
+New maps may be created by calling the type.
+```
+  (Map 'foo:1 'bar:2 'baz:3)
+
+{'bar:2 'baz:3 'foo:1}
+```
+
+Or using the literal form.
+```
+  '{foo:1 bar:2 baz:3}
+
+{'bar:2 'baz:3 'foo:1}
+```
+
+Calling a map queries or updates depending on the number of arguments.
+
+```
+  ('{foo:1 bar:2 baz:3} 'bar)
+
+2
+```
+```
+  (let [m '{foo:1 bar:2 baz:3}]
+    (m 'bar 4)
+    m)
+
+{'bar:4 'baz:3 'foo:1}
 ```
 
 ### varargs
