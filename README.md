@@ -39,6 +39,24 @@ The `Nil` type has one value, `_`.
 ## bits
 The `Bit` type has two values, `T` and `F`.
 
+```
+  (or F F)
+
+F
+  (or F T)
+
+T
+```
+```
+  (and F T)
+
+F
+
+  (and T T)
+
+T
+```
+
 ## pairs
 Pairs may be formed by putting `:` between two values.
 

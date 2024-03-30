@@ -314,6 +314,36 @@ namespace claes::libs {
 
 		  return t.call(vm, stack, arity, recursive, loc);
 		});
+
+    bind_macro("and", 1, 
+	       [](const Macro &self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) {
+		 Forms my_args(args);
+		 vector<PC> skip_pcs;
+
+		 while (!my_args.empty()) {
+		   const auto a = my_args.pop();
+		   a.emit(vm, env, my_args);
+		   
+		   if (!my_args.empty()) {
+		     const auto branch_pc = vm.emit<ops::Todo>(loc);
+		     const auto skip_next_pc = vm.emit<ops::Todo>(loc);
+		     vm.ops[branch_pc].imp = make_shared<ops::Branch>(vm.emit_pc());
+		     a.emit(vm, env, my_args);
+		     skip_pcs.push_back(vm.emit<ops::Todo>(loc));
+		     vm.ops[skip_next_pc].imp = make_shared<ops::Goto>(vm.emit_pc());
+		   }
+		 }
+		 
+		 for (const auto pc: skip_pcs) {
+		   vm.ops[pc].imp = make_shared<ops::Goto>(vm.emit_pc());
+		 }
+
+		 return nullopt;
+	       });
     
     bind_macro("benchmark", 1, 
 	       [](const Macro &self, 
@@ -654,6 +684,35 @@ namespace claes::libs {
 		 
 		 const auto path = stack.pop().as(types::Path::get());
 		 return vm.load(path, env, loc);
+	       });
+
+
+    bind_macro("or", 1, 
+	       [](const Macro &self, 
+		  VM &vm, 
+		  Env &env, 
+		  const Forms &args, 
+		  const Loc &loc) {
+		 Forms my_args(args);
+		 vector<PC> skip_pcs;
+
+		 while (!my_args.empty()) {
+		   const auto a = my_args.pop();
+		   a.emit(vm, env, my_args);
+		   
+		   if (!my_args.empty()) {
+		     const auto branch_pc = vm.emit<ops::Todo>(loc);
+		     a.emit(vm, env, my_args);
+		     skip_pcs.push_back(vm.emit<ops::Todo>(loc));
+		     vm.ops[branch_pc].imp = make_shared<ops::Branch>(vm.emit_pc());
+		   }
+		 }
+		 
+		 for (const auto pc: skip_pcs) {
+		   vm.ops[pc].imp = make_shared<ops::Goto>(vm.emit_pc());
+		 }
+
+		 return nullopt;
 	       });
 
     bind_method("path", {"value"},

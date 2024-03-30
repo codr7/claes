@@ -8,6 +8,24 @@
 
 (check T
   (Bit 1))
+
+(check 42
+  (and 42))
+
+(check 42
+  (and T 42))
+
+(check F
+  (and F 42))
+
+(check 42
+  (or 42))
+
+(check T
+  (or T 42))
+
+(check 42
+  (or F 42))
   
 (check 42
   (let [x 42] x))
