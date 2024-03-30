@@ -213,6 +213,8 @@ Methods may be defined to accept a variable number of arguments by suffixing the
 Which can be expressed even more succinctly.
 ```
   (+ 4*)
+
+6
 ```
 
 ### fexprs
