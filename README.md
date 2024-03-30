@@ -40,7 +40,7 @@ The `Nil` type has one value, `_`.
 The `Bit` type has two values, `T` and `F`.
 
 ## pairs
-Pairs may be formed by putting `:` between any two values.
+Pairs may be formed by putting `:` between two values.
 
 ```
   'foo:42
@@ -86,6 +86,7 @@ New runtime bindings may be introduced using `let`.
 
 #### updates
 Some macros update bindings behind the curtain, `decr` and `push` are two examples.<br/>
+<br/>
 Runtime bindings may be updated using `set`.<br/>
 <br/>
 The following exmaple deserves a bit of an explanation. First we bind `foo` and `bar` to their initial values; then we decrease `foo` to `0`, `bar` is still `2` at this point. Then we re-bind `foo` to a vector containing both values, `bar` to an identical vector; and finally push 42 to `foo`.
@@ -124,9 +125,7 @@ Leaving out the name creates a lambda.
 
 ### vectors
 A vector is defined as a value-based single dimensional dynamic array.<br/>
-<br/>
 Vectors are used to represent most collections/sequences in the syntax.<br/>
-<br/>
 
 New vectors may be created by calling the type.
 ```
@@ -160,7 +159,6 @@ Calling a vector queries or updates depending on the number of arguments.
 ### maps
 A map is defined as a valua based, ordered mapping between values.<br/>
 Maps and pairs are very tightly related.<br/>
-<br/>
 
 New maps may be created by calling the type.
 ```

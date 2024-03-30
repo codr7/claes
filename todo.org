@@ -5,6 +5,8 @@ mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 https://huggingface.co/mistralai/Mistral-7B-v0.1
 
+* document splats under varargs
+
 * copy lookup fib from jalang
 
 * js
