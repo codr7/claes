@@ -1,6 +1,7 @@
 #include "claes/form.hpp"
 #include "claes/forms.hpp"
 #include "claes/ops/set_ref_direct.hpp"
+#include "claes/ops/push.hpp"
 #include "claes/stack.hpp"
 #include "claes/types/ref.hpp"
 #include "claes/vm.hpp"
@@ -29,7 +30,7 @@ namespace claes::types {
 		   const Forms &args,
 		   const claes::Loc &loc) const {
     if (args.empty()) {
-      vm.emit<ops::Push>(value.as(get).imp->value);
+      vm.emit<ops::Push>(value.as(get()).imp->value);
     } else {
       Forms my_args(args);
       

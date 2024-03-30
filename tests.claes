@@ -172,6 +172,9 @@
 (check 'foobar42T
   (Sym "foo" 'bar 42 T))
 
+(check 'foobarbaz
+  '(,Sym foo bar baz))
+
 (check ['foo 42 'bar]
   (let [x 42]
     '[foo ,x bar]))

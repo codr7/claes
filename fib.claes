@@ -3,13 +3,3 @@
 
 (^ fib-tail [n a b]
   (if (> n 1) (fib-tail (decr n) b (+ a b)) (if (z? n) a b)))
-
-(^ fib-lookup [n table]
-  (or (table! n)
-       (let [result (if (< n 2) n (+ (fib-lookup (- n 1) table)
-                                     (fib-lookup (- n 2) table)))] 
-         (say 'insert n table)
-         (table! n result)
-	 result)))
-
-(fib-lookup 10 &{})
