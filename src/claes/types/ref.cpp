@@ -28,13 +28,18 @@ namespace claes::types {
 		   Env &env, 
 		   const Forms &args,
 		   const claes::Loc &loc) const {
-    Forms my_args(args);
-
-    if (auto e = my_args.pop().emit(vm, env, my_args); e) {
-      return e;
+    if (args.empty()) {
+      vm.emit<ops::Push>(value.as(get).imp->value);
+    } else {
+      Forms my_args(args);
+      
+      if (auto e = my_args.pop().emit(vm, env, my_args); e) {
+	return e;
+      }
+      
+      vm.emit<ops::SetRefDirect>(value.as(get()));
     }
     
-    vm.emit<ops::SetRefDirect>(value.as(get()));
     return nullopt;
   }
 }

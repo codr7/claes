@@ -5,7 +5,17 @@ mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 https://huggingface.co/mistralai/Mistral-7B-v0.1
 
+
 * debug lookup fib
+** add deref reader/form/op
+*** !
+
+(^ foo [m]
+  (m! 'foo 42))
+
+(let [m &{}]
+  (foo m)
+  m)
 
 * quote args and call next if call target is unquote
 ** add '(,Vector foo bar baz) test
@@ -19,14 +29,24 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 ** add f64 parser
 *** parse two i64
 ** add map parser
-**** write object
-
-* update llama.claes to use js with map literal
-** quote entire map and remove quotes from names
 
 * extract answer in llama.claes
 
 * --
+
+* fix recursion/bindings
+
+(^ fib-lookup-value [n]
+  (let [table {}]
+    (^ helper [n]
+      (or (table n)
+          (let [result (if (< n 2) n (+ (helper (- n 1))
+                                        (helper (- n 2))))]
+           (table n result)
+           (table n))))
+    (helper n))))
+
+(fib-lookup-value 10)
 
 * return pair from parse-js
 ** value:end_pos
