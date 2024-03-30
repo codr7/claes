@@ -201,6 +201,20 @@ Methods may be defined to accept a variable number of arguments by suffixing the
 [1 2 3]
 ```
 
+### splats
+`*` may also be used to splat arguments into calls.
+
+```
+  (+ [1 2 3]*)
+
+6
+```
+
+Which can be expressed even more succinctly.
+```
+  (+ 4*)
+```
+
 ### fexprs
 Quoting argument names creates fexprs, arguments may be evaluated by calling them.
 
