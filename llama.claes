@@ -1,4 +1,5 @@
 #!claes
+(trace)
 
 (define server "http://localhost:8080/completion")
 
@@ -26,10 +27,13 @@
     (parse-js (curl server "application/json" (js data)))))
 
 (^ repl [history]
-  (let [p (ask)]
+  (let [p (ask ":) ")]
     (say "in a jiffy...")
+    (say history)
     (push history p)
     (say ((send-prompt (join "\n" history)) "content"))
+    (say)
+    (say history)
     (repl history)))
 
 (if ARGV

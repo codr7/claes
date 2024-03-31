@@ -26,6 +26,12 @@ namespace claes {
   static const int VERSION = 8;
 
   struct VM {
+    struct Frame {
+      size_t recursion_depth;
+      size_t reg_count;      
+      Frame(const size_t reg_count): recursion_depth(0), reg_count(reg_count) {}
+    };
+    
     libs::Core core;
     libs::Curl curl;
 
