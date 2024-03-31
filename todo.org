@@ -46,7 +46,7 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 ** vm.defcon
 ** disable more the lower it is
 ** disallow anything that changes the machine
-*** no define, ^, stop, dump, say, curl
+*** no define, ^, stop, dump, say, curl, set
 *** skip definition in library constructor
 
 * add composition using pipe character
@@ -94,9 +94,12 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 * rebind updated parent Expr envs in Env constructor
 ** replaces default create of new env in Expr
 
+* add slurp-lines
+** return iteratpr
+
 * fix recursion/bindings
 
-(^ fib-lookup-value [n]
+(^ fib [n]
   (let [table {}]
     (^ helper [nn]
       (or (table nn)
@@ -106,4 +109,4 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
            (table nn))))
     (helper n))))
 
-(fib-lookup-value 10)
+(fib 10)

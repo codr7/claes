@@ -1,3 +1,5 @@
+#include <fstream>
+
 #include "claes/forms/id.hpp"
 #include "claes/forms/literal.hpp"
 #include "claes/forms/quote.hpp"
@@ -625,7 +627,6 @@ namespace claes::libs {
 
 		 my_args.collect_ids(body_ids);
 		 vm.emit<ops::BeginFrame>();
-		 cout << "let body ids: " << body_ids << endl;
 		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 
@@ -840,6 +841,31 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_method("slurp", {"path"},
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  const auto p = stack.pop().as(types::Path::get());
+		  ifstream in(p);
+
+		  if (in.fail()) {
+		    return Error(loc, "Failed opening file ", p, ":\n",
+				 strerror(errno));
+		  }
+
+		  in.seekg(0, ios::end);
+		  const auto size = in.tellg();
+		  std::string result;
+		  result.resize(size);
+		  in.seekg(0);
+		  in.read(result.data(), size);
+		  stack.push(types::String::get(), result);
+		  return nullopt;
+		});
+    
     bind_macro("stop", 0, 
 	       [](const Macro &self, 
 		  VM &vm, 

@@ -4,7 +4,7 @@
 #include <set>
 #include <sstream>
 
-namespace claes {
+namespace claes {  
   template <typename Arg, typename...Args>
   string to_string(Arg &&arg, Args &&...args) {
     stringstream buf;
