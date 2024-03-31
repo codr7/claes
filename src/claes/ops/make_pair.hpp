@@ -10,7 +10,7 @@ namespace claes::ops {
     MakePair():
       Op::Imp(Op::Code::MAKE_PAIR) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "MakePair";
     }
   };

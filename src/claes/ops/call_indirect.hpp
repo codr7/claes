@@ -15,8 +15,9 @@ namespace claes::ops {
     CallIndirect(int arity, const Loc &loc):
       Op::Imp(Op::Code::CALL_INDIRECT), arity(arity), loc(loc) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "CallIndirect arity: " << arity << " loc: " << loc;
+      
     }
   };
 }

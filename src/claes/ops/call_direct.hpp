@@ -16,7 +16,7 @@ namespace claes::ops {
     CallDirect(const Cell &target, int arity, const Loc &loc):
       Op::Imp(Op::Code::CALL_DIRECT), target(target), arity(arity), loc(loc) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "CallDirect target: " << target << " arity: " << arity << " loc: " << 
 	loc;
     }

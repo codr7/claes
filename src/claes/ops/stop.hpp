@@ -12,7 +12,7 @@ namespace claes::ops {
     Stop():
       Op::Imp(Op::Code::STOP) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "Stop";
     }
   };

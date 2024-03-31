@@ -6,37 +6,24 @@ https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-ll
 https://huggingface.co/mistralai/Mistral-7B-v0.1
 
 * js
-** add parse-js tests
-*** copy readme
 ** add string parser
 ** add id parser
 *** handle nil/bit
 ** add f64 parser
 *** parse two i64
 ** add map parser
+** add parse-js tests
+*** copy readme
 
 * extract answer in llama.claes
 
 * --
 
-* fix recursion/bindings
-
-(^ fib-lookup-value [n]
-  (let [table {}]
-    (^ helper [n]
-      (or (table n)
-          (let [result (if (< n 2) n (+ (helper (- n 1))
-                                        (helper (- n 2))))]
-           (table n result)
-           (table n))))
-    (helper n))))
-
-(fib-lookup-value 10)
+* add support for pair calls
+*** drop _
 
 * return pair from parse-js
 ** value:end_pos
-** add support for pair calls
-*** drop _
 
 * add vm.arity vector
 ** write failing test with nested splats
@@ -106,3 +93,17 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 
 * rebind updated parent Expr envs in Env constructor
 ** replaces default create of new env in Expr
+
+* fix recursion/bindings
+
+(^ fib-lookup-value [n]
+  (let [table {}]
+    (^ helper [nn]
+      (or (table nn)
+          (let [result (if (< n 2) n (+ (helper (- nn 1))
+                                        (helper (- nn 2))))]
+           (table nn result)
+           (table nn))))
+    (helper n))))
+
+(fib-lookup-value 10)

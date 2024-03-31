@@ -10,7 +10,7 @@ namespace claes::ops {
     PushMapItem():
       Op::Imp(Op::Code::PUSH_MAP_ITEM) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "PushMapItem";
     }
   };

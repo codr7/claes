@@ -3,6 +3,7 @@
 
 #include "claes/common.hpp"
 #include "claes/op.hpp"
+#include "claes/reg.hpp"
 
 namespace claes::ops {
   using namespace claes;
@@ -14,9 +15,7 @@ namespace claes::ops {
     PushValues(const Reg target_reg, int n): 
       Op::Imp(Op::Code::PUSH_VALUES), target_reg(target_reg), n(n) {}
     
-    virtual void trace(ostream &out) const override {
-      out << "PushValues target_reg: " << target_reg << " n: " << n;
-    }
+    virtual void trace(VM &vm, ostream &out) const override;
   };
 }
 

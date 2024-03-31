@@ -15,10 +15,7 @@ namespace claes::ops {
     CallReg(const Reg target_reg, int arity, const Loc &loc): 
       Op::Imp(Op::Code::CALL_REG), target_reg(target_reg), arity(arity), loc(loc) {}
     
-    virtual void trace(ostream &out) const override {
-      out << "CallReg target_reg: " << 
-	target_reg << " arity: " << arity << " loc: " << loc;
-    }
+    virtual void trace(VM &vm, ostream &out) const override;
   };
 }
 

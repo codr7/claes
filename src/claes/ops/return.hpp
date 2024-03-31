@@ -12,7 +12,7 @@ namespace claes::ops {
     Return():
       Op::Imp(Op::Code::RETURN) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "Return";
     }
   };

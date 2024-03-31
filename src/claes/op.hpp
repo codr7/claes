@@ -7,6 +7,8 @@
 namespace claes {
   using namespace std;
 
+  struct VM;
+  
   struct Op {
     enum struct Code {BEGIN_FRAME, BENCHMARK, BRANCH, 
 		      CALL_DIRECT, CALL_INDIRECT, CALL_REG, CHECK,
@@ -26,7 +28,7 @@ namespace claes {
       Code code;
       Imp(Code code): code(code) {}
       virtual ~Imp() {}
-      virtual void trace(ostream &out) const = 0;
+      virtual void trace(VM &vm, ostream &out) const = 0;
     };
     
     shared_ptr<const Imp> imp;
@@ -46,8 +48,8 @@ namespace claes {
       return imp->code;
     }
 
-    void trace(ostream &out) const {
-      return imp->trace(out);
+    void trace(VM &vm, ostream &out) const {
+      return imp->trace(vm, out);
     }
   };
 }

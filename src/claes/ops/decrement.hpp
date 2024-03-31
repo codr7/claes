@@ -13,9 +13,7 @@ namespace claes::ops {
     Decrement(const Reg target_reg): 
       Op::Imp(Op::Code::DECREMENT), target_reg(target_reg) {}
     
-    virtual void trace(ostream &out) const override {
-      out << "Decrement target_reg: " << target_reg;
-    }
+    virtual void trace(VM &vm, ostream &out) const override;
   };
 }
 

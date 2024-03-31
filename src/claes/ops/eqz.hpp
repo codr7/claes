@@ -10,7 +10,7 @@ namespace claes::ops {
     Eqz():
       Op::Imp(Op::Code::ZERO) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "Eqz";
     }
   };

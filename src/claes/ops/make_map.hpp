@@ -10,7 +10,7 @@ namespace claes::ops {
     MakeMap():
       Op::Imp(Op::Code::MAKE_MAP) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "MakeMap";
     }
   };

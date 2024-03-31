@@ -13,7 +13,7 @@ namespace claes::ops {
     SetRefDirect(const Ref &target): 
       Op::Imp(Op::Code::SET_REF_DIRECT), target(target) {}
     
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "SetRefDirect target: " << target;
     }
   };

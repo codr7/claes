@@ -10,7 +10,7 @@ namespace claes::ops {
     EndFrame():
       Op::Imp(Op::Code::END_FRAME) {}
 
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "EndFrame";
     }
   };

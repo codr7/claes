@@ -13,10 +13,7 @@ namespace claes::ops {
     Reg reg;
 
     GetReg(const Reg &reg): Op::Imp(Op::Code::GET_REG), reg(reg) {}
-    
-    virtual void trace(ostream &out) const override {
-      out << "GetReg reg: " << reg;
-    }
+    virtual void trace(VM &vm, ostream &out) const override;
   };
 }
 

@@ -1,6 +1,7 @@
 #ifndef CLAES_UTILITIES_HPP
 #define CLAES_UTILITIES_HPP
 
+#include <set>
 #include <sstream>
 
 namespace claes {
@@ -21,6 +22,22 @@ namespace claes {
     }
     
     return s;
+  }
+
+  template <typename T>
+  ostream &operator << (ostream &out, const set<T> &set) {
+    out << '[';
+    
+    for (auto i = set.begin(); i != set.end(); i++) {
+      if (i != set.begin()) {
+	out << ' ';
+      }
+      
+      out << *i;
+    }
+    
+    out << ']';
+    return out;
   }
 }
 

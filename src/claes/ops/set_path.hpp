@@ -15,7 +15,7 @@ namespace claes::ops {
 
     SetPath(const fs::path &path): Op::Imp(Op::Code::SET_PATH), path(path) {}
     
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "SetPath path: " << path;
     }
   };

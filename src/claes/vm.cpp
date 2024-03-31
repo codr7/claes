@@ -151,7 +151,7 @@ namespace claes {
       }
 
       cout << endl << pc << ' ';
-      ops[pc].trace(cout);
+      ops[pc].trace(*this, cout);
       cout << endl;
     }
   NEXT:

@@ -396,8 +396,8 @@ namespace claes {
 
   TRACE: {
       cout << ++pc << ' ';
-      ops[pc].trace(cout);
-      cout << endl;
+      ops[pc].trace(*this, cout);
+      cout << ' ' << stack << endl;
     }
 
     DISPATCH(pc);

@@ -625,6 +625,7 @@ namespace claes::libs {
 
 		 my_args.collect_ids(body_ids);
 		 vm.emit<ops::BeginFrame>();
+		 cout << "let body ids: " << body_ids << endl;
 		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 

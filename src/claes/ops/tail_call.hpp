@@ -15,9 +15,7 @@ namespace claes::ops {
     TailCall(PC start_pc, int reg_count):
       Op::Imp(Op::Code::TAIL_CALL), start_pc(start_pc), reg_count(reg_count) {}
 
-    virtual void trace(ostream &out) const override {
-      out << "TailCall start_pc: " << start_pc << " reg_count: " << reg_count;
-    }
+    virtual void trace(VM &vm, ostream &out) const override;
   };
 }
 

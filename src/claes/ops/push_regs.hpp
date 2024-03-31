@@ -13,7 +13,7 @@ namespace claes::ops {
     
     PushRegs(const int n): Op::Imp(Op::Code::PUSH_REGS), n(n) {}
     
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "PushRegs n: " << n;
     }
   };

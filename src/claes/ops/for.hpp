@@ -13,7 +13,7 @@ namespace claes::ops {
     For(const PC &end_pc):
       Op::Imp(Op::Code::FOR), end_pc(end_pc) {}
     
-    virtual void trace(ostream &out) const override {
+    virtual void trace(VM &vm, ostream &out) const override {
       out << "For end_pc: " << end_pc;
     }
   };

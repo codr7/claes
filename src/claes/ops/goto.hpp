@@ -13,9 +13,7 @@ namespace claes::ops {
     Goto(const PC &pc):
       Op::Imp(Op::Code::GOTO), pc(pc) {}
     
-    virtual void trace(ostream &out) const override {
-      out << "Goto pc: " << pc;
-    }
+    virtual void trace(VM &vm, ostream &out) const override;
   };
 }
 

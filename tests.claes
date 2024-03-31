@@ -267,6 +267,17 @@
 (check [1 2 3]
   (parse-js "[1, 2, 3]"))
 
+(check {1 2 3}
+ (^ foo [x]
+    (let [y {}]
+      (^ helper [z]
+        (if (z? z) y (do
+          (y z:z)
+  	(helper (- z 1)))))
+      (helper x)))
+
+  (foo 3))
+  
 (load (path "fib.claes"))
 
 (check 55
