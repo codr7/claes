@@ -8,11 +8,7 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 * js
 ** add f64 parser
 *** parse two i64
-** add id parser
-*** handle nil/bit
 ** add map parser
-** add parse-js tests
-*** copy readme
 
 * extract answer in llama.claes
 

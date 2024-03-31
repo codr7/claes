@@ -264,8 +264,8 @@
 (check "[42, .123, \"foo\", \"bar\", null, true, [1, 2]]"
   (js [42 .123 "foo" 'bar _ T 1:2]))
 
-(check ["foo" 42 []]
-  (parse-js `["foo", 42, []]`))
+(check ["foo" 42 T F _ []]
+  (parse-js `["foo", 42, true, false, null, []]`))
 
 (check {1 2 3}
  (^ foo [x]

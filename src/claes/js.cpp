@@ -22,6 +22,44 @@ namespace claes::js {
     return P(nullopt, nullopt);
   }
 
+  P parse_id(istream &in, Loc &loc) {
+    const auto form_loc = loc;
+    stringstream buffer;
+    char c = 0;
+    
+    while (in.get(c)) {
+      if (!isgraph(c) ||  
+	  c == '[' || c == ']' || c == '{' || c == '}' || 
+	  c == '"' || c == ':' || c == ',') {
+	in.unget();
+	break;
+      }
+
+      buffer << c;
+      loc.column++;
+    }
+
+    if (!buffer.tellp()) {
+      return P(nullopt, nullopt);
+    }
+
+    const auto id = buffer.str();
+
+    if (id == "null") {
+      return P(NIL(), nullopt);
+    }
+
+    if (id == "true") {
+      return P(T(), nullopt);
+    }
+
+    if (id == "false") {
+      return P(F(), nullopt);
+    }
+
+    return P(nullopt, Error(loc, "Unknown identifier: ", id));
+  }
+
   P parse_i64(istream &in, Loc &loc) {
     char c = 0;
 
@@ -163,6 +201,8 @@ namespace claes::js {
       parse_i64,
       parse_string,
       parse_vector,
+
+      parse_id
     };
 
     for (const auto &p: parsers) {
