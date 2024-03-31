@@ -4,7 +4,7 @@
 
 (^ prompt [value]
   (let [data '{
-         stream:            F
+         stream:            ,F
          n_predict:         400
          temperature:       0
          stop:              ["</s>"]
@@ -25,4 +25,4 @@
        }]
     (parse-js (curl server "application/json" (js data)))))
 
-(say (prompt (ARGV 0)))
+(say ((prompt (ARGV 0)) "content"))

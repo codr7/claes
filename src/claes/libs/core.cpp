@@ -100,15 +100,22 @@ namespace claes::libs {
 		   int arity,
 		   bool recursive,
 		   const Loc &loc) -> E {
-		  types::I64::Value v = 0;
+		  if (arity == 1) {
+		    auto &s = stack.peek();
+		    s = Cell(types::I64::get(), -s.as(types::I64::get()));
+		  } else {
+		    reverse(stack.begin() + stack.len() - arity, stack.end());
+		    types::I64::Value v = stack.pop().as(types::I64::get());
+		    arity -= 2;
+		    
+		    while (arity--) {
+		      v -= stack.pop().as(types::I64::get());
+		    }
 
-		  while (--arity) {
-		    const auto a = stack.pop().as(types::I64::get());
-		    v -= a;
+		    auto &s = stack.peek();
+		    s = Cell(types::I64::get(), v - s.as(types::I64::get()));
 		  }
 
-		  auto &s = stack.peek();
-		  s = Cell(types::I64::get(), v + s.as(types::I64::get()));
 		  return nullopt;
 		});
 
@@ -121,9 +128,9 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  auto v = stack.pop();
 		  auto result = true;
-		  arity--;
+		  arity -= 2;
 
-		  while (--arity) {
+		  while (arity--) {
 		    if (stack.pop() != v) {
 		      result = false;
 		      break;
@@ -144,9 +151,9 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  auto v = stack.pop();
 		  auto result = true;
-		  arity--;
+		  arity -= 2;
 
-		  while(--arity) {
+		  while(arity--) {
 		    if (const auto nv = stack.pop(); nv >= v) {
 		      result = false;
 		    } else {
@@ -168,9 +175,9 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  auto v = stack.pop();
 		  auto result = true;
-		  arity--;
+		  arity -= 2;
 
-		  while(--arity) {
+		  while(arity--) {
 		    if (const auto nv = stack.pop(); nv <= v) {
 		      result = false;
 		      break;
@@ -604,7 +611,7 @@ namespace claes::libs {
 		    return e;
 		  }
 
-		  stack.push(types::String::get(), result.str());
+		  v = Cell(types::String::get(), result.str());
 		  return nullopt;
 		});
 

@@ -261,11 +261,11 @@
 (check 42
   (let [x 41] (set x (+ x 1)) x))
   
-(check "[42, .123, \"foo\", \"bar\", null, true, [1, 2]]"
+(check "[42, 0.123, \"foo\", \"bar\", null, true, [1, 2]]"
   (js [42 .123 "foo" 'bar _ T 1:2]))
 
-(check ["foo" 42 T F _ [] {"bar":2 "foo":1}]
-  (parse-js `["foo", 42, true, false, null, [], {"foo": 1, "bar": 2}]`))
+(check ["foo" 42 T F _ [] {"bar":(- 2) "foo":1}]
+  (parse-js `["foo", 42, true, false, null, [], {"foo": 1, "bar": -2}]`))
 
 (check {1 2 3}
  (^ foo [x]

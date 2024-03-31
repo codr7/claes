@@ -41,7 +41,8 @@ namespace claes::types {
     virtual E js(const Cell &value, 
 		 ostream &out, const 
 		 claes::Loc &loc) const override {
-      dump(value, out);
+      const auto &v = value.as(get());
+      out << f64::trunc(v) << '.' << f64::frac(v);
       return nullopt;
     }
   };

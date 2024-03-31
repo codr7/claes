@@ -118,7 +118,7 @@ namespace claes::js {
     while (in.get(c)) {
       if (!isgraph(c) ||  
 	  c == '[' || c == ']' || c == '{' || c == '}' || 
-	  c == '"' || c == ':' || c == ',') {
+	  c == '"' || c == ':' || c == ',' || c == '-') {
 	in.unget();
 	break;
       }
@@ -155,12 +155,20 @@ namespace claes::js {
       return P(nullopt, nullopt); 
     }
 
-    in.unget();
-
-    if (!isdigit(c)) {
+    if (!isdigit(c) && c != '-') {
+      in.unget();
       return P(nullopt, nullopt);
     }
 
+    auto neg = false;
+    
+    if (c == '-') {
+      loc.column++;
+      neg = true;
+    } else {
+      in.unget();
+    }
+    
     types::I64::Value v = 0;
 
     while (in.get(c)) {
@@ -177,7 +185,7 @@ namespace claes::js {
       loc.column++;
     }
 
-    return P(Cell(types::I64::get(), v), nullopt);
+    return P(Cell(types::I64::get(), neg ? -v : v), nullopt);
   }
 
   P parse_object(istream &in, Loc &loc) {
