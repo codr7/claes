@@ -55,6 +55,14 @@ namespace claes {
     }
 
     Loc load_loc(path, 1, 1);
+    char c = 0;
+    
+    if (in.get(c) && c == '#') { 
+      string line;
+      getline(in, line);
+      load_loc.line++;
+    }
+    
     Forms fs;
 
     if (auto [_, e] = read_forms(in, fs, load_loc); e) {
