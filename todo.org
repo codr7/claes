@@ -5,8 +5,14 @@ mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 https://huggingface.co/mistralai/Mistral-7B-v0.1
 
+(^ foo [n x]
+  (if n (do
+    (push x n)
+    (foo (- n 1) x))
+    x))
+  
 * add support for pair calls
-*** drop _
+*** drop _ recursively
 
 * return pair from parse-js
 ** value:end_pos
@@ -16,9 +22,8 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 * ifdef curl lib
 ** CMake
 ** libs/Curl
-
-* rename Curl library to IO
-** move say, dump
+** add ifdef macro
+*** only emit args if symbol is defined
 
 * add defcon
 ** command line arg

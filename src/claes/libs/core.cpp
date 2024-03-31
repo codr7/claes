@@ -353,6 +353,23 @@ namespace claes::libs {
 
 		 return nullopt;
 	       });
+
+     bind_method("ask", {},
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  string result;
+		  
+		  if (!getline(cin, result)) {
+		    return Error(loc, "Failed reading input");
+		  }
+
+		  stack.push(types::String::get(), result);
+		  return nullopt; 
+		});
     
     bind_macro("benchmark", 1, 
 	       [](const Macro &self, 
@@ -597,6 +614,44 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
+    bind_method("join", {"sep"},
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  reverse(stack.begin() + stack.len() - arity, stack.end());
+		  const auto s = stack.pop();
+		  stringstream result;
+		  auto n = 0;
+		  
+		  for (int i = 0; i < arity-1; i++) {		    
+		    auto it = stack.pop().iter().as(types::Iter::get());
+
+		    for (;;) {
+		      auto [v, e] = it.next();
+
+		      if (e) {
+			return e;
+		      };
+
+		      if (!v) {
+			break;
+		      }
+
+		      if (n++) {
+			s.say(result);
+		      }
+
+		      v->say(result);
+		    }
+		  }
+
+		  stack.push(types::String::get(), result.str());
+		  return nullopt;
+		});
+		
     bind_method("js", {"value"},
 		[](const Method &self, 
 		   VM &vm, 

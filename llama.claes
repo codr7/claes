@@ -1,8 +1,8 @@
-(debug)
+#!claes
 
 (define server "http://localhost:8080/completion")
 
-(^ prompt [value]
+(^ send-prompt [value]
   (let [data '{
          stream:            ,F
          n_predict:         400
@@ -25,4 +25,14 @@
        }]
     (parse-js (curl server "application/json" (js data)))))
 
-(say ((prompt (ARGV 0)) "content"))
+(^ repl [history]
+  (let [p (ask)]
+    (say "in a jiffy...")
+    (push history p)
+    (say ((send-prompt (join "\n" history)) "content"))
+    (repl history)))
+
+(if ARGV
+  (say (send-prompt (join " " ARGV)))
+  (repl []))
+
