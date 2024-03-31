@@ -3,6 +3,7 @@
 #include "claes/cell.hpp"
 #include "claes/js.hpp"
 #include "claes/types/i64.hpp"
+#include "claes/types/string.hpp"
 #include "claes/types/vector.hpp"
 
 namespace claes::js {
@@ -49,6 +50,62 @@ namespace claes::js {
     return P(Cell(types::I64::get(), v), nullopt);
   }
 
+  P parse_string(istream &in, Loc &loc) {
+    char c = 0;
+
+    if (!in.get(c)) { 
+      return P(nullopt, nullopt); 
+    }
+
+    if (c != '"') {
+      in.unget();
+      return P(nullopt, nullopt);
+    }
+
+    const auto form_loc = loc;
+    loc.column++;
+    stringstream buffer;
+    
+    for (;;) {
+      if (in.get(c)) {
+	if (c == '"') { 
+	  break; 
+	}
+      } else {
+	break;
+      }
+      
+      if (c == '\\') {
+	loc.column++;
+
+	if (!in.get(c)) {
+	  return P(nullopt, Error(loc, "Invalid string escape"));
+	}
+
+	switch (c) {
+	case '"':
+	  break;
+	case 'n':
+	  c = '\n';
+	  break;
+	case 't':
+	  c = '\t';
+	  break;
+	}
+      }
+
+      buffer << c;
+      loc.column++;
+    }
+
+    if (c != '"') { 
+      return P(nullopt, Error(loc, "Invalid string")); 
+    }
+
+    loc.column++;
+    return P(Cell(types::String::get(), buffer.str()), nullopt);
+  }
+  
   P parse_vector(istream &in, Loc &loc) {
     char c = 0;
 
@@ -104,6 +161,7 @@ namespace claes::js {
       parse_ws, 
 
       parse_i64,
+      parse_string,
       parse_vector,
     };
 
