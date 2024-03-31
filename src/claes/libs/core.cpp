@@ -362,6 +362,10 @@ namespace claes::libs {
 		   bool recursive,
 		   const Loc &loc) -> E {
 		  string result;
+
+		  if (arity > 0) {
+		    stack.pop().say(cout);
+		  }
 		  
 		  if (!getline(cin, result)) {
 		    return Error(loc, "Failed reading input");
@@ -545,7 +549,7 @@ namespace claes::libs {
 		 }
 
 		 vm.emit<ops::Iter>();
-		 vm.emit<ops::BeginFrame>();
+		 vm.emit<ops::BeginFrame>(false);
 		 set<string> body_ids;
 		 my_args.collect_ids(body_ids);
 		 Env body_env(env.imp, body_ids);
@@ -614,7 +618,7 @@ namespace claes::libs {
 		 return nullopt;
 	       });
 
-    bind_method("join", {"sep"},
+    bind_method("join-strings", {"sep"},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 
@@ -624,28 +628,25 @@ namespace claes::libs {
 		  reverse(stack.begin() + stack.len() - arity, stack.end());
 		  const auto s = stack.pop();
 		  stringstream result;
-		  auto n = 0;
-		  
-		  for (int i = 0; i < arity-1; i++) {		    
-		    auto it = stack.pop().iter().as(types::Iter::get());
+		  auto n = 0;		  
+		  auto it = stack.pop().iter().as(types::Iter::get());
 
-		    for (;;) {
-		      auto [v, e] = it.next();
-
-		      if (e) {
-			return e;
-		      };
-
-		      if (!v) {
-			break;
-		      }
-
-		      if (n++) {
-			s.say(result);
-		      }
-
-		      v->say(result);
+		  for (;;) {
+		    auto [v, e] = it.next();
+		    
+		    if (e) {
+		      return e;
+		    };
+		    
+		    if (!v) {
+		      break;
 		    }
+		    
+		    if (n++) {
+		      s.say(result);
+		    }
+		    
+		    v->say(result);
 		  }
 
 		  stack.push(types::String::get(), result.str());
@@ -688,7 +689,7 @@ namespace claes::libs {
 		 }
 
 		 my_args.collect_ids(body_ids);
-		 vm.emit<ops::BeginFrame>();
+		 vm.emit<ops::BeginFrame>(false);
 		 Env body_env(env.imp, body_ids);
 		 auto reg_count = 0;
 
@@ -841,7 +842,31 @@ namespace claes::libs {
 		 return nullopt;
 	       });
     
-    bind_method("say", {"value"},
+    bind_method("reverse-string", {"in"},
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  auto &v = stack.peek().as(types::String::get());
+		  reverse(v.begin(), v.end());
+		  return nullopt;
+		});
+
+    bind_method("reverse-vector", {"in"},
+		[](const Method &self, 
+		   VM &vm, 
+		   Stack &stack, 
+		   int arity,
+		   bool recursive,
+		   const Loc &loc) -> E {
+		  auto &v = stack.peek().as(types::Vector::get());
+		  reverse(v.begin(), v.end());
+		  return nullopt;
+		});
+    
+    bind_method("say", {},
 		[](const Method &self, 
 		   VM &vm, 
 		   Stack &stack, 

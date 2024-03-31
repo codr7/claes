@@ -27,9 +27,11 @@ namespace claes {
 
   struct VM {
     struct Frame {
-      size_t recursion_depth;
-      size_t reg_count;      
-      Frame(const size_t reg_count): recursion_depth(0), reg_count(reg_count) {}
+      bool recursive;
+      size_t reg_count;
+      
+      Frame(const size_t reg_count, bool recursive):
+	recursive(recursive), reg_count(reg_count) {}
     };
     
     libs::Core core;
@@ -40,7 +42,7 @@ namespace claes {
     int arity = 0;
     Call *call = nullptr;
     Alloc<Call, 64> call_alloc;
-    vector<size_t> frames;
+    vector<Frame> frames;
     optional<Loc> loc;
     vector<Op> ops;
     fs::path path;
@@ -51,11 +53,11 @@ namespace claes {
     map<string, Sym *> syms;
     
     VM() {
-      begin_frame();
+      begin_frame(false);
     }
     
     void begin_call(const Cell &target, bool recursive, const Loc &loc) {
-      begin_frame();
+      begin_frame(recursive);
 
       if (recursive) {
 	recursion_depth++;
@@ -64,8 +66,8 @@ namespace claes {
       call = call_alloc.get(call, target, recursive, loc, pc);
     }
 
-    void begin_frame() {
-      frames.push_back(regs.size());
+    void begin_frame(bool recursive) {
+      frames.emplace_back(regs.size(), recursive);
     }
 
     template <typename T, typename...Args>
@@ -100,7 +102,7 @@ namespace claes {
     }
 
     void end_frame() {
-      for (auto i = 0; i < regs.size() - frames.back(); i++) {
+      for (auto i = 0; i < regs.size() - frames.back().reg_count; i++) {
 	regs.pop_back();
       }
       
@@ -113,18 +115,18 @@ namespace claes {
 
     int frame_offset(const Reg &reg) const {
       auto o = reg.frame_offset;
-      if (o) { o += recursion_depth; }
+      if (o && frames.back().recursive) { o += recursion_depth; }
       return o;
     }
 
     const Cell &get_reg(const Reg &reg) const {
       const auto &f = *next(frames.rbegin(), frame_offset(reg));
-      return regs[f + reg.index];
+      return regs[f.reg_count + reg.index];
     }
 
     Cell &get_reg(const Reg &reg) {
-      auto &f = *next(frames.rbegin(), frame_offset(reg));
-      return regs[f + reg.index];
+      const auto &f = *next(frames.rbegin(), frame_offset(reg));
+      return regs[f.reg_count + reg.index];
     }
   
     E load(fs::path path, Env &env, const Loc &loc);
@@ -139,7 +141,7 @@ namespace claes {
 
     void set_reg(const Reg &reg, const Cell &value) {
       auto &f = *next(frames.rbegin(), frame_offset(reg));
-      regs[f + reg.index] = value;
+      regs[f.reg_count + reg.index] = value;
     }
 
     E single_step(Stack &stack);

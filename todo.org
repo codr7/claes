@@ -5,18 +5,6 @@ mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 https://huggingface.co/mistralai/Mistral-7B-v0.1
 
-(^ foo [n x]
-  (let []
-    (if n (do
-      (push x (String n))
-      (foo (- n 1) x))
-      x)))
-
-* fix scopes
-** bara för att en symbol har frame_offset > 0 så betyder inte det att recalls
-** ska läggas till.
-** repl history ska fortfarande ha frame offset 1 trots att vi är i ett rekursivt anrop
-
 * add support for pair calls
 *** drop _ recursively
 

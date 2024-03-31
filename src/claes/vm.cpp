@@ -57,10 +57,14 @@ namespace claes {
     Loc load_loc(path, 1, 1);
     char c = 0;
     
-    if (in.get(c) && c == '#') { 
-      string line;
-      getline(in, line);
-      load_loc.line++;
+    if (in.get(c)) {
+      if (c == '#') { 
+	string line;
+	getline(in, line);
+	load_loc.line++;
+      } else {
+	in.unget();
+      }
     }
     
     Forms fs;

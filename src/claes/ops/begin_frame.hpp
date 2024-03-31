@@ -7,8 +7,10 @@ namespace claes::ops {
   using namespace claes;
   
   struct BeginFrame: Op::Imp {
-    BeginFrame():
-      Op::Imp(Op::Code::BEGIN_FRAME) {}
+    bool recursive;
+    
+    BeginFrame(bool recursive):
+      Op::Imp(Op::Code::BEGIN_FRAME), recursive(recursive) {}
 
     virtual void trace(VM &vm, ostream &out) const override {
       out << "BeginFrame";

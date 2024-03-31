@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "claes/error.hpp"
+#include "claes/ops/begin_frame.hpp"
 #include "claes/ops/benchmark.hpp"
 #include "claes/ops/branch.hpp"
 #include "claes/ops/call_direct.hpp"
@@ -61,7 +62,7 @@ namespace claes {
     DISPATCH(start_pc);
 
   BEGIN_FRAME: {
-      begin_frame();
+      begin_frame(op.as<ops::BeginFrame>().recursive);
     }
 
     DISPATCH(pc+1);
