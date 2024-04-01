@@ -42,21 +42,21 @@ The `Nil` type has one value, `_`.
 The `Bit` type has two values, `T` and `F`.
 
 ```
-  (or F F)
+  (or 0 F)
 
 F
-  (or F T)
+  (or 42 0)
 
-T
+42
 ```
 ```
-  (and F T)
+  (and 0 42)
 
-F
+0
 
-  (and T T)
+  (and "abc" 42)
 
-T
+42
 ```
 
 ## pairs
@@ -316,7 +316,7 @@ Most types are value types; that is, you can't modify their values outside of th
 &42
 ```
 
-Dereferencing is as simple as calling without arguments.
+Dereferencing is as easy as calling without arguments.
 
 ```
   (&42)
@@ -376,13 +376,13 @@ Applicable values may be converted to json using `js`.
 ```
   (js [42 .123 "foo" 'bar _ T 1:2])
 
-"[42, .123, \"foo\", \"bar\", null, true, [1, 2]]"
+"[42, 0.123, \"foo\", \"bar\", null, true, [1, 2]]"
 ```
 
 Values may be parsed from json strings using `parse-js`.
 
 ```
-  (parse-js "[42, .123, \"foo\", \"bar\", null, true, [1, 2]]")
+  (parse-js "[42, 0.123, \"foo\", \"bar\", null, true, [1, 2]]")
 
 [42 .123 "foo" 'bar _ T 1:2]
 ```

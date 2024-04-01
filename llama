@@ -5,7 +5,7 @@
 (^ send-prompt [value]
   (let [data '{
          stream:            ,F
-         n_predict:         300
+         n_predict:         500
          temperature:       10
          stop:              ["</s>"]
          repeat_last_n:     256
