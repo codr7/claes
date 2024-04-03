@@ -3,7 +3,7 @@ This project aims to implement a custom Lisp in C++.<br/>
 <br/>
 Most of the code in this document is included in the [test suite](https://github.com/codr7/claes/blob/main/tests.claes).<br/>
 <br/>
-The codebase hsa very few dependencies, doesn't use exceptions, and currently weighs in at around 6 kloc.
+The codebase has very few dependencies, doesn't use exceptions, and currently weighs in at around 6 kloc.
 
 ## setup
 The codebase requires CMake and a C++20-compiler to build. At the moment, libcurl is also required, though the plan is the make that optional; but it's fairly straight forward to build from source if no other options are available.

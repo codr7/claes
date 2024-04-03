@@ -5,17 +5,37 @@ mistral 8x7b
 https://medium.com/vendi-ai/efficiently-run-your-fine-tuned-llm-locally-using-llama-cpp-66e2a7c51300
 https://huggingface.co/mistralai/Mistral-7B-v0.1
 
+* define <= and >= in core eval block
+** use vararg/splat
+
+* add optional Cell.reverse method
+** in place
+** default error
+** string, vector, pair
+** replaces reverse-vector
+
+* implement Pair::iter
+
+* add len method
+** add Cell.len()
+** return 1 default
+** override for i64, string, vector, pair (2)
+
+
 * add support for pair calls
 *** drop _ recursively
 
 * return pair from parse-js
 ** value:end_pos
 
-* implement Pair::iter
+* add parse-number
+** return i64 or f64
 
-* add reverse flag to all iter constructors
-** add cell.reverse that returns a reverse iter
-** replaces reverse-vector
+* add libsodium
+** snackis
+** add hex method
+** return hex contents
+** add parse-hex method
 
 * add support for f64 > 1 in reader
 
@@ -42,15 +62,6 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 ** remove default curl import
 ** use in llama.claes
 
-* define <= and >= in core eval block
-** use vararg/splat
-** add tests
-
-* add len method
-** add Cell.len()
-** return 1 default
-** override for i64, string, vector, pair (2)
-
 * add Type.peek/pop
 ** self default
 *** set nil on pop
@@ -58,8 +69,6 @@ https://huggingface.co/mistralai/Mistral-7B-v0.1
 ** peek/pop för vector/string
 ** pop for i64
 ** add stacks to readme
-
-* implement Pair::iter
 
 * replace Rec with move/erase
 
