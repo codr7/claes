@@ -4,11 +4,17 @@ project(claes)
 
 set(CMAKE_CXX_COMPILER clang++)
 
-find_library(CURL_LIBRARY NAMES curl curllib libcurl_imp curllib_static)
+option(WITH_CURL "Add support for curl" ON)
+
+if(WITH_CURL)
+  add_definitions(-DUSE_CURL)
+  find_library(CURL_LIBRARY NAMES curl curllib libcurl_imp curllib_static)
+  add_link_options(-lcurl)
+endif()
 
 add_compile_options(-std=c++20 -fno-exceptions -Wall -Werror -g -O2 -fno-omit-frame-pointer -Wno-unused-variable -fsanitize=address,undefined)
 
-add_link_options(-fsanitize=address,undefined -lcurl)
+add_link_options(-fsanitize=address,undefined)
 
 file(GLOB_RECURSE src src/claes/*.cpp)
 

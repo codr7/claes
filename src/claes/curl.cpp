@@ -1,3 +1,5 @@
+#ifdef USE_CURL
+
 #include "claes/curl.hpp"
 #include "claes/stack.hpp"
 #include "claes/types/string.hpp"
@@ -32,3 +34,5 @@ namespace claes {
     return nullopt;
   }
 }
+
+#endif

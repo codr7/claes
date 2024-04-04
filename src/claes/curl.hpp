@@ -1,3 +1,5 @@
+#ifdef USE_CURL
+
 #pragma once
 
 #include <iostream>
@@ -80,3 +82,5 @@ namespace claes {
   }
 
 }
+
+#endif

@@ -1,3 +1,5 @@
+#ifdef USE_CURL
+
 #include "claes/cell.hpp"
 #include "claes/types/curl.hpp"
 #include "claes/types/string.hpp"
@@ -30,3 +32,5 @@ namespace claes::types {
     return left.as(get()) == right.as(get());
   }
 }
+
+#endif

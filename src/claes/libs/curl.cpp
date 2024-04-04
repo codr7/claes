@@ -5,6 +5,7 @@
 
 namespace claes::libs {
   Curl::Curl(): Env() {
+#ifdef USE_CURL
     bind_type(types::Curl::get());
 
     bind_method("curl", {"url"},
@@ -16,5 +17,7 @@ namespace claes::libs {
 		   const Loc &loc) -> E {
 		  return claes::Curl().call(vm, stack, arity, loc);
 		});
+#endif
   }
 }
+

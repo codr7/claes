@@ -1,3 +1,5 @@
+#ifdef USE_CURL
+
 #pragma once
 
 #include <cstdint>
@@ -42,3 +44,5 @@ namespace claes::types {
     virtual bool eq(const Cell &left, const Cell &right) const override;
   };
 }
+
+#endif
