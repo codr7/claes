@@ -1,6 +1,32 @@
 3268
 1208
 
+* sqlite
+** close db in Context::Imp destructor
+** add db lib
+*** add VM.db
+** add Context type
+*** db/types
+** add db/connect method
+** add support for namespaced ids
+*** handle recursively in id emit
+*** (db/new-table "users")
+*** (db/connect "")
+*** (db/begin db)
+*** (db/create users)
+** add Context::exec(sql, params) maethod
+** add table_column.type_sql()
+** add I64Column
+** add StringColumn
+** add constraint/key/foreign_key
+** add db lib
+** add types
+** ifdef all references to sqlite
+** --
+** pragma journal_mode = "wal"
+** pragma synchronous = "off"
+** pragma foreign_keys = "on"
+
 * define <= and >= in core eval block
 ** use vararg/splat
 
@@ -16,7 +42,6 @@
 ** add Cell.len()
 ** return 1 default
 ** override for i64, string, vector, pair (2)
-
 
 * add support for pair calls
 *** drop _ recursively
@@ -68,7 +93,7 @@
 * add reduce macro
 * add map macro
 
-* aoc1
+* aoc 1
 
 * add vm.arity vector
 ** write failing test with nested splats
