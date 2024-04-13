@@ -1,10 +1,6 @@
 434
 145
 
-pragma journal_mode = "wal"
-pragma synchronous = "off"
-pragma foreign_keys = "on"
-
 * sqlite
 ** add support for namespaced ids
 *** handle recursively in id emit
@@ -24,6 +20,11 @@ pragma foreign_keys = "on"
       user-name2 (db/string-column users)
       cx (connect "file://test.dn")]
   (db/create users cx))
+
+* set sqllite settings in db/connect()
+** pragma journal_mode = "wal"
+** pragma synchronous = "off"
+** pragma foreign_keys = "on"
 
 * extract curl to separare dir like db
 ** rename to http/Client and http/send
