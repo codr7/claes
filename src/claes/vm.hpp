@@ -9,6 +9,7 @@
 #include "claes/call.hpp"
 #include "claes/common.hpp"
 #include "claes/libs/core.hpp"
+#include "claes/libs/db.hpp"
 #include "claes/libs/curl.hpp"
 #include "claes/op.hpp"
 #include "claes/reg.hpp"
@@ -35,6 +36,7 @@ namespace claes {
     };
     
     libs::Core core;
+    libs::DB db;
     libs::Curl curl;
 
     bool debug = false, trace = false;

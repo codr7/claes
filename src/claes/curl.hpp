@@ -83,7 +83,6 @@ namespace claes {
     out << "(Curl " << c.imp << ')';
     return out;
   }
-
 }
 
 #endif
