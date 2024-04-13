@@ -19,9 +19,7 @@ if(WITH_SQLITE)
   add_link_options(-lsqlite3)
 endif()
 
-add_compile_options(-std=c++20 -fno-exceptions -Wall -Werror -g -O2 -fno-omit-frame-pointer -Wno-unused-variable -fsanitize=address,undefined)
-
-add_link_options(-fsanitize=address,undefined)
+add_compile_options(-std=c++20 -fno-exceptions -Wall -Werror -g -O2 -Wno-unused-variable)
 
 file(GLOB_RECURSE src src/claes/*.cpp)
 

@@ -22,8 +22,8 @@ namespace claes {
     // Returns an initialized object
     template <typename...Args>
     T *get(Args&&...args) {
-      auto *s = get_slot();
-      *s = T(std::forward<Args>(args)...);
+      const auto s = get_slot();
+      new (s) T(std::forward<Args>(args)...);
       return s;
     }
 
