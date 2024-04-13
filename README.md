@@ -20,7 +20,7 @@ make claes
 rlwrap ./claes
 
 claes v8
-may the source be with you
+may the src be with you
 
   (say "hello" "world")
 
