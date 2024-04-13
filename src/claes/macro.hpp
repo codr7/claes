@@ -1,6 +1,7 @@
 #ifndef CLAES_MACRO_HPP
 #define CLAES_MACRO_HPP
 
+#include <functional>
 #include "claes/error.hpp"
 
 namespace claes {

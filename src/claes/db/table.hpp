@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "claes/db/definition.hpp"
 
 namespace claes::db {

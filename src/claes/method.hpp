@@ -1,6 +1,9 @@
 #ifndef CLAES_METHOD_HPP
 #define CLAES_METHOD_HPP
 
+#include <functional>
+#include <vector>
+
 #include "claes/error.hpp"
 
 namespace claes {

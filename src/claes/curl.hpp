@@ -2,7 +2,10 @@
 
 #pragma once
 
+#include <array>
+#include <cstring>
 #include <iostream>
+
 #include "curl/curl.h"
 #include "claes/error.hpp"
 

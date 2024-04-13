@@ -1,6 +1,9 @@
 #ifndef CLAES_ERROR_H
 #define CLAES_ERROR_H
 
+#include <memory>
+#include <optional>
+
 #include "claes/loc.hpp"
 #include "claes/utilities.hpp"
 

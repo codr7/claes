@@ -1,3 +1,4 @@
+#include <cstring>
 #include <fstream>
 
 #include "claes/forms/id.hpp"

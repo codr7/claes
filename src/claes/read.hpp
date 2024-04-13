@@ -1,6 +1,8 @@
 #ifndef CLAES_READER_HPP
 #define CLAES_READER_HPP
 
+#include <functional>
+
 #include "claes/error.hpp"
 #include "claes/form.hpp"
 
