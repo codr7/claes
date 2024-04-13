@@ -14,7 +14,7 @@ namespace claes::iters {
     int n;
     claes::Cell value;
 
-    Repeat(const claes::Cell &value, const int n): value(value) {}
+    Repeat(const claes::Cell &value, const int n): n(n), value(value) {}
 
     virtual Imp *clone() const override {
       return new Repeat(value, n);
