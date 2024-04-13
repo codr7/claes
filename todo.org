@@ -18,7 +18,7 @@
 (let [users (db/table "users")
       user-name1 (db/string-column users)
       user-name2 (db/string-column users)
-      cx (connect "file://test.dn")]
+      cx (db/connect "file://test.dn")]
   (db/create users cx))
 
 * set sqllite settings in db/connect()

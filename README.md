@@ -6,7 +6,7 @@ Most of the code in this document is included in the [test suite](https://github
 The codebase has very few dependencies, doesn't use exceptions, and currently weighs in at around 6 kloc.
 
 ## setup
-The codebase requires CMake and a C++20-compiler to build. At the moment, libcurl is also required, though the plan is the make that optional; but it's fairly straight forward to build from source if no other options are available.
+The codebase requires CMake and a C++20-compiler to build.
 
 Launching the binary without arguments starts a REPL, `rlwrap` may be used to add support for line editing.
 
