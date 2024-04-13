@@ -12,7 +12,7 @@
 namespace claes {
   void VM::repl(istream &in, ostream &out, Env &env) {
     out << "claes v" << VERSION << endl;
-    out << "may the src be with you" << endl << endl;
+    out << "may the src/ be with you" << endl << endl;
 
     stringstream buffer;
     Stack stack;
