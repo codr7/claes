@@ -230,7 +230,7 @@ Methods may be defined to accept a variable number of arguments by suffixing the
 6
 ```
 
-Which can be expressed even more succinctly.
+Which could be expressed even more succinctly.
 ```
   (+ 4*)
 

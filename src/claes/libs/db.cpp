@@ -5,8 +5,8 @@
 
 namespace claes::libs {
   DB::DB(): Env() {
-#ifdef USE_DB
-    bind_type(types::db::Context::get());
+#ifdef USE_SQLITE
+    bind_type(db::types::Context::get());
 
     bind_method("connect", {"path"},
 		[](const Method &self, 
@@ -16,7 +16,14 @@ namespace claes::libs {
 		   bool recursive,
 		   const Loc &loc) -> E {
 		  const auto p = stack.pop().as(types::String::get());
-		  stack.push(db::types::Context::get(), db::connect(p));
+		  auto [cx, e] = db::connect(p);
+
+		  if (e) {
+		    return Error(loc, e->imp->message);
+		  }
+
+		  stack.push(db::types::Context::get(), *cx);
+		  return nullopt;
 		});
 #endif
   }

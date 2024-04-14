@@ -1,12 +1,9 @@
-#ifdef USE_CONTEXT
+#ifdef USE_SQLITE
 
 #include "claes/cell.hpp"
-#include "claes/types/context.hpp"
-#include "claes/types/string.hpp"
-#include "claes/stack.hpp"
-#include "claes/vm.hpp"
+#include "claes/db/types/context.hpp"
 
-namespace claes::types {
+namespace claes::db::types {
   void Context::dump(const Cell &value, ostream &out) const {
     out << value.as(get());
   }

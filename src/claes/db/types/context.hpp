@@ -1,17 +1,17 @@
-#ifdef USE_CONTEXT
+#ifdef USE_SQLITE
 #pragma once
 
 #include <cstdint>
 #include <ostream>
 
-#include "claes/context.hpp"
+#include "claes/db/context.hpp"
 #include "claes/type.hpp"
 
 namespace claes::db::types {
   using namespace claes;
 
   struct Context: Type::Imp {
-    using Value = claes::Context;
+    using Value = db::Context;
 
     static TType<Context> get() {
       static TType<Context> t("Context");

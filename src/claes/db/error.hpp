@@ -25,5 +25,3 @@ namespace claes::db {
     return out;
   }
 }
-
-#endif

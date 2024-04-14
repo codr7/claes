@@ -34,6 +34,8 @@ namespace claes::forms {
 		       Forms &arguments, 
 		       const Loc &loc) const override;
 
+    pair<optional<Cell>, E> find(Env &env) const;
+
     E quote(VM &vm, Env &env, int depth) const override;
   };
 }

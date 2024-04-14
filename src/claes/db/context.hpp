@@ -1,22 +1,25 @@
 #pragma once
 
-#ifdef USE_DB
+#ifdef USE_SQLITE
 
 #include <cassert>
+#include <iostream>
 
 #include "claes/db/error.hpp"
 #include <sqlite3.h>
 
 namespace claes::db {
+  using namespace std;
+  
   struct Context {
     struct Imp {
-      sqlite3 *db;
+      sqlite3 *db = nullptr;
       int ref_count = 1;
 
       Imp(sqlite3 *db): db(db) {}
 
-      virtual ~Context() {
-	const auto result = sqllite3_close(db);
+      virtual ~Imp() {
+	const auto result = sqlite3_close(db);
 	assert(result == SQLITE_OK);
       }
 
@@ -29,7 +32,7 @@ namespace claes::db {
 
     Imp *imp = nullptr;
 
-    Context(sqlite3 *db): imp(db) {}
+    Context(sqlite3 *db): imp(new Imp(db)) {}
     
     Context(const Context &source): imp(source.imp) {
       imp->ref_count++;
@@ -52,7 +55,7 @@ namespace claes::db {
       sqlite3_exec(imp->db, sql.c_str(), nullptr, nullptr, &e);
 
       if (e) {
-	const autop s = string(e);
+	const auto s = string(e);
 	sqlite3_free(e);
 	return E(s);
       }
@@ -74,11 +77,11 @@ namespace claes::db {
     return out;
   }
   
-  inline pair<Context, E> *connect(fs::path path) {
+  inline pair<optional<Context>, E> connect(const string &path) {
     sqlite3 *db = nullptr;
 
-    if (int e = sqlite3_open(path, &db); e) {
-      return make_pair(nullptr, Error(sqlite3_errmsg(db)));
+    if (int result = sqlite3_open(path.c_str(), &db); result != SQLITE_OK) {
+      return make_pair(nullopt, Error("Failed connecting to database: ", path));
     }
 
     return make_pair(Context(db), nullopt);

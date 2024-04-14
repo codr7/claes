@@ -2,12 +2,6 @@
 145
 
 * sqlite
-** add support for namespaced ids
-*** handle recursively in id emit
-*** (db/new-table "users")
-*** (db/connect "")
-*** (db/begin db)
-*** (db/create users)
 ** add table_column.type_sql()
 ** add I64Column
 ** add StringColumn
@@ -15,13 +9,15 @@
 ** add Schema
 *** add param to table
 
+(db/connect "file:test.db")
+
 (let [users (db/table "users")
       user-name1 (db/string-column users)
       user-name2 (db/string-column users)
-      cx (db/connect "file://test.dn")]
+      cx (db/connect "file:test.dn")]
   (db/create users cx))
 
-* set sqllite settings in db/connect()
+* modify settings in db/connect()
 ** pragma journal_mode = "wal"
 ** pragma synchronous = "off"
 ** pragma foreign_keys = "on"
@@ -38,6 +34,10 @@
 ** default error
 ** string, vector, pair
 ** replaces reverse-vector
+
+* add read/write
+** add Cell/Type methods
+** cin/out
 
 * implement Pair::iter
 
