@@ -1,5 +1,4 @@
-#ifndef CLAES_TYPE_HPP
-#define CLAES_TYPE_HPP
+#pragma once
 
 #include <string>
 #include "claes/error.hpp"
@@ -179,5 +178,3 @@ namespace claes {
     return out;
   }
 }
-
-#endif

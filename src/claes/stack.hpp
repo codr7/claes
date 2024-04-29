@@ -1,9 +1,7 @@
-#ifndef CLAES_STACK_HPP
-#define CLAES_STACK_HPP
+#pragma once
 
 #include <vector>
 #include "cell.hpp"
-
 
 namespace claes {
   struct Stack {
@@ -75,5 +73,3 @@ namespace claes {
     return out;
   }
 }
-
-#endif

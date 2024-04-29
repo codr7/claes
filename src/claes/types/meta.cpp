@@ -16,7 +16,7 @@ namespace claes::types {
   void Meta::dump(const Cell &value, ostream &out) const {
     out << value.as(get());
   }
-
+  
   E Meta::emit_ref(const Cell &value,
 		   VM &vm, 
 		   Env &env, 

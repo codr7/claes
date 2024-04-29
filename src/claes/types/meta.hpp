@@ -30,7 +30,7 @@ namespace claes::types {
 		   const claes::Loc &loc) const override;
 
     virtual void dump(const Cell &value, ostream &out) const override;
-    
+
     virtual E emit_ref(const Cell &value,
 		       VM &vm, 
 		       Env &env, 

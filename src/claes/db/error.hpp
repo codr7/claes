@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+#include <optional>
 #include "claes/utilities.hpp"
 
 namespace claes::db {

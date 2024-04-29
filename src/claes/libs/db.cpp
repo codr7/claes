@@ -1,12 +1,13 @@
 #include "claes/libs/db.hpp"
-#include "claes/db/context.hpp"
 #include "claes/db/types/context.hpp"
+#include "claes/db/types/schema.hpp"
 #include "claes/types/string.hpp"
 
 namespace claes::libs {
   DB::DB(): Env() {
 #ifdef USE_SQLITE
     bind_type(db::types::Context::get());
+    bind_type(db::types::Schema::get());
 
     bind_method("connect", {"path"},
 		[](const Method &self, 

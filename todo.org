@@ -1,26 +1,36 @@
-434
-145
+* fix compile
+** add Schema <<
+
+* make stack fixed size
+* make frames fixed size
+* make ops fixed size
+* make regs fixed size
+* convert call to fixed size calls?
+
+* profile using valgrind
 
 * sqlite
-** add table_column.type_sql()
+** add Record
 ** add I64Column
 ** add StringColumn
+** implement db/Schema.emit_call
 ** add constraint/key/foreign_key
-** add Schema
-*** add param to table
 
 (db/connect "file:test.db")
 
-(let [users (db/table "users")
-      user-name1 (db/string-column users)
-      user-name2 (db/string-column users)
-      cx (db/connect "file:test.dn")]
-  (db/create users cx))
+(let [db (db/Schema
+           (table users (email)
+	     (string-column email)
+             (string-column name1)
+             (string-column name2)))
+      cx (db/connect "file:test.db")]
+  (db/create db cx))
 
-* modify settings in db/connect()
+* modify sqlite connect settings
 ** pragma journal_mode = "wal"
 ** pragma synchronous = "off"
 ** pragma foreign_keys = "on"
+** add to readme
 
 * extract curl to separare dir like db
 ** rename to http/Client and http/send
@@ -28,6 +38,10 @@
 
 * define <= and >= in core eval block
 ** use vararg/splat
+
+* add string lib
+** extract from core
+*** join-strings, reverse-string
 
 * add optional Cell.reverse method
 ** in place
@@ -68,19 +82,11 @@
 *** no define, ^, stop, dump, say, curl, set
 *** skip definition in library constructor
 
-* add libsodium
-** snackis
-** add hex method
-** return hex contents
-** add parse-hex method
-** optional like curl
-
-
 * add import macro
 ** register core/curl in root env
 *** add VM.root_env
+*** use as source in main/repl
 ** remove default curl import
-** use in llama.claes
 
 * add Type.peek/pop
 ** self default
@@ -115,7 +121,7 @@
 ** replaces default create of new env in Expr
 
 * add slurp-lines
-** return iteratpr
+** return iterator
 
 * fix recursion/bindings
 

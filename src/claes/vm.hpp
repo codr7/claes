@@ -1,5 +1,4 @@
-#ifndef CLAES_VM_HPP
-#define CLAES_VM_HPP
+#pragma once
 
 #include <filesystem>
 #include <iostream>
@@ -169,5 +168,3 @@ namespace claes {
 	  Op *last_call = nullptr);
   };
 }
-
-#endif
