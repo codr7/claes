@@ -15,7 +15,7 @@ git clone https://github.com/codr7/claes.git
 cd claes
 mkdir build
 cd build
-cmake ..
+cmake -DUSE_CURL=OFF -DUSE_SQLITE=OFF ..
 make claes
 rlwrap ./claes
 
@@ -41,6 +41,7 @@ The `Nil` type has one value, `_`.
 ## bits
 The `Bit` type has two values, `T` and `F`.
 
+`or` short-circuits to return the first true value.
 ```
   (or 0 F)
 
@@ -49,6 +50,8 @@ F
 
 42
 ```
+
+`and` short-circuits to return the first false value.
 ```
   (and 0 42)
 
